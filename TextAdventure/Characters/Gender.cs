@@ -1,4 +1,6 @@
 ﻿namespace TextAdventure.Characters;
-public class Human : Humanoid
+public enum Gender
 {
+    Male,
+    Female
 }

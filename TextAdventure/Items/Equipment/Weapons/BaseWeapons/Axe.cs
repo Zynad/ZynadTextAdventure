@@ -1,6 +1,8 @@
-﻿using TextAdventure.Items.Equipment.Weapons;
-
-namespace TextAdventure.Items.Equipment.Weapons.BaseWeapons;
+﻿namespace TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 public class Axe : WeaponBase
 {
+    public Axe()
+    {
+        WeaponType = WeaponType.Axe;
+    }
 }

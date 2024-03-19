@@ -8,7 +8,7 @@ public class Rat : Creature
         Age = age;
         HitPoints = hitPoints;
         ArmorValue = armorValue;
-        AttackDamage = attackDamage;
+        MeleePhysicalAttackDamage = attackDamage;
         DefenseValue = defenseValue;
     }
 }

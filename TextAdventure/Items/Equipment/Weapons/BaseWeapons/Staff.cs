@@ -3,7 +3,11 @@
 namespace TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 public class Staff : WeaponBase
 {
-    public void BeginnerStaff()
+    public Staff()
+    {
+        WeaponType = WeaponType.Staff;
+    }
+    public Staff BeginnerStaff()
     {
         Name = "Beginner Staff";
         LevelRequirement = 1;
@@ -17,5 +21,6 @@ public class Staff : WeaponBase
         Value = 5;
         Weight = 5;
         TwoHanded = true;
+        return this;
     }
 }

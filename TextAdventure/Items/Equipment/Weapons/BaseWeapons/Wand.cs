@@ -1,10 +1,13 @@
 ﻿using TextAdventure.Game;
-using TextAdventure.Items.Equipment.Weapons;
 
 namespace TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 public class Wand : WeaponBase
 {
-    public void BeginnerWand()
+    public Wand()
+    {
+        WeaponType = WeaponType.Wand;
+    }
+    public Wand BeginnerWand()
     {
         Name = "Beginner Wand";
         Rarity = Rarity.Uncommon;
@@ -18,5 +21,6 @@ public class Wand : WeaponBase
         Value = 5;
         Weight = 1;
         TwoHanded = false;
+        return this;
     }
 }
