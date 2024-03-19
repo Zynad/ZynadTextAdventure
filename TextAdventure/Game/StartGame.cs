@@ -1,4 +1,5 @@
 ﻿using TextAdventure.Classes;
+using TextAdventure.Equipment.Weapons;
 using TextAdventure.PlayerSettings;
 
 namespace TextAdventure.Game;
@@ -85,6 +86,39 @@ public class StartGame
 
     private void ChooseStartEquipment()
     {
+        switch (_player.Vocation)
+        {
+            case Mage:
+                Console.WriteLine("Choose your starting weapon:");
+            Console.WriteLine("1. Staff");
+            Console.WriteLine("2. Wand");
+            int weaponChoice;
+            while (!int.TryParse(Console.ReadLine(), out weaponChoice) || (weaponChoice != 1 && weaponChoice != 2))
+            {
+                Console.WriteLine("Invalid choice");
+                Console.WriteLine("Choose your starting weapon:");
+                Console.WriteLine("1. Staff");
+                Console.WriteLine("2. Wand");
+            }
+            WeaponBase startingWeapon = weaponChoice switch
+            {
+                1 => new Staff(),
+                2 => new Wand(),
+                _ => null
+            };
+            if (startingWeapon != null)
+            {
+                _player.MainHand = startingWeapon;
+                Console.WriteLine($"You have chosen a {startingWeapon.Name} as your starting weapon.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice");
+            }
+                break;
+            default:
+                break;
+        }
         throw new NotImplementedException();
     }
 }
