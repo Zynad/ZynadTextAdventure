@@ -1,4 +1,4 @@
-﻿namespace TextAdventure.Equipment.Weapons;
+﻿namespace TextAdventure.Items.Equipment.Weapons;
 public enum WeaponMaterial
 {
     Wood,

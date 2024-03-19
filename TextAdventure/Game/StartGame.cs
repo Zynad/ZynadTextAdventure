@@ -1,5 +1,6 @@
 ﻿using TextAdventure.Classes;
-using TextAdventure.Equipment.Weapons;
+using TextAdventure.Items.Equipment.Weapons;
+using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 using TextAdventure.PlayerSettings;
 
 namespace TextAdventure.Game;
@@ -89,62 +90,82 @@ public class StartGame
         switch (_player.Vocation)
         {
             case Mage: 
-                Console.WriteLine("Choose your starting weapon:");
-                Console.WriteLine("1. Staff");
-                Console.WriteLine("2. Wand");
-                int weaponChoice;
-                while (!int.TryParse(Console.ReadLine(), out weaponChoice) || (weaponChoice != 1 && weaponChoice != 2))
-                {
-                    Console.WriteLine("Invalid choice");
-                    Console.WriteLine("Choose your starting weapon:");
-                    Console.WriteLine("1. Staff");
-                    Console.WriteLine("2. Wand");
-                }
-                WeaponBase startingWeapon = weaponChoice switch
-                {
-                    1 => new Staff(),
-                    2 => new Wand(),
-                    _ => null
-                };
-                if (startingWeapon != null)
-                {
-                    _player.MainHand = startingWeapon;
-                    Console.WriteLine($"You have chosen a {startingWeapon.Name} as your starting weapon.");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice");
-                }
+                ChooseMageWeapon();
                 break;
             case Knight:
-                Console.WriteLine("Choose your starting weapon:");
-                Console.WriteLine("1. Sword");
-                Console.WriteLine("2. Axe");
-                int weaponChoice;
-                while (!int.TryParse(Console.ReadLine(), out weaponChoice) || (weaponChoice != 1 && weaponChoice != 2))
-                {
-                    Console.WriteLine("Invalid choice");
-                    Console.WriteLine("Choose your starting weapon:");
-                    Console.WriteLine("1. Sword");
-                    Console.WriteLine("2. Axe");
-                }
-                WeaponBase startingWeapon = weaponChoice switch
-                {
-                    1 => new Sword(),
-                    2 => new Axe(),
-                    _ => null
-                };
-                if (startingWeapon != null)
-                {
-                    _player.MainHand = startingWeapon;
-                    Console.WriteLine($"You have chosen a {startingWeapon.Name} as your starting weapon.");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice");
-                }
+                ChooseKnightWeapon();
                 break;
         }
         throw new NotImplementedException();
+    }
+
+    private void ChooseMageWeapon()
+    {
+        Console.WriteLine("Choose your starting weapon:");
+        Console.WriteLine("1. Staff");
+        Console.WriteLine("2. Wand");
+        int weaponChoice;
+        while (!int.TryParse(Console.ReadLine(), out weaponChoice) || (weaponChoice != 1 && weaponChoice != 2))
+        {
+            Console.WriteLine("Invalid choice");
+            Console.WriteLine("Choose your starting weapon:");
+            Console.WriteLine("1. Staff");
+            Console.WriteLine("2. Wand");
+        }
+        WeaponBase startingWeapon = weaponChoice switch
+        {
+            1 => new Staff(),
+            2 => new Wand(),
+            _ => null
+        };
+        if (startingWeapon != null)
+        {
+            _player.MainHand = startingWeapon;
+            
+            switch (startingWeapon)
+            {
+                case Staff staff: 
+                    staff.BeginnerStaff();
+                    break;
+                case Wand wand:
+                    wand.BeginnerWand();
+                    break;
+            }
+            Console.WriteLine($"You have chosen a {_player.MainHand.Name} as your starting weapon.");
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice");
+        }
+    }
+
+    private void ChooseKnightWeapon()
+    {
+        Console.WriteLine("Choose your starting weapon:");
+        Console.WriteLine("1. Sword");
+        Console.WriteLine("2. Axe");
+        int weaponChoice;
+        while (!int.TryParse(Console.ReadLine(), out weaponChoice) || (weaponChoice != 1 && weaponChoice != 2))
+        {
+            Console.WriteLine("Invalid choice");
+            Console.WriteLine("Choose your starting weapon:");
+            Console.WriteLine("1. Sword");
+            Console.WriteLine("2. Axe");
+        }
+        WeaponBase startingWeapon = weaponChoice switch
+        {
+            1 => new Sword(),
+            2 => new Axe(),
+            _ => null
+        };
+        if (startingWeapon != null)
+        {
+            _player.MainHand = startingWeapon;
+            Console.WriteLine($"You have chosen a {_player.MainHand.Name} as your starting weapon.");
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice");
+        }
     }
 }

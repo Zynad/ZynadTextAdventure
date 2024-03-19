@@ -1,5 +1,5 @@
-﻿using TextAdventure.Equipment.Armor;
-using TextAdventure.Equipment.Weapons;
+﻿using TextAdventure.Items.Equipment.Armor;
+using TextAdventure.Items.Equipment.Weapons;
 
 namespace TextAdventure.Characters;
 public class Humanoid : Creature
@@ -12,9 +12,8 @@ public class Humanoid : Creature
     public WeaponBase MainHand { get; set; }
     public WeaponBase OffHand { get; set; }
 
-    internal void SetArmorAndAttackValue()
+    internal void SetArmorValue()
     {
         ArmorValue = Boots.ArmorValue + Helmet.ArmorValue + Chest.ArmorValue + Gloves.ArmorValue + Legs.ArmorValue;
-        AttackDamage = MainHand.AttackValue + OffHand.AttackValue;
     }
 }

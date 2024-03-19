@@ -1,4 +1,6 @@
-﻿namespace TextAdventure.Equipment.Armor;
+﻿using TextAdventure.Equipment.Armor;
+
+namespace TextAdventure.Items.Equipment.Armor;
 
 public abstract class ArmorPiece : EquipmentBase
 {

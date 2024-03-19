@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Items\Equipment\Weapons\Axes\" />
+    <Folder Include="Items\Equipment\Weapons\Staves\" />
+    <Folder Include="Items\Equipment\Weapons\Wands\" />
+    <Folder Include="Items\Equipment\Weapons\Swords\" />
     <Folder Include="Repos\" />
     <Folder Include="Services\" />
   </ItemGroup>

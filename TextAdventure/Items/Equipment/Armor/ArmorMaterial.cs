@@ -1,4 +1,4 @@
-﻿namespace TextAdventure.Equipment.Armor;
+﻿namespace TextAdventure.Items.Equipment.Armor;
 public enum ArmorMaterial
 {
     Cloth,

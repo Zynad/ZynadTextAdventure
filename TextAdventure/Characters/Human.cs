@@ -1,5 +1,5 @@
-﻿using TextAdventure.Equipment.Armor;
-using TextAdventure.Equipment.Weapons;
+﻿using TextAdventure.Items.Equipment.Armor;
+using TextAdventure.Items.Equipment.Weapons;
 
 namespace TextAdventure.Characters;
 public class Human : Humanoid
@@ -19,7 +19,7 @@ public class Human : Humanoid
         AttackDamage = attackDamage;
         DefenseValue = defenseValue;
         // Update ArmorValue based on the new armor
-        SetArmorAndAttackValue();
+        SetArmorValue();
     }
     public Human(string firstName, string lastName, int age, int hitPoints, int attackDamage, int defenseValue, Helmet helmet, Boots boots, Chest chest, Gloves gloves, Legs legs, WeaponBase mainhand, WeaponBase offhand)
     {
@@ -40,6 +40,6 @@ public class Human : Humanoid
         MainHand = mainhand;
         OffHand = offhand;
         // Update ArmorValue based on the new armor
-        SetArmorAndAttackValue();
+        SetArmorValue();
     }
 }
