@@ -1,24 +1,43 @@
-﻿using System.Numerics;
-using TextAdventure.Characters;
-using TextAdventure.Classes;
+﻿using TextAdventure.Classes;
+using TextAdventure.PlayerSettings;
 
 namespace TextAdventure.Game;
 public class StartGame
 {
+    private Player _player = new Player();
     public Player Start()
     {
-        var player = new Player();
-        Console.WriteLine("Hello and Welcome");
-        Console.Write("Please enter your firstname here : ");
-        player.FirstName = Console.ReadLine();
-        Console.Write("Please enter your lastname here : ");
-        player.LastName = Console.ReadLine();
-        Console.WriteLine($"Welcome {player.Name}");
-        player.Vocation = ChooseClass(player);
-        return player;
+        SetNameAndAge();
+        ChooseVocation();
+        _player.SetBaseValues();
+        ChooseStartEquipment();
+        return _player;
     }
 
-    private Vocation ChooseClass(Player player)
+    private void SetNameAndAge()
+    {
+        Console.WriteLine("Hello and Welcome");
+        Console.Write("Please enter your firstname here : ");
+        _player.FirstName = Console.ReadLine();
+        Console.Write("Please enter your lastname here : ");
+        _player.LastName = Console.ReadLine();
+        Console.WriteLine($"Welcome {_player.Name}");
+        int age;
+        while (true)
+        {
+            Console.Write($"Now tell me {_player.FirstName}, how old are you? ");
+            if (int.TryParse(Console.ReadLine(), out age) && age > 0)
+            {
+                _player.Age = age;
+                break;
+            }
+            
+            Console.WriteLine("That was not a correct number, please try again.");
+            
+        }
+    }
+
+    private void ChooseVocation()
     {
         while (true)
         {
@@ -34,35 +53,38 @@ public class StartGame
                 Console.WriteLine("2. Mage");
             }
 
-            Vocation vocation = choice switch
+            var vocation = choice switch
             {
                 1 => new Knight(),
                 2 => new Mage(),
-                _ => player.Vocation
+                _ => _player.Vocation
             };
             Console.WriteLine($"So you choose to be a {vocation.VocationName}");
             Console.WriteLine("Is that correct?");
-            Console.Write("1. Yes");
-            Console.Write("2. No");
+            Console.WriteLine("1. Yes");
+            Console.WriteLine("2. No");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1)
+            switch (choice)
             {
-                Console.WriteLine("Great choice!");
+                case 1:
+                    Console.WriteLine("Great choice!");
+                    _player.Vocation = vocation;
+                    break;
+                case 2:
+                    Console.WriteLine("Let's choose again!");
+                    continue;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    Console.WriteLine("Choose your class");
+                    Console.WriteLine("1. Knight");
+                    Console.WriteLine("2. Mage");
+                    continue;
             }
-            else if (choice == 2)
-            {
-                Console.WriteLine("Let's choose again!");
-                continue;
-            }
-            else
-            {
-                Console.WriteLine("Invalid choice");
-                Console.WriteLine("Choose your class");
-                Console.WriteLine("1. Knight");
-                Console.WriteLine("2. Mage");
-                continue;
-            }
-            return vocation;
         }
+    }
+
+    private void ChooseStartEquipment()
+    {
+        throw new NotImplementedException();
     }
 }
