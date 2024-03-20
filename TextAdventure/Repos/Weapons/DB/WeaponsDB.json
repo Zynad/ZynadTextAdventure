@@ -36,5 +36,43 @@
     "TwoHanded": false,
     "Range": 30,
     "MagicPower": 30
+  },
+  {
+    "Id": "3fa85f64-5717-1234-b3fc-2c963f66afa6",
+    "Name": "Beginner Sword",
+    "LevelRequirement": 1,
+    "Rarity": "Uncommon",
+    "Value": 5,
+    "Weight": 5,
+    "Durability": 30,
+    "Material": "Wood",
+    "WeaponType": "Sword",
+    "ArmorValue": 3,
+    "MeleeAttackValue": 7,
+    "RangedAttackValue": 0,
+    "MagicAttackValue": 40,
+    "IsRanged": false,
+    "TwoHanded": true,
+    "Range": 0,
+    "MagicPower": 0
+  },
+  {
+    "Id": "3fa85f64-1234-4562-b3fc-2c963f66afa6",
+    "Name": "Beginner Axe",
+    "LevelRequirement": 1,
+    "Rarity": "Uncommon",
+    "Value": 5,
+    "Weight": 5,
+    "Durability": 30,
+    "Material": "Wood",
+    "WeaponType": "Axe",
+    "ArmorValue": 3,
+    "MeleeAttackValue": 7,
+    "RangedAttackValue": 0,
+    "MagicAttackValue": 40,
+    "IsRanged": false,
+    "TwoHanded": false,
+    "Range": 0,
+    "MagicPower": 0
   }
 ]

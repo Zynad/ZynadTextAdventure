@@ -12,13 +12,14 @@ public class Knight : Vocation
         VocationName = "Knight";
     }
 
-    public override void SetBaseValues(Player player)
+    public override Task SetBaseValues(Player player)
     {
         var allowedArmor = new List<ArmorMaterial>();
         var allowedWeapon = new List<WeaponType>();
         player.SetBaseValues(60, 20, 20, 10, 60, 30, 20, 5, allowedArmor, allowedWeapon);
         ChooseWeapon(player);
         ChooseEquipment(player);
+        return Task.CompletedTask;
     }
     private void ChooseWeapon(Player player)
     {

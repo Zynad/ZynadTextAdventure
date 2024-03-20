@@ -2,7 +2,7 @@
 using TextAdventure.Repos.Equipment.Models;
 
 namespace TextAdventure.Repos.Weapons.Models;
-public class WeaponsBaseEntity : EquipmentBaseEntity
+public class WeaponBaseEntity : EquipmentBaseEntity
 {
     public WeaponMaterial Material { get; set; }
     public WeaponType WeaponType { get; set; }

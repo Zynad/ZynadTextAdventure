@@ -1,11 +1,11 @@
 ﻿using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 
 namespace TextAdventure.Repos.Weapons.Models;
-public class WandEntity : WeaponBaseEntity
+public class AxeEntity : WeaponBaseEntity
 {
-    public static implicit operator Wand(WandEntity entity)
+    public static implicit operator Axe(AxeEntity entity)
     {
-        return new Wand
+        return new Axe
         {
             Name = entity.Name,
             Rarity = entity.Rarity,

@@ -2,34 +2,26 @@
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
-using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
-using TextAdventure.Repos.Weapons;
+using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Repos.Weapons.Models;
+using TextAdventure.Repos.Weapons.WeaponRepos;
+
 namespace TextAdventureTests.Repos;
 public class WeaponsRepositoryTests
 {
     private readonly Fixture _autoFixture = new Fixture();
-    public WeaponRepository<Wand> GetSut()
+    public WandRepository GetWandSut()
     {
         var configuration = Substitute.For<IConfiguration>();
         configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\OneDrive\\Kul Kod\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
-        return new WeaponRepository<Wand>(configuration);
+        return new WandRepository(configuration);
     }
-    [Fact]
-    public async Task GetWeapons_ReturnsListOfWands()
-    {
-        // Arrange
-        var sut = GetSut();
-        // Act
-        var result = await sut.GetWeapons();
-        // Assert
-        Assert.IsType<List<Wand>>(result);
-    }
+
     [Fact]
     public async Task GetWeapon_WithNameBeginnerWand_ShouldReturnCorrectItem()
     {
         // Arrange
-        var sut = GetSut();
+        var sut = GetWandSut();
         var wandName = "Beginner Wand";
         // Act
         var result = await sut.GetWeapon(w => w.Name == wandName);
@@ -41,12 +33,25 @@ public class WeaponsRepositoryTests
     public async Task AddWeapon_AddsWandToList()
     {
         // Arrange
-        var sut = GetSut();
-        var wand = _autoFixture.Create<Wand>();
+        var sut = GetWandSut();
+        var wand = _autoFixture.Create<WandEntity>();
         // Act
         await sut.AddWeapon(wand);
         var result = await sut.GetWeapons();
         // Assert
         result.Should().ContainEquivalentOf(wand);
+    }
+
+    [Fact]
+    public async Task GetWeapons_ShouldOnlyReturnListWithCorrectWands()
+    {
+        // Arrange
+        var sut = GetWandSut();
+        
+        // Act
+        var result = await sut.GetWeapons();
+        
+        // Assert
+        result.Should().OnlyContain(w => w.WeaponType == WeaponType.Wand);
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using TextAdventure.Classes;
 using TextAdventure.Game;
-using TextAdventure.Items.Equipment.Weapons;
-using TextAdventure.Repos.Weapons;
+using TextAdventure.Repos.Weapons.WeaponRepos;
+using TextAdventure.Services.Weapons.WeaponServices;
+
 namespace TextAdventure
 {
     class Program
@@ -29,10 +31,11 @@ namespace TextAdventure
             IConfiguration configuration = builder.Build();
             services.AddSingleton<IConfiguration>(configuration);
             // Add your services here
-            services.AddSingleton<IWeaponRepository<WeaponBase>, WeaponRepository<WeaponBase>>();
-            services.AddSingleton<IWeaponService<WeaponBase>, WeaponService<WeaponBase>>();
+            services.AddSingleton<IWandService, WandService>();
+            services.AddSingleton<IWandRepository, WandRepository>();
             services.AddSingleton<IGameManager, GameManager>();
             services.AddSingleton<IStartGame, StartGame>();
+            services.AddScoped<Mage>();
         }
     }
 }

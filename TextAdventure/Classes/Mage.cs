@@ -3,23 +3,24 @@ using TextAdventure.Items.Equipment.Armor;
 using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 using TextAdventure.PlayerSettings;
+using TextAdventure.Services.Weapons.WeaponServices;
 
 namespace TextAdventure.Classes;
 public class Mage : Vocation
 {
-    private readonly IWeaponService<WeaponBase> _weaponsService;
-    public Mage(IWeaponService<WeaponBase> weaponsService)
+    private readonly IWandService _wandService;
+    public Mage(IWandService wandService)
     {
-        _weaponsService = weaponsService ?? throw new ArgumentNullException(nameof(weaponsService));
+        _wandService = wandService ?? throw new ArgumentNullException(nameof(wandService));
         VocationName = "Mage";
     }
 
-    public override void SetBaseValues(Player player)
+    public override async Task SetBaseValues(Player player)
     {
         var allowedArmor = new List<ArmorMaterial>();
         var allowedWeapon = new List<WeaponType>();
         player.SetBaseValues(30, 10, 5, 50, 30, 15, 10, 30, allowedArmor, allowedWeapon);
-        ChooseWeapon(player);
+        await ChooseWeapon(player);
         ChooseEquipment(player);
     }
     private async Task ChooseWeapon(Player player)
@@ -47,8 +48,8 @@ public class Mage : Vocation
     {
         return weaponChoice switch
         {
-            "staff" or "1" => await _weaponsService.GetWeapon(x => x.Name == "Beginner Staff" && x is Staff),
-            "wand" or "2" => await _weaponsService.GetWeapon(x => x.Name == "Beginner Wand" && x is Wand),
+            "staff" or "1" => await _wandService.GetWeapon(x => x.Name == "Beginner Staff" && x is Staff),
+            "wand" or "2" => await _wandService.GetWeapon(x => x.Name == "Beginner Wand" && x is Wand),
             _ => null
         };
     }
