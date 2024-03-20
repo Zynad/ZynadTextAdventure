@@ -16,7 +16,7 @@ public class StartGame
 
     private void SetPersonalInfo()
     {
-        Console.WriteLine("Hello and Welcome to (insert worldname here)");
+        Console.WriteLine("Hello and Welcome to Zynadria");
         _player.Gender = ParseHelper.AskForEnum<Gender>("Are you Male or Female? : ");
         _player.FirstName = ParseHelper.AskForName("Please enter your firstname here : ");
         _player.LastName = ParseHelper.AskForName("Please enter your lastname here : ");
@@ -58,5 +58,6 @@ public class StartGame
     {
         _player.Vocation.SetBaseValues(_player);
         _player.Vocation.ChooseWeapon(_player);
+        _player.Vocation.ChooseEquipment(_player);
     }
 }

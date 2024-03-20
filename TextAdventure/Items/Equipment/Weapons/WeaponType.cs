@@ -4,5 +4,7 @@ public enum WeaponType
     Axe,
     Staff,
     Sword,
-    Wand
+    Wand,
+    Bow,
+    Crossbow
 }

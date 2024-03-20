@@ -1,5 +1,7 @@
 ﻿using TextAdventure.Characters;
 using TextAdventure.Classes;
+using TextAdventure.Items.Equipment.Armor;
+using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Mechanics;
 
 namespace TextAdventure.PlayerSettings;
@@ -8,7 +10,7 @@ public class Player : Human
     public Dice Dice { get; set; } = new Dice();
     public Vocation Vocation { get; set; }
 
-    public void SetBaseValues(int hitPoints, int meleeAttackDamage, int defenseValue, int manaPoints, int carryWeigth, int stamina, int rangedAttackDamage, int magicAttackDamage)
+    public void SetBaseValues(int hitPoints, int meleeAttackDamage, int defenseValue, int manaPoints, int carryWeigth, int stamina, int rangedAttackDamage, int magicAttackDamage, List<ArmorMaterial> allowedArmors, List<WeaponType> allowedWeaponTypes)
     {
         HitPoints = hitPoints;
         MeleePhysicalAttackDamage = meleeAttackDamage;
@@ -18,6 +20,8 @@ public class Player : Human
         Stamina = stamina;
         MagicAttackDamage = magicAttackDamage;
         RangedPhysicalAttackDamage = rangedAttackDamage;
+        CamCarryArmorType = allowedArmors ?? [];
+        CanCarryWeaponType = allowedWeaponTypes ?? [];
     }
 
     protected override void LevelUp()

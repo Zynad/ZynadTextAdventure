@@ -2,6 +2,7 @@
 using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.PlayerSettings;
 using TextAdventure.Game.Helpers;
+using TextAdventure.Items.Equipment.Armor;
 
 namespace TextAdventure.Classes;
 public class Knight : Vocation
@@ -13,7 +14,9 @@ public class Knight : Vocation
 
     public override void SetBaseValues(Player player)
     {
-        player.SetBaseValues(60, 20, 20, 10, 60, 30, 20, 5);
+        var allowedArmor = new List<ArmorMaterial>();
+        var allowedWeapon = new List<WeaponType>();
+        player.SetBaseValues(60, 20, 20, 10, 60, 30, 20, 5, allowedArmor, allowedWeapon);
     }
     public override void ChooseWeapon(Player player)
     {
@@ -29,6 +32,11 @@ public class Knight : Vocation
         }
         player.MainHand = startingWeapon;
         Console.WriteLine($"You have chosen a {player.MainHand.Name} as your starting weapon.");
+    }
+
+    public override void ChooseEquipment(Player player)
+    {
+        throw new NotImplementedException();
     }
 
     private WeaponBase CreateWeapon(string weaponChoice)
