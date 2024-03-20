@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TextAdventure.Classes;
 using TextAdventure.Game;
-using TextAdventure.Repos.Weapons.WeaponRepos;
+using TextAdventure.Repos.Weapons;
 using TextAdventure.Services.Weapons.WeaponServices;
 
 namespace TextAdventure
@@ -32,7 +32,7 @@ namespace TextAdventure
             services.AddSingleton<IConfiguration>(configuration);
             // Add your services here
             services.AddSingleton<IWandService, WandService>();
-            services.AddSingleton<IWandRepository, WandRepository>();
+            services.AddSingleton<IWeaponsRepository, WeaponsRepository>();
             services.AddSingleton<IGameManager, GameManager>();
             services.AddSingleton<IStartGame, StartGame>();
             services.AddScoped<Mage>();
