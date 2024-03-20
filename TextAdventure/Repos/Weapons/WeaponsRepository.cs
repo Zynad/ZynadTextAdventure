@@ -69,7 +69,8 @@ public class WeaponsRepository : IWeaponsRepository
     private async Task<List<T>> GetAllWeapons<T>()
     {
         var json = await File.ReadAllTextAsync(_filePath);
-        return JsonConvert.DeserializeObject<List<T>>(json);
+        var result = JsonConvert.DeserializeObject<List<T>>(json);
+        return result;
     }
 }
 

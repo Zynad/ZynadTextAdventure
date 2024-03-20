@@ -49,7 +49,7 @@ public class Mage : Vocation
         return weaponChoice switch
         {
             "staff" or "1" => await _wandService.GetWeapon(x => x.Name == "Beginner Staff" && x is Staff),
-            "wand" or "2" => await _wandService.GetWeapon(x => x.Name == "Beginner Wand" && x is Wand),
+            "wand" or "2" => await _wandService.GetWeapon(x => x.Name == "Beginner Wand"),
             _ => null
         };
     }
