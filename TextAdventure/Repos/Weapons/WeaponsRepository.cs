@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Repos.Weapons.Models;
 
 namespace TextAdventure.Repos.Weapons;
@@ -18,9 +17,9 @@ public class WeaponsRepository : IWeaponsRepository
         return JsonConvert.DeserializeObject<List<WeaponBaseEntity>>(json);
     }
 
-    public async Task<T> GetWeapon<T>(Func<T, bool> predicate, WeaponType type)
+    public async Task<T> GetWeapon<T>(Func<T, bool> predicate)
     {
-        var weapons = await GetWeapons<T>(type);
+        var weapons = await GetWeapons<T>();
         return weapons.FirstOrDefault(predicate);
     }
 
@@ -33,9 +32,9 @@ public class WeaponsRepository : IWeaponsRepository
         return true;
     }
 
-    public async Task<List<T>> GetWeapons<T>(WeaponType type)
+    public async Task<List<T>> GetWeapons<T>()
     {
-        var weapons = await GetAllWeapons<T>(type);
+        var weapons = await GetAllWeapons<T>();
         return weapons.OfType<T>().ToList();
     }
 
@@ -67,7 +66,7 @@ public class WeaponsRepository : IWeaponsRepository
         return true;
     }
 
-    private async Task<List<T>> GetAllWeapons<T>(WeaponType type)
+    private async Task<List<T>> GetAllWeapons<T>()
     {
         var json = await File.ReadAllTextAsync(_filePath);
         return JsonConvert.DeserializeObject<List<T>>(json);

@@ -36,7 +36,7 @@ public class WeaponsServiceTests
             .With(x => x.WeaponType, WeaponType.Wand)
             .CreateMany<WandEntity>()
             .ToList();
-        _mockedRepo.GetWeapons<WandEntity>(Arg.Any<WeaponType>()).Returns(wands);
+        _mockedRepo.GetWeapons<WandEntity>().Returns(wands);
         var sut = GetWandSut();
         // Act
         var result = await sut.GetWeapons();
@@ -57,7 +57,7 @@ public class WeaponsServiceTests
         result.OfType<Wand>().Count().Should().Be(2);
     }
 
-    [Fact(Skip = "Only run this test manually.")]
+    [Fact]
     public async Task GetWeapon_WithRealRepo_ShouldReturnCorrectItem()
     {
         // Arrange

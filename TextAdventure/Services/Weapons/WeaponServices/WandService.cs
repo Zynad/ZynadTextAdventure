@@ -14,13 +14,13 @@ public class WandService : IWandService
     }
     public async Task<List<Wand>> GetWeapons()
     {
-        var entities = await _repo.GetWeapons<WandEntity>(WeaponType.Wand);
+        var entities = await _repo.GetWeapons<WandEntity>();
         var sortedEntities = entities.Where(x => x.WeaponType == WeaponType.Wand).ToList();
         return sortedEntities.Select(e => (Wand)e).ToList();
     }
-    public async Task<Wand> GetWeapon(Func<Wand, bool> predicate)
+    public async Task<Wand> GetWeapon(Func<WandEntity, bool> predicate)
     {
-        var entity = await _repo.GetWeapon(predicate, WeaponType.Wand);
+        var entity = await _repo.GetWeapon(predicate);
         return entity;
     }
 

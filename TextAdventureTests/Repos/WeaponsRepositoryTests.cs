@@ -24,7 +24,7 @@ public class WeaponsRepositoryTests
         var sut = GetSut();
         var wandName = "Beginner Wand";
         // Act
-        var result = await sut.GetWeapon<WandEntity>(w => w.Name == wandName, WeaponType.Wand);
+        var result = await sut.GetWeapon<WandEntity>(w => w.Name == wandName);
         // Assert
         result.Should().NotBeNull();
         result.Name.Should().Be(wandName);
@@ -41,7 +41,7 @@ public class WeaponsRepositoryTests
             .Create();
         // Act
         await sut.AddWeapon(wand);
-        var result = await sut.GetWeapon<WandEntity>(x => x.Id == wand.Id, WeaponType.Wand);
+        var result = await sut.GetWeapon<WandEntity>(x => x.Id == wand.Id);
         // Assert
         result.Should().NotBeNull();
     }
@@ -53,7 +53,7 @@ public class WeaponsRepositoryTests
         var sut = GetSut();
         
         // Act
-        var result = await sut.GetWeapons<WandEntity>(WeaponType.Wand);
+        var result = await sut.GetWeapons<WandEntity>();
         
         // Assert
         result.Should().OnlyContain(w => w.WeaponType == WeaponType.Wand);

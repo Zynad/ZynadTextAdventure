@@ -1,10 +1,13 @@
 ﻿using TextAdventure.Items.Equipment.Weapons;
+using TextAdventure.Repos.Weapons.Models;
 
-public interface IWeaponService<T> where T : WeaponBase
+public interface IWeaponService<TModel, TEntity>
+    where TModel : WeaponBase
+    where TEntity : WeaponBaseEntity
 {
-    Task<List<T>> GetWeapons();
-    Task<T> GetWeapon(Func<T, bool> predicate);
-    Task<bool> AddWeapon(T weapon);
-    Task<bool> UpdateWeapon(T weapon);
+    Task<List<TModel>> GetWeapons();
+    Task<TModel> GetWeapon(Func<TEntity, bool> predicate);
+    Task<bool> AddWeapon(TModel weapon);
+    Task<bool> UpdateWeapon(TModel weapon);
     Task<bool> DeleteWeapon(Guid id);
 }
