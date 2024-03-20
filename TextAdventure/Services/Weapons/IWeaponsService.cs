@@ -1,9 +1,7 @@
-﻿using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
-using TextAdventure.Repos.Weapons.Models;
+﻿using TextAdventure.Items.Equipment.Weapons;
 
-namespace TextAdventure.Services.Weapons;
-public interface IWeaponsService
+public interface IWeaponService<T> where T : WeaponBase
 {
-    Task<Wand> GetWand(Func<WandEntity, bool> predicate);
-    Task<List<Wand>> GetWands();
+    Task<List<T>> GetWeapons();
+    Task<T> GetWeapon(Func<T, bool> predicate);
 }

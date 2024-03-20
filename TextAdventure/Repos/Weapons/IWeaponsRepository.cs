@@ -1,9 +1,10 @@
-﻿using TextAdventure.Repos.Weapons.Models;
+﻿using TextAdventure.Items.Equipment.Weapons;
 
 namespace TextAdventure.Repos.Weapons;
-public interface IWeaponsRepository
+public interface IWeaponRepository<T> where T : WeaponBase
 {
-    Task<List<WandEntity>> GetWands();
-    Task AddWand(WandEntity wand);
-    Task<WandEntity> GetWand(Func<WandEntity, bool> predicate);
+    Task<List<T>> GetWeapons();
+    Task<T> GetWeapon(Func<T, bool> predicate);
+    Task AddWeapon(T weapon);
 }
+

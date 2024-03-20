@@ -1,26 +1,19 @@
-﻿using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
+﻿using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Repos.Weapons;
-using TextAdventure.Repos.Weapons.Models;
 
-namespace TextAdventure.Services.Weapons;
-public class WeaponsService : IWeaponsService
+public class WeaponService<T> : IWeaponService<T> where T : WeaponBase
 {
-    private readonly IWeaponsRepository _repo;
-
-    public WeaponsService(IWeaponsRepository repo)
+    private readonly IWeaponRepository<T> _repo;
+    public WeaponService(IWeaponRepository<T> repo)
     {
         _repo = repo;
     }
-
-    public async Task<List<Wand>> GetWands()
+    public async Task<List<T>> GetWeapons()
     {
-        var enteties = await _repo.GetWands();
-        return enteties.Select(entity => (Wand)entity).ToList();
+        return await _repo.GetWeapons();
     }
-
-    public async Task<Wand> GetWand(Func<WandEntity, bool> predicate)
+    public async Task<T> GetWeapon(Func<T, bool> predicate)
     {
-        var wand = await _repo.GetWand(predicate);
-        return wand;
+        return await _repo.GetWeapon(predicate);
     }
 }

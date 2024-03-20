@@ -1,32 +1,30 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using TextAdventure.Repos.Weapons.Models;
+using TextAdventure.Items.Equipment.Weapons;
+using TextAdventure.Repos.Weapons;
 
-namespace TextAdventure.Repos.Weapons;
-public class WeaponsRepository : IWeaponsRepository
+public class WeaponRepository<T> : IWeaponRepository<T> where T : WeaponBase
 {
     private readonly string _filePath;
-    public WeaponsRepository(IConfiguration configuration)
+    public WeaponRepository(IConfiguration configuration)
     {
         _filePath = configuration["FilePaths:WeaponsDB"];
     }
-    public async Task<List<WandEntity>> GetWands()
+    public async Task<List<T>> GetWeapons()
     {
         var json = File.ReadAllText(_filePath);
-        return JsonConvert.DeserializeObject<List<WandEntity>>(json);
+        return JsonConvert.DeserializeObject<List<T>>(json);
     }
-
-    public async Task<WandEntity> GetWand(Func<WandEntity, bool> predicate)
+    public async Task<T> GetWeapon(Func<T, bool> predicate)
     {
-        var wands = await GetWands();
-        return wands.FirstOrDefault(predicate);
+        var weapons = await GetWeapons();
+        return weapons.FirstOrDefault(predicate);
     }
-    
-    public async Task AddWand(WandEntity wand)
+    public async Task AddWeapon(T weapon)
     {
-        var wands = await GetWands();
-        wands.Add(wand);
-        var json = JsonConvert.SerializeObject(wands);
+        var weapons = await GetWeapons();
+        weapons.Add(weapon);
+        var json = JsonConvert.SerializeObject(weapons);
         File.WriteAllText(_filePath, json);
     }
 }

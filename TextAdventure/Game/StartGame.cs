@@ -1,16 +1,15 @@
 ﻿using TextAdventure.Characters;
 using TextAdventure.Classes;
 using TextAdventure.Game.Helpers;
+using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.PlayerSettings;
-using TextAdventure.Services.Weapons;
 
 namespace TextAdventure.Game;
 public class StartGame : IStartGame
 {
     private Player _player = new Player();
-    private readonly IWeaponsService _weaponsService;
-
-    public StartGame(IWeaponsService weaponsService)
+    private readonly IWeaponService<WeaponBase> _weaponsService;
+    public StartGame(IWeaponService<WeaponBase> weaponsService)
     {
         _weaponsService = weaponsService ?? throw new ArgumentNullException(nameof(weaponsService));
     }

@@ -3,13 +3,12 @@ using TextAdventure.Items.Equipment.Armor;
 using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 using TextAdventure.PlayerSettings;
-using TextAdventure.Services.Weapons;
 
 namespace TextAdventure.Classes;
 public class Mage : Vocation
 {
-    private readonly IWeaponsService _weaponsService;
-    public Mage(IWeaponsService weaponsService)
+    private readonly IWeaponService<WeaponBase> _weaponsService;
+    public Mage(IWeaponService<WeaponBase> weaponsService)
     {
         _weaponsService = weaponsService ?? throw new ArgumentNullException(nameof(weaponsService));
         VocationName = "Mage";
@@ -48,9 +47,10 @@ public class Mage : Vocation
     {
         return weaponChoice switch
         {
-            "staff" or "1" => new Staff().BeginnerStaff(),
-            "wand" or "2" => await _weaponsService.GetWand(x => x.Name == "Beginner Wand"),
+            "staff" or "1" => await _weaponsService.GetWeapon(x => x.Name == "Beginner Staff" && x is Staff),
+            "wand" or "2" => await _weaponsService.GetWeapon(x => x.Name == "Beginner Wand" && x is Wand),
             _ => null
         };
     }
+
 }
