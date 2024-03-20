@@ -2,12 +2,20 @@
 using TextAdventure.Classes;
 using TextAdventure.Game.Helpers;
 using TextAdventure.PlayerSettings;
+using TextAdventure.Services.Weapons;
 
 namespace TextAdventure.Game;
-public class StartGame
+public class StartGame : IStartGame
 {
     private Player _player = new Player();
-    public Player Start()
+    private readonly IWeaponsService _weaponsService;
+
+    public StartGame(IWeaponsService weaponsService)
+    {
+        _weaponsService = weaponsService ?? throw new ArgumentNullException(nameof(weaponsService));
+    }
+
+    public async Task<Player> Start()
     {
         SetPersonalInfo();
         ChooseVocation();
@@ -32,7 +40,7 @@ public class StartGame
             var vocation = choice switch
             {
                 "knight" or "1" => new Knight(),
-                "mage" or "2" => new Mage(),
+                "mage" or "2" => new Mage(_weaponsService),
                 _ => _player.Vocation
             };
             Console.WriteLine($"So you choose to be a {vocation.VocationName}");
@@ -57,7 +65,5 @@ public class StartGame
     private void SetStartProperties()
     {
         _player.Vocation.SetBaseValues(_player);
-        _player.Vocation.ChooseWeapon(_player);
-        _player.Vocation.ChooseEquipment(_player);
     }
 }

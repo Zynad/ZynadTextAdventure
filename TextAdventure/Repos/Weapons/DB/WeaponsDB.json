@@ -1,0 +1,40 @@
+[
+  {
+    "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "Name": "Beginner Staff",
+    "LevelRequirement": 1,
+    "Rarity": "Uncommon",
+    "Value": 5,
+    "Weight": 5,
+    "Durability": 30,
+    "Material": "Wood",
+    "WeaponType": "Staff",
+    "ArmorValue": 3,
+    "MeleeAttackValue": 7,
+    "RangedAttackValue": 0,
+    "MagicAttackValue": 40,
+    "IsRanged": false,
+    "TwoHanded": true,
+    "Range": 0,
+    "MagicPower": 0
+  },
+  {
+    "Id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+    "Name": "Beginner Wand",
+    "LevelRequirement": 1,
+    "Rarity": "Uncommon",
+    "Value": 5,
+    "Weight": 1,
+    "Durability": 40,
+    "Material": "Wood",
+    "WeaponType": "Wand",
+    "ArmorValue": 0,
+    "MeleeAttackValue": 2,
+    "RangedAttackValue": 8,
+    "MagicAttackValue": 0,
+    "IsRanged": true,
+    "TwoHanded": false,
+    "Range": 30,
+    "MagicPower": 30
+  }
+]

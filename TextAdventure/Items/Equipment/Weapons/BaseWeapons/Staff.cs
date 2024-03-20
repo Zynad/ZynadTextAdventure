@@ -21,6 +21,7 @@ public class Staff : WeaponBase
         Value = 5;
         Weight = 5;
         TwoHanded = true;
+        MagicAttackValue = 40;
         return this;
     }
 }

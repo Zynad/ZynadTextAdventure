@@ -17,8 +17,10 @@ public class Knight : Vocation
         var allowedArmor = new List<ArmorMaterial>();
         var allowedWeapon = new List<WeaponType>();
         player.SetBaseValues(60, 20, 20, 10, 60, 30, 20, 5, allowedArmor, allowedWeapon);
+        ChooseWeapon(player);
+        ChooseEquipment(player);
     }
-    public override void ChooseWeapon(Player player)
+    private void ChooseWeapon(Player player)
     {
         WeaponBase startingWeapon = null;
         while (startingWeapon == null)
@@ -34,7 +36,7 @@ public class Knight : Vocation
         Console.WriteLine($"You have chosen a {player.MainHand.Name} as your starting weapon.");
     }
 
-    public override void ChooseEquipment(Player player)
+    private void ChooseEquipment(Player player)
     {
         throw new NotImplementedException();
     }

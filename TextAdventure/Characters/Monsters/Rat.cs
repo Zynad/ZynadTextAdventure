@@ -10,5 +10,6 @@ public class Rat : Creature
         ArmorValue = armorValue;
         MeleePhysicalAttackDamage = attackDamage;
         DefenseValue = defenseValue;
+        WorthXp = 5;
     }
 }

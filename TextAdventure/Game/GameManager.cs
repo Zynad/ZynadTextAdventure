@@ -1,10 +1,16 @@
 ﻿namespace TextAdventure.Game;
-public class GameManager
+public class GameManager : IGameManager
 {
-    private readonly StartGame _startGame = new StartGame();
+    private readonly IStartGame _startGame;
 
-    public void StartGame()
+    public GameManager(IStartGame startGame)
+    {
+        _startGame = startGame;
+    }
+
+    public Task StartGame()
     {
         _startGame.Start();
+        return Task.CompletedTask;
     }
 }

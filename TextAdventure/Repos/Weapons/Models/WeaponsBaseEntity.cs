@@ -1,5 +1,8 @@
-﻿namespace TextAdventure.Items.Equipment.Weapons;
-public class WeaponBase : EquipmentBase
+﻿using TextAdventure.Items.Equipment.Weapons;
+using TextAdventure.Repos.Equipment.Models;
+
+namespace TextAdventure.Repos.Weapons.Models;
+public class WeaponsBaseEntity : EquipmentBaseEntity
 {
     public WeaponMaterial Material { get; set; }
     public WeaponType WeaponType { get; set; }

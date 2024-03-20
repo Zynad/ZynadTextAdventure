@@ -27,13 +27,14 @@ public abstract class Creature
     public List<WeaponType> CanCarryWeaponType { get; set; }
     public List<ItemsBase> Inventory { get; set; }
     public int MaxCarryWeigth { get; set; }
-    private int xpValue;
-    public int XpValue
+    public int WorthXp { get; set; }
+    private int xp;
+    public int Xp
     {
-        get => xpValue;
+        get => xp;
         set
         {
-            xpValue = value;
+            xp = value;
             CheckLevel();
         }
     }
@@ -41,7 +42,7 @@ public abstract class Creature
     private void CheckLevel()
     {
         int oldLevel = Level;
-        Level = XpValue switch
+        Level = Xp switch
         {
             < 100 => 1,
             >= 100 and < 300 => 2,
@@ -57,7 +58,7 @@ public abstract class Creature
     }
     public void AddXp(int xp)
     {
-        XpValue += xp;
+        Xp += xp;
     }
 
     protected virtual void LevelUp()
