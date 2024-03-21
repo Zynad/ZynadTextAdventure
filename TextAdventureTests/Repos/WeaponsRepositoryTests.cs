@@ -13,7 +13,7 @@ public class WeaponsRepositoryTests
     public WeaponsRepository GetSut()
     {
         var configuration = Substitute.For<IConfiguration>();
-        configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\OneDrive\\Kul Kod\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
+        configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\Desktop\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
         return new WeaponsRepository(configuration);
     }
 

@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Runtime.CompilerServices;
-using AutoFixture;
+﻿using AutoFixture;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
