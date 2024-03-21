@@ -24,12 +24,18 @@ public class WeaponsRepositoryTests
     {
         // Arrange
         var sut = GetSut();
+        var wand = _autoFixture.Build<WandEntity>()
+            .With(x => x.Name, "Beginner Wand")
+            .With(x => x.WeaponType, WeaponTypeEntity.Wand)
+            .Create();
+        await sut.AddAsync(wand);
         var wandName = "Beginner Wand";
         // Act
         var result = await sut.GetAsync(w => w.Name == wandName);
         // Assert
         result.Should().NotBeNull();
         result.Name.Should().Be(wandName);
+        result.WeaponType.Should().Be(WeaponTypeEntity.Wand);
     }
 
     [Fact]

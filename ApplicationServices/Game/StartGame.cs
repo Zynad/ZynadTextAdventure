@@ -3,6 +3,9 @@ using ApplicationServices.Classes;
 using ApplicationServices.Game.Helpers;
 using ApplicationServices.PlayerSettings;
 using ApplicationServices.Services.Weapons.WeaponServices;
+using Domain.Entities.Weapons.Models;
+using Domain.Enums;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationServices.Game;
 public class StartGame : IStartGame
@@ -42,7 +45,7 @@ public class StartGame : IStartGame
             var vocation = choice switch
             {
                 "knight" or "1" => new Knight(),
-                "mage" or "2" => new Mage(_wandService),
+                "mage" or "2" => _serviceProvider.GetRequiredService<Mage>(),
                 _ => _player.Vocation
             };
             Console.WriteLine($"So you choose to be a {vocation.VocationName}");

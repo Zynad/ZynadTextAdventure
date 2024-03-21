@@ -79,7 +79,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Axe");
+                    b.ToTable("Axe", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Weapons.Models.StaffEntity", b =>
@@ -139,7 +139,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Staff");
+                    b.ToTable("Staff", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Weapons.Models.SwordEntity", b =>
@@ -199,7 +199,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sword");
+                    b.ToTable("Sword", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Weapons.Models.WandEntity", b =>
@@ -259,7 +259,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Wand");
+                    b.ToTable("Wand", (string)null);
                 });
 #pragma warning restore 612, 618
         }

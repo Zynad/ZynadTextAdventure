@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ApplicationServices.Classes;
 using ApplicationServices.Game;
+using ApplicationServices.Game.Helpers;
 using ApplicationServices.Services.Weapons.WeaponServices;
 using Domain.Contexts;
 using Domain.Repos.Weapons;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace TextAdventure
 {
@@ -33,13 +36,16 @@ namespace TextAdventure
             services.AddSingleton<IConfiguration>(configuration);
             // Add DbContext
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Database1")));
+                options.UseSqlServer(configuration.GetConnectionString("Database1"))
+                    .EnableDetailedErrors());
             // Add your services here
             services.AddSingleton<IGameManager, GameManager>();
             services.AddSingleton<IStartGame, StartGame>();
             services.AddSingleton<IWandRepository, WandRepository>();
-            //services.AddScoped<Mage>();
+            services.AddSingleton<IStaffRepository, StaffRepository>();
             services.AddSingleton<IWandService, WandService>();
+            services.AddScoped<Mage>();
+            services.AddTransient<DBHandler>();
         }
     }
 }
