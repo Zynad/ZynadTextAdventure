@@ -1,12 +1,10 @@
-﻿using ApplicationServices.Items.Equipment.Weapons;
-using AutoFixture;
+﻿using AutoFixture;
 using Domain.Contexts;
 using Domain.Entities.Weapons.Models;
 using Domain.Enums;
 using Domain.Repos.Weapons;
 using FluentAssertions;
-using Microsoft.Extensions.Configuration;
-using NSubstitute;
+using Microsoft.EntityFrameworkCore;
 
 namespace TextAdventureTests.Repos;
 public class WeaponsRepositoryTests
@@ -14,9 +12,10 @@ public class WeaponsRepositoryTests
     private readonly Fixture _autoFixture = new Fixture();
     public WandRepository GetSut()
     {
-        var configuration = Substitute.For<IConfiguration>();
-        configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\Desktop\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
-        var context = Substitute.For<DataContext>();
+        var options = new DbContextOptionsBuilder<DataContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase") // Use in-memory database for testing
+            .Options;
+        var context = new DataContext(options); // Create a new DataContext with the options
         return new WandRepository(context);
     }
 
@@ -42,6 +41,38 @@ public class WeaponsRepositoryTests
             .Build<WandEntity>()
             .With(x => x.WeaponType, WeaponTypeEntity.Wand)
             .Create();
+        // Act
+        await sut.AddAsync(wand);
+        var result = await sut.GetAsync(x => x.Id == wand.Id);
+        // Assert
+        result.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task AddWeapon_TempTest()
+    {
+        // Arrange
+        var sut = GetSut();
+        var wand = new WandEntity
+        {
+            Id = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa7"),
+            Name = "Beginner Wand",
+            LevelRequirement = 1,
+            Rarity = RarityEntity.Common,
+            Value = 5,
+            Weight = 1,
+            Durability = 40,
+            Material = WeaponMaterialEntity.Wood,
+            WeaponType = WeaponTypeEntity.Wand,
+            ArmorValue = 0,
+            MeleeAttackValue = 2,
+            RangedAttackValue = 8,
+            MagicAttackValue = 0,
+            IsRanged = true,
+            TwoHanded = false,
+            Range = 30,
+            MagicPower = 30
+        };
         // Act
         await sut.AddAsync(wand);
         var result = await sut.GetAsync(x => x.Id == wand.Id);
