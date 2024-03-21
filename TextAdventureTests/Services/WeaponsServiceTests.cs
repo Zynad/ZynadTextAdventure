@@ -4,22 +4,22 @@ using Microsoft.Extensions.Configuration;
 using NSubstitute;
 using TextAdventure.Items.Equipment.Weapons;
 using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
-using TextAdventure.Repos.Weapons;
 using TextAdventure.Repos.Weapons.Models;
+using TextAdventure.Repos.Weapons.SpecificRepo;
 using TextAdventure.Services.Weapons.WeaponServices;
 
 namespace TextAdventureTests.Services;
 public class WeaponsServiceTests
 {
-    private readonly IWeaponsRepository _mockedRepo = Substitute.For<IWeaponsRepository>();
+    private readonly IWandRepository _mockedRepo = Substitute.For<IWandRepository>();
     private readonly Fixture _autoFixture = new Fixture();
     public WandService GetWandSut(bool useMockedRepo = true)
     {
         if (!useMockedRepo)
         {
             var configuration = Substitute.For<IConfiguration>();
-            configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\OneDrive\\Kul Kod\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
-            var repo = new WeaponsRepository(configuration);
+            configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\Desktop\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
+            var repo = new WandRepository(configuration);
             return new WandService(repo);
         }
         return new WandService(_mockedRepo);
@@ -34,7 +34,7 @@ public class WeaponsServiceTests
             .With(x => x.WeaponType, WeaponType.Wand)
             .CreateMany<WandEntity>()
             .ToList();
-        _mockedRepo.GetWeapons<WandEntity>().Returns(wands);
+        _mockedRepo.GetWeapons().Returns(wands);
         var sut = GetWandSut();
         // Act
         var result = await sut.GetWeapons();

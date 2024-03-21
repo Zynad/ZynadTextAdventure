@@ -2,19 +2,20 @@
 using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
 using TextAdventure.Repos.Weapons;
 using TextAdventure.Repos.Weapons.Models;
+using TextAdventure.Repos.Weapons.SpecificRepo;
 
 namespace TextAdventure.Services.Weapons.WeaponServices;
 
 public class WandService : IWandService
 {
-    private readonly IWeaponsRepository _repo;
-    public WandService(IWeaponsRepository repo)
+    private readonly IWandRepository _repo;
+    public WandService(IWandRepository repo)
     {
         _repo = repo;
     }
     public async Task<List<Wand>> GetWeapons()
     {
-        var entities = await _repo.GetWeapons<WandEntity>();
+        var entities = await _repo.GetWeapons();
         var sortedEntities = entities.Where(x => x.WeaponType == WeaponType.Wand).ToList();
         return sortedEntities.Select(e => (Wand)e).ToList();
     }

@@ -45,17 +45,4 @@ public class WeaponsRepositoryTests
         // Assert
         result.Should().NotBeNull();
     }
-
-    [Fact]
-    public async Task GetWeapons_ShouldOnlyReturnListWithCorrectWands()
-    {
-        // Arrange
-        var sut = GetSut();
-        
-        // Act
-        var result = await sut.GetWeapons<WandEntity>();
-        
-        // Assert
-        result.Should().OnlyContain(w => w.WeaponType == WeaponType.Wand);
-    }
 }
