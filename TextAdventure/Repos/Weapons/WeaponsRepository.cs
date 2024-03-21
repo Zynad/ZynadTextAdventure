@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 using TextAdventure.Repos.Weapons.Models;
-
 namespace TextAdventure.Repos.Weapons;
 
 public class WeaponsRepository : IWeaponsRepository
@@ -14,30 +13,26 @@ public class WeaponsRepository : IWeaponsRepository
     public async Task<List<WeaponBaseEntity>> GetAllWeapons()
     {
         var json = await File.ReadAllTextAsync(_filePath);
-        return JsonConvert.DeserializeObject<List<WeaponBaseEntity>>(json);
+        return JsonSerializer.Deserialize<List<WeaponBaseEntity>>(json);
     }
-
     public async Task<T> GetWeapon<T>(Func<T, bool> predicate)
     {
         var weapons = await GetWeapons<T>();
         return weapons.FirstOrDefault(predicate);
     }
-
     public async Task<bool> AddWeapon(WeaponBaseEntity weapon)
     {
         var weapons = await GetAllWeapons();
         weapons.Add(weapon);
-        var json = JsonConvert.SerializeObject(weapons);
-        File.WriteAllText(_filePath, json);
+        var json = JsonSerializer.Serialize(weapons);
+        await File.WriteAllTextAsync(_filePath, json);
         return true;
     }
-
     public async Task<List<T>> GetWeapons<T>()
     {
         var weapons = await GetAllWeapons<T>();
         return weapons.OfType<T>().ToList();
     }
-
     public async Task<bool> UpdateWeapon(WeaponBaseEntity weapon)
     {
         var weapons = await GetAllWeapons();
@@ -47,11 +42,10 @@ public class WeaponsRepository : IWeaponsRepository
             return false; // Weapon not found
         }
         weapons[index] = weapon; // Update the weapon
-        var json = JsonConvert.SerializeObject(weapons);
+        var json = JsonSerializer.Serialize(weapons);
         await File.WriteAllTextAsync(_filePath, json);
         return true;
     }
-
     public async Task<bool> DeleteWeapon(Guid id)
     {
         var weapons = await GetAllWeapons();
@@ -61,15 +55,14 @@ public class WeaponsRepository : IWeaponsRepository
             return false; // Weapon not found
         }
         weapons.RemoveAt(index); // Delete the weapon
-        var json = JsonConvert.SerializeObject(weapons);
+        var json = JsonSerializer.Serialize(weapons);
         await File.WriteAllTextAsync(_filePath, json);
         return true;
     }
-
     private async Task<List<T>> GetAllWeapons<T>()
     {
         var json = await File.ReadAllTextAsync(_filePath);
-        var result = JsonConvert.DeserializeObject<List<T>>(json);
+        var result = JsonSerializer.Deserialize<List<T>>(json);
         return result;
     }
 }
