@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using TextAdventure.Classes;
-using TextAdventure.Game;
-using TextAdventure.Repos.Weapons;
-using TextAdventure.Services.Weapons.WeaponServices;
+using ApplicationServices.Game;
+using ApplicationServices.Services.Weapons.WeaponServices;
 
 namespace TextAdventure
 {
@@ -31,11 +29,10 @@ namespace TextAdventure
             IConfiguration configuration = builder.Build();
             services.AddSingleton<IConfiguration>(configuration);
             // Add your services here
-            services.AddSingleton<IWandService, WandService>();
-            services.AddSingleton<IWeaponsRepository, WeaponsRepository>();
             services.AddSingleton<IGameManager, GameManager>();
             services.AddSingleton<IStartGame, StartGame>();
-            services.AddScoped<Mage>();
+            //services.AddScoped<Mage>();
+            services.AddTransient<IWandService, WandService>();
         }
     }
 }

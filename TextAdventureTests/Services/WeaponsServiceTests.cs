@@ -1,12 +1,16 @@
 ﻿using AutoFixture;
+using Domain.Contexts;
+using Domain.Repos.Weapons;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
-using TextAdventure.Items.Equipment.Weapons;
-using TextAdventure.Items.Equipment.Weapons.BaseWeapons;
-using TextAdventure.Repos.Weapons.Models;
-using TextAdventure.Repos.Weapons.SpecificRepo;
-using TextAdventure.Services.Weapons.WeaponServices;
+using System.Linq.Expressions;
+using ApplicationServices.Items.Equipment.Weapons;
+using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
+using ApplicationServices.Services.Weapons.WeaponServices;
+using Domain.Entities.Weapons.Models;
+using Domain.Enums;
 
 namespace TextAdventureTests.Services;
 public class WeaponsServiceTests
@@ -19,7 +23,9 @@ public class WeaponsServiceTests
         {
             var configuration = Substitute.For<IConfiguration>();
             configuration["FilePaths:WeaponsDB"].Returns("C:\\Users\\Zynad\\Desktop\\Adventure\\TextAdventure\\TextAdventure\\Repos\\Weapons\\DB\\WeaponsDBTests.json");
-            var repo = new WandRepository(configuration);
+            var options = new DbContextOptions<DataContext>();
+            var context = new DataContext(options);
+            var repo = new WandRepository(context);
             return new WandService(repo);
         }
         return new WandService(_mockedRepo);
@@ -31,10 +37,10 @@ public class WeaponsServiceTests
         // Arrange
         var wands = _autoFixture
             .Build<WandEntity>()
-            .With(x => x.WeaponType, WeaponType.Wand)
+            .With(x => x.WeaponType, WeaponTypeEntity.Wand)
             .CreateMany<WandEntity>()
             .ToList();
-        _mockedRepo.GetWeapons().Returns(wands);
+        _mockedRepo.GetAsync(Arg.Any<Expression<Func<WandEntity, bool>>>()).Returns(Task.FromResult(wands.First()));
         var sut = GetWandSut();
         // Act
         var result = await sut.GetWeapons();
