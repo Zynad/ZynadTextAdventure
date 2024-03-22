@@ -8,9 +8,8 @@ public class GameManager : IGameManager
         _startGame = startGame;
     }
 
-    public Task StartGame()
+    public async Task StartGame()
     {
-        _startGame.Start();
-        return Task.CompletedTask;
+        await _startGame.Start();
     }
 }
