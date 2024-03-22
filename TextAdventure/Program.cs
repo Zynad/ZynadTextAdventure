@@ -13,7 +13,7 @@ namespace TextAdventure;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         // Create a new service collection
         var serviceCollection = new ServiceCollection();
@@ -23,7 +23,7 @@ class Program
         var serviceProvider = serviceCollection.BuildServiceProvider();
         // Resolve the dependency for your game manager and start the game
         var game = serviceProvider.GetRequiredService<IGameManager>();
-        game.StartGame();
+        await game.StartGame();
     }
     private static void ConfigureServices(IServiceCollection services)
     {
