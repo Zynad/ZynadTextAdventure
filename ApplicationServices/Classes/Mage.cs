@@ -1,7 +1,6 @@
 ﻿using ApplicationServices.Game.Helpers;
 using ApplicationServices.Items.Equipment.Armor;
 using ApplicationServices.Items.Equipment.Weapons;
-using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
 using ApplicationServices.PlayerSettings;
 using ApplicationServices.Services.Weapons.WeaponServices;
 
@@ -9,9 +8,11 @@ namespace ApplicationServices.Classes;
 public class Mage : Vocation
 {
     private readonly IWandService _wandService;
-    public Mage(IWandService wandService)
+    private readonly IStaffService _staffService;
+    public Mage(IWandService wandService, IStaffService staffService)
     {
         _wandService = wandService ?? throw new ArgumentNullException(nameof(wandService));
+        _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService));
         VocationName = "Mage";
     }
 
@@ -21,7 +22,7 @@ public class Mage : Vocation
         var allowedWeapon = new List<WeaponType>();
         player.SetBaseValues(30, 10, 5, 50, 30, 15, 10, 30, allowedArmor, allowedWeapon);
         await ChooseWeapon(player);
-        ChooseEquipment(player);
+        await ChooseEquipment(player);
     }
     private async Task ChooseWeapon(Player player)
     {
@@ -39,16 +40,16 @@ public class Mage : Vocation
         Console.WriteLine($"You have chosen a {player.MainHand.Name} as your starting weapon.");
     }
 
-    private void ChooseEquipment(Player player)
+    private async Task ChooseEquipment(Player player)
     {
         throw new NotImplementedException();
     }
 
-    private async Task<WeaponBase> CreateWeapon(string weaponChoice)
+    private async Task<WeaponBase?> CreateWeapon(string weaponChoice)
     {
         return weaponChoice switch
         {
-            "staff" or "1" => await _wandService.GetWeapon(x => x.Name == "Beginner Staff" && x is Staff),
+            "staff" or "1" => await _staffService.GetWeapon(x => x.Name == "Beginner Staff"),
             "wand" or "2" => await _wandService.GetWeapon(x => x.Name == "Beginner Wand"),
             _ => null
         };

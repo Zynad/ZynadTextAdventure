@@ -2,32 +2,27 @@
 using ApplicationServices.Classes;
 using ApplicationServices.Game.Helpers;
 using ApplicationServices.PlayerSettings;
-using ApplicationServices.Services.Weapons.WeaponServices;
-using Domain.Entities.Weapons.Models;
-using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationServices.Game;
 public class StartGame : IStartGame
 {
-    private Player _player = new Player();
+    private Player _player = new();
     private readonly IServiceProvider _serviceProvider;
-    private readonly IWandService _wandService;
 
-    public StartGame(IServiceProvider serviceProvider, IWandService wandService)
+    public StartGame(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        _wandService = wandService;
     }
 
     public async Task<Player> Start()
     {
-        SetPersonalInfo();
-        ChooseVocation();
+        await SetPersonalInfo();
+        await ChooseVocation();
         return _player;
     }
 
-    private void SetPersonalInfo()
+    private async Task SetPersonalInfo()
     {
         Console.WriteLine("Hello and Welcome to Zynadria");
         _player.Gender = ParseHelper.AskForEnum<Gender>("Are you Male or Female? : ");
@@ -37,7 +32,7 @@ public class StartGame : IStartGame
         _player.Age = ParseHelper.AskForInt($"Now tell me {_player.FirstName}, how old are you? ");
     }
 
-    private void ChooseVocation()
+    private async Task ChooseVocation()
     {
         while (true)
         {
@@ -55,7 +50,7 @@ public class StartGame : IStartGame
                 case "yes" or "1":
                     Console.WriteLine("Great choice!");
                     _player.Vocation = vocation;
-                    SetStartProperties();
+                    await SetStartProperties();
                     return;
                 case "no" or "2":
                     Console.WriteLine("Let's choose again!");
