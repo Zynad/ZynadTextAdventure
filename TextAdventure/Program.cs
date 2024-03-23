@@ -43,6 +43,7 @@ class Program
         services.AddSingleton<IWandRepository, WandRepository>();
         services.AddSingleton<IStaffRepository, StaffRepository>();
         services.AddSingleton<IWandService, WandService>();
+        services.AddSingleton<IStaffService, StaffService>();
         services.AddScoped<Mage>();
         services.AddTransient<DBHandler>();
     }
