@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ApplicationServices.Admin;
+using ApplicationServices.Items.Equipment.Weapons.Factories;
 
 namespace TextAdventure;
 
@@ -39,12 +41,14 @@ class Program
                 .EnableDetailedErrors());
         // Add your services here
         services.AddSingleton<IGameManager, GameManager>();
+        services.AddSingleton<IAdminManager, AdminManager>();
+        services.AddSingleton<IDbHandler, DbHandler>();
         services.AddSingleton<IStartGame, StartGame>();
         services.AddSingleton<IWandRepository, WandRepository>();
         services.AddSingleton<IStaffRepository, StaffRepository>();
         services.AddSingleton<IWandService, WandService>();
         services.AddSingleton<IStaffService, StaffService>();
         services.AddScoped<Mage>();
-        services.AddTransient<DBHandler>();
+        services.AddScoped<IWandFactory, WandFactory>();
     }
 }

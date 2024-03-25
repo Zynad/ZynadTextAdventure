@@ -1,16 +1,14 @@
-﻿using AutoFixture;
+﻿using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
+using ApplicationServices.Services.Weapons.WeaponServices;
+using AutoFixture;
 using Domain.Contexts;
+using Domain.Entities.Weapons.Models;
+using Domain.Enums;
 using Domain.Repos.Weapons;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
-using System.Linq.Expressions;
-using ApplicationServices.Items.Equipment.Weapons;
-using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
-using ApplicationServices.Services.Weapons.WeaponServices;
-using Domain.Entities.Weapons.Models;
-using Domain.Enums;
 
 namespace TextAdventureTests.Services;
 public class WeaponsServiceTests
@@ -40,7 +38,7 @@ public class WeaponsServiceTests
             .With(x => x.WeaponType, WeaponTypeEntity.Wand)
             .CreateMany<WandEntity>()
             .ToList();
-        _mockedRepo.GetAsync(Arg.Any<Expression<Func<WandEntity, bool>>>()).Returns(Task.FromResult(wands.First()));
+        _mockedRepo.GetAllAsync().Returns(wands);
         var sut = GetWandSut();
         // Act
         var result = await sut.GetWeapons();
@@ -61,7 +59,7 @@ public class WeaponsServiceTests
         result.OfType<Wand>().Count().Should().Be(2);
     }
 
-    [Fact]
+    [Fact(Skip = "Only run this test manually.")]
     public async Task GetWeapon_WithRealRepo_ShouldReturnCorrectItem()
     {
         // Arrange
