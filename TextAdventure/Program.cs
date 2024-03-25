@@ -50,5 +50,6 @@ class Program
         services.AddSingleton<IStaffService, StaffService>();
         services.AddScoped<Mage>();
         services.AddScoped<IWandFactory, WandFactory>();
+        services.AddScoped<IStaffFactory, StaffFactory>();
     }
 }

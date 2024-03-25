@@ -7,11 +7,13 @@ public class DbHandler : IDbHandler
     private readonly IWandRepository _wandRepository;
     private readonly IStaffRepository _staffRepository;
     private readonly IWandFactory _wandFactory;
-    public DbHandler(IWandRepository wandRepository, IStaffRepository staffRepository, IWandFactory wandFactory)
+    private readonly IStaffFactory _staffFactory;
+    public DbHandler(IWandRepository wandRepository, IStaffRepository staffRepository, IWandFactory wandFactory, IStaffFactory staffFactory)
     {
         _wandRepository = wandRepository;
         _staffRepository = staffRepository;
         _wandFactory = wandFactory;
+        _staffFactory = staffFactory;
     }
     public async Task AddWand(WandEntity entity = null)
     {
@@ -20,7 +22,7 @@ public class DbHandler : IDbHandler
             await _wandRepository.AddAsync(entity);
             return;
         }
-        var wand = await _wandFactory.CreateNewWand();
+        var wand = _wandFactory.CreateNewWand();
         await _wandRepository.AddAsync(wand);
     }
     public async Task UpdateWand(WandEntity entity)
@@ -44,7 +46,13 @@ public class DbHandler : IDbHandler
 
     public async Task AddStaff(StaffEntity entity = null)
     {
-        await _staffRepository.AddAsync(entity);
+        if (entity != null)
+        {
+            await _staffRepository.AddAsync(entity);
+            return;
+        }
+        var staff = _staffFactory.CreateNewStaff();
+        await _staffRepository.AddAsync(staff);
     }
     public async Task UpdateStaff(StaffEntity entity)
     {

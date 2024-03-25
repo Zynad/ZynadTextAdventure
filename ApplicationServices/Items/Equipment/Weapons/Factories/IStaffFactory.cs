@@ -2,8 +2,8 @@
 
 namespace ApplicationServices.Items.Equipment.Weapons.Factories;
 
-public interface IWandFactory
+public interface IStaffFactory
 {
-    WandEntity CreateNewWand();
+    StaffEntity CreateNewStaff();
 }
 
