@@ -27,4 +27,24 @@ public class Sword : WeaponBase
             MagicPower = entity.MagicPower
         };
     }
+
+    public static implicit operator SwordEntity(Sword model)
+    {
+        return new SwordEntity
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            Rarity = Mapper.MapToEntity(model.Rarity),
+            Material = Mapper.MapToEntity(model.Material),
+            WeaponType = Mapper.MapToEntity(model.WeaponType),
+            ArmorValue = model.ArmorValue,
+            MeleeAttackValue = model.MeleeAttackValue,
+            RangedAttackValue = model.RangedAttackValue,
+            MagicAttackValue = model.MagicAttackValue,
+            IsRanged = model.IsRanged,
+            TwoHanded = model.TwoHanded,
+            Range = model.Range,
+            MagicPower = model.MagicPower
+        };
+    }
 }

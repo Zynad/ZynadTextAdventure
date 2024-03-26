@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Items.Models;
+﻿using Domain.Entities.Armor.Models;
 using Domain.Entities.Weapons.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,4 +13,9 @@ public class DataContext : DbContext
     DbSet<StaffEntity> Staff { get; set; }
     DbSet<SwordEntity> Sword { get; set; }
     DbSet<AxeEntity> Axe { get; set; }
+    DbSet<BootsEntity> Boots { get; set; }
+    DbSet<ChestEntity> Chest { get; set; }
+    DbSet<GlovesEntity> Gloves { get; set; }
+    DbSet<HelmetEntity> Helmet { get; set; }
+    DbSet<LegsEntity> Legs { get; set; }
 }

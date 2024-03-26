@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using ApplicationServices.Admin;
+using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
 using ApplicationServices.Items.Equipment.Weapons.Factories;
 
 namespace TextAdventure;
@@ -39,15 +40,26 @@ class Program
         services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("Database1"))
                 .EnableDetailedErrors());
+        
         // Add your services here
         services.AddSingleton<IGameManager, GameManager>();
         services.AddSingleton<IAdminManager, AdminManager>();
         services.AddSingleton<IDbHandler, DbHandler>();
         services.AddSingleton<IStartGame, StartGame>();
+        
+        // Repositories
         services.AddSingleton<IWandRepository, WandRepository>();
         services.AddSingleton<IStaffRepository, StaffRepository>();
+        services.AddSingleton<ISwordRepository, SwordRepository>();
+        services.AddSingleton<IAxeRepository, AxeRepository>();
+        
+        //Services
         services.AddSingleton<IWandService, WandService>();
         services.AddSingleton<IStaffService, StaffService>();
+        services.AddSingleton<ISwordService, SwordService>();
+        services.AddSingleton<IAxeService, AxeService>();
+        
+        // Classes
         services.AddScoped<Mage>();
         services.AddScoped<IWandFactory, WandFactory>();
         services.AddScoped<IStaffFactory, StaffFactory>();

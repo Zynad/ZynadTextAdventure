@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Locations\Towns\" />
     <Folder Include="Locations\Villages\" />
+    <Folder Include="Services\Weapons\Armor\" />
   </ItemGroup>
 
   <ItemGroup>
