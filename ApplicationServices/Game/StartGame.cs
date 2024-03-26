@@ -24,39 +24,39 @@ public class StartGame : IStartGame
 
     private async Task SetPersonalInfo()
     {
-        Console.WriteLine("Hello and Welcome to Zynadria");
-        _player.Gender = ParseHelper.AskForEnum<Gender>("Are you Male or Female? : ");
-        _player.FirstName = ParseHelper.AskForName("Please enter your firstname here : ");
-        _player.LastName = ParseHelper.AskForName("Please enter your lastname here : ");
-        Console.WriteLine($"Welcome {_player.Name}");
-        _player.Age = ParseHelper.AskForInt($"Now tell me {_player.FirstName}, how old are you? ");
+        Console.WriteLine("Game Master : Hello and Welcome to Zynadria");
+        _player.Gender = ParseHelper.AskForEnum<Gender>("Game Master : Are you Male or Female? : ");
+        _player.FirstName = ParseHelper.AskForName("Game Master : Please enter your firstname here : ");
+        _player.LastName = ParseHelper.AskForName("Game Master : Please enter your lastname here : ");
+        Console.WriteLine($"Game Master : Welcome {_player.Name}");
+        _player.Age = ParseHelper.AskForInt($"Game Master : Now tell me {_player.FirstName}, how old are you? ");
     }
 
     private async Task ChooseVocation()
     {
         while (true)
         {
-            string choice = ParseHelper.AskForString("Choose your class:\n1. Knight\n2. Mage\n");
+            string choice = ParseHelper.AskForString("Game Master : Choose your class:\n1. Knight\n2. Mage\n");
             var vocation = choice switch
             {
                 "knight" or "1" => _serviceProvider.GetRequiredService<Knight>(),
                 "mage" or "2" => _serviceProvider.GetRequiredService<Mage>(),
                 _ => _player.Vocation
             };
-            Console.WriteLine($"So you choose to be a {vocation.VocationName}");
-            string confirmChoice = ParseHelper.AskForString("Is that correct?\n1. Yes\n2. No\n");
+            Console.WriteLine($"Game Master : So you choose to be a {vocation.VocationName}");
+            string confirmChoice = ParseHelper.AskForString("Game Master : Are you sure of that? It is a very permanent choice\n1. Yes\n2. No\n");
             switch (confirmChoice)
             {
                 case "yes" or "1":
-                    Console.WriteLine("Great choice!");
+                    Console.WriteLine("Game Master : Great choice!");
                     _player.Vocation = vocation;
                     await SetStartProperties();
                     return;
                 case "no" or "2":
-                    Console.WriteLine("Let's choose again!");
+                    Console.WriteLine("Game Master : Let's choose again!");
                     continue;
                 default:
-                    Console.WriteLine("Invalid choice");
+                    Console.WriteLine("Game Master : Invalid choice");
                     continue;
             }
         }

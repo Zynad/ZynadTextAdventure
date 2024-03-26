@@ -19,7 +19,7 @@ public class AdminManager : IAdminManager
             return;
         }
 
-        string tryPassword = ParseHelper.AskForString("Enter the password :");
+        string tryPassword = ParseHelper.AskForString("Enter the password : ");
         if (tryPassword is "bytmig123!")
         {
             Console.WriteLine("Admin login successful!");
