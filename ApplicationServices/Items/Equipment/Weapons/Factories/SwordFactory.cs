@@ -4,7 +4,7 @@ using Domain.Enums;
 
 namespace ApplicationServices.Items.Equipment.Weapons.Factories;
 
-internal class SwordFactory : ISwordFactory
+public class SwordFactory : ISwordFactory
 {
     public SwordEntity CreateNewSword()
     {

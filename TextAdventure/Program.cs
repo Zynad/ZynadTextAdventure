@@ -11,6 +11,8 @@ using System.Reflection;
 using ApplicationServices.Admin;
 using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
 using ApplicationServices.Items.Equipment.Weapons.Factories;
+using ApplicationServices.Services.Weapons.Armor;
+using Domain.Repos.Armor;
 
 namespace TextAdventure;
 
@@ -52,17 +54,29 @@ class Program
         services.AddSingleton<IStaffRepository, StaffRepository>();
         services.AddSingleton<ISwordRepository, SwordRepository>();
         services.AddSingleton<IAxeRepository, AxeRepository>();
+        services.AddSingleton<IBootsRepository, BootsRepository>();
+        services.AddSingleton<IChestRepository, ChestRepository>();
+        services.AddSingleton<IGlovesRepository, GlovesRepository>();
+        services.AddSingleton<IHelmetRepository, HelmetRepository>();
+        services.AddSingleton<ILegsRepository, LegsRepository>();
         
         //Services
         services.AddSingleton<IWandService, WandService>();
         services.AddSingleton<IStaffService, StaffService>();
         services.AddSingleton<ISwordService, SwordService>();
         services.AddSingleton<IAxeService, AxeService>();
+        services.AddSingleton<IBootsService, BootsService>();
+        services.AddSingleton<IChestService, ChestService>();
+        services.AddSingleton<IGlovesService, GlovesService>();
+        services.AddSingleton<IHelmetService, HelmetService>();
+        services.AddSingleton<ILegsService, LegsService>();
         
         // Classes
         services.AddScoped<Mage>();
         services.AddScoped<Knight>();
         services.AddScoped<IWandFactory, WandFactory>();
         services.AddScoped<IStaffFactory, StaffFactory>();
+        services.AddScoped<IAxeFactory, AxeFactory>();
+        services.AddScoped<ISwordFactory, SwordFactory>();
     }
 }

@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="DB\" />
-    <Folder Include="Repos\Armor\" />
     <Folder Include="Repos\Equipment\" />
     <Folder Include="Repos\Items\" />
   </ItemGroup>
