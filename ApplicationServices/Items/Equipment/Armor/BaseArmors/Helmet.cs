@@ -1,12 +1,12 @@
 ﻿using ApplicationServices.Mapping;
 using Domain.Entities.Armor.Models;
 
-namespace ApplicationServices.Items.Equipment.Armor;
-public class Boots : ArmorPiece
+namespace ApplicationServices.Items.Equipment.Armor.BaseArmors;
+public class Helmet : ArmorPiece
 {
-    public static implicit operator Boots(BootsEntity entity)
+    public static implicit operator Helmet(HelmetEntity entity)
     {
-        return new Boots
+        return new Helmet
         {
             Name = entity.Name,
             Material = Mapper.MapToModel(entity.Material),
@@ -19,9 +19,9 @@ public class Boots : ArmorPiece
         };
     }
 
-    public static implicit operator BootsEntity(Boots model)
+    public static implicit operator HelmetEntity(Helmet model)
     {
-        return new BootsEntity
+        return new HelmetEntity
         {
             Id = Guid.NewGuid(),
             Name = model.Name,

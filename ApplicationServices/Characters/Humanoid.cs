@@ -1,5 +1,5 @@
 ﻿using ApplicationServices.Items.Equipment;
-using ApplicationServices.Items.Equipment.Armor;
+using ApplicationServices.Items.Equipment.Armor.BaseArmors;
 using ApplicationServices.Items.Equipment.Weapons;
 
 namespace ApplicationServices.Characters;

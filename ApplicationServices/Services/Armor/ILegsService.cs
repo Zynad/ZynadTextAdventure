@@ -1,8 +1,8 @@
-﻿using ApplicationServices.Items.Equipment.Armor;
+﻿using ApplicationServices.Items.Equipment.Armor.BaseArmors;
 using Domain.Entities.Armor.Models;
 using System.Linq.Expressions;
 
-namespace ApplicationServices.Services.Weapons.Armor;
+namespace ApplicationServices.Services.Armor;
 
 public interface ILegsService
 {

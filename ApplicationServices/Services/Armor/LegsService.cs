@@ -1,9 +1,9 @@
-﻿using ApplicationServices.Items.Equipment.Armor;
+﻿using ApplicationServices.Items.Equipment.Armor.BaseArmors;
 using Domain.Entities.Armor.Models;
 using Domain.Repos.Armor;
 using System.Linq.Expressions;
 
-namespace ApplicationServices.Services.Weapons.Armor;
+namespace ApplicationServices.Services.Armor;
 
 public class LegsService : ILegsService
 {

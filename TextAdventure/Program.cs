@@ -3,7 +3,7 @@ using ApplicationServices.Classes;
 using ApplicationServices.Game;
 using ApplicationServices.Game.Helpers;
 using ApplicationServices.Items.Equipment.Weapons.Factories;
-using ApplicationServices.Services.Weapons.Armor;
+using ApplicationServices.Services.Armor;
 using ApplicationServices.Services.Weapons.WeaponServices;
 using Domain.Contexts;
 using Domain.Repos.Armor;
