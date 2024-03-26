@@ -85,8 +85,63 @@ public class AdminManager : IAdminManager
 
     private async Task ArmorCrud(string crudMethod, string armorType)
     {
-        
+        while (true)
+        {
+            switch (crudMethod)
+            {
+                case "create":
+                    switch (armorType)
+                    {
+                        case "boots" or "1":
+                            await _dbHandler.AddBoots();
+                            break;
+                        case "chest" or "2":
+                            await _dbHandler.AddChest();
+                            break;
+                        case "gloves" or "3":
+                            await _dbHandler.AddGloves();
+                            break;
+                        case "helmet" or "4":
+                            await _dbHandler.AddHelmet();
+                            break;
+                        case "legs" or "5":
+                            await _dbHandler.AddLegs();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid armor type, please try again.");
+                            break;
+                    }
+                    break;
+                case "get":
+                    switch (armorType)
+                    {
+                        case "boots" or "1":
+                            await _dbHandler.GetBoots();
+                            break;
+                        case "chest" or "2":
+                            await _dbHandler.GetChest();
+                            break;
+                        case "gloves" or "3":
+                            await _dbHandler.GetGloves();
+                            break;
+                        case "helmet" or "4":
+                            await _dbHandler.GetHelmet();
+                            break;
+                        case "legs" or "5":
+                            await _dbHandler.GetLegs();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid armor type, please try again.");
+                            break;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid CRUD method, please try again.");
+                    break;
+            }
+        }
     }
+
 
     private async Task WeaponCrud(string crudMethod, string weaponType)
     {
