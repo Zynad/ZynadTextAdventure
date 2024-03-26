@@ -18,4 +18,20 @@ public class Helmet : ArmorPiece
             Value = entity.Value
         };
     }
+
+    public static implicit operator HelmetEntity(Helmet model)
+    {
+        return new HelmetEntity
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            Material = Mapper.MapToEntity(model.Material),
+            ArmorValue = model.ArmorValue,
+            Durability = model.Durability,
+            Weight = model.Weight,
+            LevelRequirement = model.LevelRequirement,
+            Rarity = Mapper.MapToEntity(model.Rarity),
+            Value = model.Value
+        };
+    }
 }

@@ -18,4 +18,20 @@ public class Chest : ArmorPiece
             Value = entity.Value
         };
     }
+
+    public static implicit operator ChestEntity(Chest model)
+    {
+        return new ChestEntity
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            Material = Mapper.MapToEntity(model.Material),
+            ArmorValue = model.ArmorValue,
+            Durability = model.Durability,
+            Weight = model.Weight,
+            LevelRequirement = model.LevelRequirement,
+            Rarity = Mapper.MapToEntity(model.Rarity),
+            Value = model.Value
+        };
+    }
 }

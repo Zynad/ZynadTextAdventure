@@ -18,4 +18,20 @@ public class Boots : ArmorPiece
             Value = entity.Value
         };
     }
+
+    public static implicit operator BootsEntity(Boots model)
+    {
+        return new BootsEntity
+        {
+            Id = Guid.NewGuid(),
+            Name = model.Name,
+            Material = Mapper.MapToEntity(model.Material),
+            ArmorValue = model.ArmorValue,
+            Durability = model.Durability,
+            Weight = model.Weight,
+            LevelRequirement = model.LevelRequirement,
+            Rarity = Mapper.MapToEntity(model.Rarity),
+            Value = model.Value
+        };
+    }
 }
