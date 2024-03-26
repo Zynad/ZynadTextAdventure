@@ -60,7 +60,8 @@ public class DbHandler : IDbHandler
         }
 
         var wand = _wandFactory.CreateNewWand();
-        await _wandRepository.AddAsync(wand);
+        var createdItem = await _wandRepository.AddAsync(wand);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateWand(WandEntity entity)
@@ -96,7 +97,8 @@ public class DbHandler : IDbHandler
         }
 
         var staff = _staffFactory.CreateNewStaff();
-        await _staffRepository.AddAsync(staff);
+        var createdItem = await _staffRepository.AddAsync(staff);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateStaff(StaffEntity entity)
@@ -122,7 +124,8 @@ public class DbHandler : IDbHandler
         }
 
         var sword = _swordFactory.CreateNewSword();
-        await _swordRepository.AddAsync(sword);
+        var createdItem = await _swordRepository.AddAsync(sword);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateSword(SwordEntity entity)
@@ -152,7 +155,8 @@ public class DbHandler : IDbHandler
             return;
         }
         var axe = _axeFactory.CreateNewAxe();
-        await _axeRepository.AddAsync(axe);
+        var createdItem = await _axeRepository.AddAsync(axe);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateAxe(AxeEntity entity)
     {
@@ -178,7 +182,8 @@ public class DbHandler : IDbHandler
             return;
         }
         var boots = _bootsFactory.CreateNewBoots();
-        await _bootsRepository.AddAsync(boots);
+        var createdItem = await _bootsRepository.AddAsync(boots);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateBoots(BootsEntity entity)
     {
@@ -203,7 +208,8 @@ public class DbHandler : IDbHandler
             return;
         }
         var chest = _chestFactory.CreateNewChest();
-        await _chestRepository.AddAsync(chest);
+        var createdItem = await _chestRepository.AddAsync(chest);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateChest(ChestEntity entity)
     {
@@ -228,7 +234,8 @@ public class DbHandler : IDbHandler
             return;
         }
         var gloves = _glovesFactory.CreateNewGloves();
-        await _glovesRepository.AddAsync(gloves);
+        var createdItem = await _glovesRepository.AddAsync(gloves);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateGloves(GlovesEntity entity)
     {
@@ -253,7 +260,8 @@ public class DbHandler : IDbHandler
             return;
         }
         var helmet = _helmetFactory.CreateNewHelmet();
-        await _helmetRepository.AddAsync(helmet);
+        var createdItem = await _helmetRepository.AddAsync(helmet);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateHelmet(HelmetEntity entity)
     {
@@ -278,7 +286,9 @@ public class DbHandler : IDbHandler
             return;
         }
         var legs = _legsFactory.CreateNewLegs();
-        await _legsRepository.AddAsync(legs);
+        var createdItem = await _legsRepository.AddAsync(legs);
+        Console.WriteLine($"{createdItem.Name} was added in the database!");
+        
     }
     public async Task UpdateLegs(LegsEntity entity)
     {

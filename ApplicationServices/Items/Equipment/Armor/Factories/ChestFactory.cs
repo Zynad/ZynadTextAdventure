@@ -18,7 +18,7 @@ public class ChestFactory : IChestFactory
                 Name = ParseHelper.AskForName("What should the name be? "),
                 ArmorValue = ParseHelper.AskForInt("What should the armor value be? "),
                 Durability = ParseHelper.AskForInt("What should the durability cap be? "),
-                LevelRequirement = ParseHelper.AskForInt("What should the level requirement be?"),
+                LevelRequirement = ParseHelper.AskForInt("What should the level requirement be? "),
                 Weight = ParseHelper.AskForInt("How many kgs does it weigh? "),
                 Value = ParseHelper.AskForInt("How much gps is it worth? "),
             };

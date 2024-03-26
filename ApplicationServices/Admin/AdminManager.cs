@@ -111,7 +111,7 @@ public class AdminManager : IAdminManager
                             Console.WriteLine("Invalid armor type, please try again.");
                             break;
                     }
-                    break;
+                    return;
                 case "get":
                     switch (armorType)
                     {
@@ -134,7 +134,7 @@ public class AdminManager : IAdminManager
                             Console.WriteLine("Invalid armor type, please try again.");
                             break;
                     }
-                    break;
+                    return;
                 default:
                     Console.WriteLine("Invalid CRUD method, please try again.");
                     break;
