@@ -1,18 +1,17 @@
-﻿using ApplicationServices.Classes;
+﻿using ApplicationServices.Admin;
+using ApplicationServices.Classes;
 using ApplicationServices.Game;
 using ApplicationServices.Game.Helpers;
+using ApplicationServices.Items.Equipment.Weapons.Factories;
+using ApplicationServices.Services.Weapons.Armor;
 using ApplicationServices.Services.Weapons.WeaponServices;
 using Domain.Contexts;
+using Domain.Repos.Armor;
 using Domain.Repos.Weapons;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using ApplicationServices.Admin;
-using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
-using ApplicationServices.Items.Equipment.Weapons.Factories;
-using ApplicationServices.Services.Weapons.Armor;
-using Domain.Repos.Armor;
 
 namespace TextAdventure;
 
