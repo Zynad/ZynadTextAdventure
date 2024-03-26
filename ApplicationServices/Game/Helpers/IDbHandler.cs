@@ -12,5 +12,13 @@ public interface IDbHandler
     Task AddStaff(StaffEntity entity = null);
     Task UpdateStaff(StaffEntity entity);
     Task DeleteStaff(StaffEntity entity);
+    Task AddSword(SwordEntity entity = null);
+    Task UpdateSword(SwordEntity entity);
+    Task DeleteSword(SwordEntity entity);
+    Task GetSword();
+    Task AddAxe(AxeEntity entity = null);
+    Task UpdateAxe(AxeEntity entity);
+    Task DeleteAxe(AxeEntity entity);
+    Task GetAxe();
 }
 

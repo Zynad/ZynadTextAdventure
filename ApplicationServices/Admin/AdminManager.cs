@@ -103,6 +103,12 @@ public class AdminManager : IAdminManager
                         case "wand" or "2":
                             await _dbHandler.AddWand();
                             break;
+                        case "axe" or "3":
+                            await _dbHandler.AddAxe();
+                            break;
+                        case "sword" or "4":
+                            await _dbHandler.AddSword();
+                            break;
                         default:
                             Console.WriteLine("Invalid weapon type, please try again.");
                             break;
@@ -116,6 +122,12 @@ public class AdminManager : IAdminManager
                             break;
                         case "wand" or "2":
                             await _dbHandler.GetWand();
+                            break;
+                        case "axe" or "3":
+                            await _dbHandler.GetAxe();
+                            break;
+                        case "sword" or "4":
+                            await _dbHandler.GetSword();
                             break;
                         default:
                             Console.WriteLine("Invalid weapon type, please try again.");
