@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ApplicationServices.Items.Equipment.Armor.Factories;
 
 namespace TextAdventure;
 
@@ -69,13 +70,21 @@ class Program
         services.AddSingleton<IGlovesService, GlovesService>();
         services.AddSingleton<IHelmetService, HelmetService>();
         services.AddSingleton<ILegsService, LegsService>();
-        
-        // Classes
-        services.AddScoped<Mage>();
-        services.AddScoped<Knight>();
+
+        // Factories
         services.AddScoped<IWandFactory, WandFactory>();
         services.AddScoped<IStaffFactory, StaffFactory>();
         services.AddScoped<IAxeFactory, AxeFactory>();
         services.AddScoped<ISwordFactory, SwordFactory>();
+        services.AddScoped<IBootsFactory, BootsFactory>();
+        services.AddScoped<IChestFactory, ChestFactory>();
+        services.AddScoped<ILegsFactory, LegsFactory>();
+        services.AddScoped<IGlovesFactory, GlovesFactory>();
+        services.AddScoped<IHelmetFactory, HelmetFactory>();
+        
+        // Classes
+        services.AddScoped<Mage>();
+        services.AddScoped<Knight>();
+        
     }
 }
