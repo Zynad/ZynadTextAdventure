@@ -4,13 +4,13 @@ using Domain.Enums;
 
 namespace ApplicationServices.Items.Equipment.Armor.Factories;
 
-public class BootsFactory : IBootsFactory
+public class GlovesFactory : IGlovesFactory
 {
-    public BootsEntity CreateNewBoots()
+    public GlovesEntity CreateNewGloves()
     {
         while (true)
         {
-            var boots = new BootsEntity
+            var gloves = new GlovesEntity
             {
                 Id = Guid.NewGuid(),
                 Rarity = ParseHelper.AskForEnum<RarityEntity>("What should the Rarity be?\n0. Common\n1. Uncommon\n2. Rare\n3. Epic\n4. Legendary\n"),
@@ -22,7 +22,7 @@ public class BootsFactory : IBootsFactory
                 Weight = ParseHelper.AskForInt("How many kgs does it weigh? "),
                 Value = ParseHelper.AskForInt("How much gps is it worth? "),
             };
-            return boots;
+            return gloves;
         }
     }
 }
