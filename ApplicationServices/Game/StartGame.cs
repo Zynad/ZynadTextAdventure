@@ -39,7 +39,7 @@ public class StartGame : IStartGame
             string choice = ParseHelper.AskForString("Choose your class:\n1. Knight\n2. Mage\n");
             var vocation = choice switch
             {
-                "knight" or "1" => new Knight(),
+                "knight" or "1" => _serviceProvider.GetRequiredService<Knight>(),
                 "mage" or "2" => _serviceProvider.GetRequiredService<Mage>(),
                 _ => _player.Vocation
             };

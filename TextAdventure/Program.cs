@@ -61,6 +61,7 @@ class Program
         
         // Classes
         services.AddScoped<Mage>();
+        services.AddScoped<Knight>();
         services.AddScoped<IWandFactory, WandFactory>();
         services.AddScoped<IStaffFactory, StaffFactory>();
     }
