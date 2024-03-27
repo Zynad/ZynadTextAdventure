@@ -2,6 +2,7 @@
 using ApplicationServices.Classes;
 using ApplicationServices.Items.Equipment.Armor;
 using ApplicationServices.Items.Equipment.Weapons;
+using ApplicationServices.Locations;
 using ApplicationServices.Mechanics;
 
 namespace ApplicationServices.PlayerSettings;
@@ -9,6 +10,7 @@ public class Player : Human
 {
     public Dice Dice { get; set; } = new Dice();
     public Vocation Vocation { get; set; }
+    public BaseLocation CurrentLocation { get; set; }
 
     public void SetBaseValues(int hitPoints, int meleeAttackDamage, int defenseValue, int manaPoints, int carryWeigth, int stamina, int rangedAttackDamage, int magicAttackDamage, List<ArmorMaterial> allowedArmors, List<WeaponType> allowedWeaponTypes)
     {

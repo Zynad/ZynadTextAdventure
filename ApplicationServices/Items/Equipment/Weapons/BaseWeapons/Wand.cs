@@ -14,9 +14,9 @@ public class Wand : WeaponBase
         return new Wand
         {
             Name = entity.Name,
-            Rarity = Mapper.MapToModel(entity.Rarity),
-            Material = Mapper.MapToModel(entity.Material),
-            WeaponType = Mapper.MapToModel(entity.WeaponType),
+            Rarity = EnumMapper.MapToModel(entity.Rarity),
+            Material = EnumMapper.MapToModel(entity.Material),
+            WeaponType = EnumMapper.MapToModel(entity.WeaponType),
             ArmorValue = entity.ArmorValue,
             MeleeAttackValue = entity.MeleeAttackValue,
             RangedAttackValue = entity.RangedAttackValue,
@@ -34,9 +34,9 @@ public class Wand : WeaponBase
         {
             Id = Guid.NewGuid(),
             Name = wand.Name,
-            Rarity = Mapper.MapToEntity(wand.Rarity),
-            Material = Mapper.MapToEntity(wand.Material),
-            WeaponType = Mapper.MapToEntity(wand.WeaponType),
+            Rarity = EnumMapper.MapToEntity(wand.Rarity),
+            Material = EnumMapper.MapToEntity(wand.Material),
+            WeaponType = EnumMapper.MapToEntity(wand.WeaponType),
             ArmorValue = wand.ArmorValue,
             MeleeAttackValue = wand.MeleeAttackValue,
             RangedAttackValue = wand.RangedAttackValue,

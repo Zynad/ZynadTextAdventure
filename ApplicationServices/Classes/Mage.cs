@@ -29,8 +29,8 @@ public class Mage : Vocation
 
     public override async Task SetBaseValues(Player player)
     {
-        var allowedArmor = new List<ArmorMaterial>();
-        var allowedWeapon = new List<WeaponType>();
+        var allowedArmor = new List<ArmorMaterial> { ArmorMaterial.Cloth };
+        var allowedWeapon = new List<WeaponType> { WeaponType.Staff , WeaponType.Wand};
         player.SetBaseValues(30, 10, 5, 50, 30, 15, 10, 30, allowedArmor, allowedWeapon);
         await ChooseWeapon(player);
         await ChooseEquipment(player);

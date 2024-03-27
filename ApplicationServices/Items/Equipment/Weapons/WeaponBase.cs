@@ -21,9 +21,9 @@ public class WeaponBase : EquipmentBase
         return new WeaponBaseEntity
         {
             Id = Guid.NewGuid(),
-            Material = Mapper.MapToEntity(weaponBase.Material),
-            WeaponType = Mapper.MapToEntity(weaponBase.WeaponType),
-            Rarity = Mapper.MapToEntity(weaponBase.Rarity),
+            Material = EnumMapper.MapToEntity(weaponBase.Material),
+            WeaponType = EnumMapper.MapToEntity(weaponBase.WeaponType),
+            Rarity = EnumMapper.MapToEntity(weaponBase.Rarity),
             ArmorValue = weaponBase.ArmorValue,
             MeleeAttackValue = weaponBase.MeleeAttackValue,
             RangedAttackValue = weaponBase.RangedAttackValue,
@@ -41,9 +41,9 @@ public class WeaponBase : EquipmentBase
     {
         return new WeaponBase
         {
-            Material = Mapper.MapToModel(entity.Material),
-            WeaponType = Mapper.MapToModel(entity.WeaponType),
-            Rarity = Mapper.MapToModel(entity.Rarity),
+            Material = EnumMapper.MapToModel(entity.Material),
+            WeaponType = EnumMapper.MapToModel(entity.WeaponType),
+            Rarity = EnumMapper.MapToModel(entity.Rarity),
             ArmorValue = entity.ArmorValue,
             MeleeAttackValue = entity.MeleeAttackValue,
             RangedAttackValue = entity.RangedAttackValue,

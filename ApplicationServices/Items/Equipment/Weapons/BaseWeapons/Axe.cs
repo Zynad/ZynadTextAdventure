@@ -14,9 +14,9 @@ public class Axe : WeaponBase
         return new Axe
         {
             Name = entity.Name,
-            Rarity = Mapper.MapToModel(entity.Rarity),
-            Material = Mapper.MapToModel(entity.Material),
-            WeaponType = Mapper.MapToModel(entity.WeaponType),
+            Rarity = EnumMapper.MapToModel(entity.Rarity),
+            Material = EnumMapper.MapToModel(entity.Material),
+            WeaponType = EnumMapper.MapToModel(entity.WeaponType),
             ArmorValue = entity.ArmorValue,
             MeleeAttackValue = entity.MeleeAttackValue,
             RangedAttackValue = entity.RangedAttackValue,
@@ -34,9 +34,9 @@ public class Axe : WeaponBase
         {
             Id = Guid.NewGuid(),
             Name = model.Name,
-            Rarity = Mapper.MapToEntity(model.Rarity),
-            Material = Mapper.MapToEntity(model.Material),
-            WeaponType = Mapper.MapToEntity(model.WeaponType),
+            Rarity = EnumMapper.MapToEntity(model.Rarity),
+            Material = EnumMapper.MapToEntity(model.Material),
+            WeaponType = EnumMapper.MapToEntity(model.WeaponType),
             ArmorValue = model.ArmorValue,
             MeleeAttackValue = model.MeleeAttackValue,
             RangedAttackValue = model.RangedAttackValue,

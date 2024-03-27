@@ -6,7 +6,7 @@ using Domain.Enums;
 
 namespace ApplicationServices.Mapping;
 
-public static class Mapper
+public static class EnumMapper
 {
     public static WeaponMaterial MapToModel(WeaponMaterialEntity entity)
     {
