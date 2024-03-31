@@ -14,7 +14,8 @@ public class AdventureContextFactory : IDesignTimeDbContextFactory<DataContext>
             .SetBasePath(basePath)
             .AddJsonFile("appsettings.json")
             .Build();
-        var connectionString = config.GetConnectionString("Database1");
+        var connectionString = config.GetConnectionString("LaptopDB");
+        //var connectionString = config.GetConnectionString("Database1");
         Console.WriteLine($"Connection string: {connectionString}");
         var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
         optionsBuilder.UseSqlServer(connectionString);

@@ -40,7 +40,8 @@ class Program
         services.AddSingleton<IConfiguration>(configuration);
         // Add DbContext
         services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("Database1"))
+            options.UseSqlServer(configuration.GetConnectionString("LaptopDB"))
+           // options.UseSqlServer(configuration.GetConnectionString("Database1"))
                 .EnableDetailedErrors());
         
         // Add your services here
