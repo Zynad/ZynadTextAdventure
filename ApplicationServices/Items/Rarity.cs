@@ -1,4 +1,4 @@
-﻿namespace ApplicationServices.Game;
+﻿namespace ApplicationServices.Items;
 public enum Rarity
 {
     Common,

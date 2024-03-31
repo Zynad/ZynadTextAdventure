@@ -1,5 +1,5 @@
 ﻿using ApplicationServices.Characters;
-using ApplicationServices.Game;
+using ApplicationServices.Items;
 using ApplicationServices.Items.Equipment.Armor;
 using ApplicationServices.Items.Equipment.Weapons;
 using Domain.Enums;

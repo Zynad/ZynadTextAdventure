@@ -1,6 +1,4 @@
-﻿using ApplicationServices.Game;
-
-namespace ApplicationServices.Items;
+﻿namespace ApplicationServices.Items;
 public abstract class ItemsBase
 {
     public string Name { get; set; }
