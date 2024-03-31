@@ -27,6 +27,7 @@ public abstract class Creature
             }
         }
     }
+    public bool IsDead => HitPoints <= 0;
     public int ManaPoints { get; set; }
     public int Stamina { get; set; }
     public Gender Gender { get; set; }
