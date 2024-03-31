@@ -22,7 +22,7 @@ public class Player : Human
         Stamina = stamina;
         MagicAttackDamage = magicAttackDamage;
         RangedPhysicalAttackDamage = rangedAttackDamage;
-        CamCarryArmorType = allowedArmors ?? [];
+        CanCarryArmorType = allowedArmors ?? [];
         CanCarryWeaponType = allowedWeaponTypes ?? [];
     }
 

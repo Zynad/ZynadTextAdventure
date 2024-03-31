@@ -14,7 +14,19 @@ public abstract class Creature
     public string LastName { get; set; }
     public string Name => $"{FirstName} {LastName}";
     public int Age { get; set; }
-    public int HitPoints { get; set; }
+    private int hp;
+    public int HitPoints
+    {
+        get => hp;
+        set
+        {
+            hp = value;
+            if (value <= 0)
+            {
+                OnDeath();
+            }
+        }
+    }
     public int ManaPoints { get; set; }
     public int Stamina { get; set; }
     public Gender Gender { get; set; }
@@ -23,7 +35,7 @@ public abstract class Creature
     public int RangedPhysicalAttackDamage { get; set; }
     public int MagicAttackDamage { get; set; }
     public int DefenseValue { get; set; }
-    public List<ArmorMaterial> CamCarryArmorType { get; set; }
+    public List<ArmorMaterial> CanCarryArmorType { get; set; }
     public List<WeaponType> CanCarryWeaponType { get; set; }
     public List<ItemsBase> Inventory { get; set; }
     public int MaxCarryWeigth { get; set; }
@@ -62,6 +74,10 @@ public abstract class Creature
     }
 
     protected virtual void LevelUp()
+    {
+    }
+
+    protected virtual void OnDeath()
     {
     }
 }

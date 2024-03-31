@@ -19,6 +19,7 @@ public class StartGame : IStartGame
     {
         await SetPersonalInfo();
         await ChooseVocation();
+        await StartStory();
         return _player;
     }
 
@@ -26,8 +27,8 @@ public class StartGame : IStartGame
     {
         Console.WriteLine("Game Master : Hello and Welcome to Zynadria");
         _player.Gender = ParseHelper.AskForEnum<Gender>("Game Master : Are you Male or Female? : ");
-        _player.FirstName = ParseHelper.AskForName("Game Master : Please enter your firstname here : ");
-        _player.LastName = ParseHelper.AskForName("Game Master : Please enter your lastname here : ");
+        _player.FirstName = ParseHelper.AskForName("Game Master : What is your first name? : ");
+        _player.LastName = ParseHelper.AskForName("Game Master : And your last name? : ");
         Console.WriteLine($"Game Master : Welcome {_player.Name}");
         _player.Age = ParseHelper.AskForInt($"Game Master : Now tell me {_player.FirstName}, how old are you? ");
     }
@@ -66,4 +67,25 @@ public class StartGame : IStartGame
     {
         await _player.Vocation.SetBaseValues(_player);
     }
+
+    private async Task StartStory()
+    {
+        string choice = ParseHelper.AskForString("Game Master : Do you want me to describe the world to you?\n1. No\n2. Yes\n");
+        switch (choice)
+        {
+            case "yes" or "1":
+                Console.WriteLine("Game Master : Let me tell you about the world of Zynadria...");
+                // Add code to describe the world
+                break;
+            case "no" or "2":
+                Console.WriteLine("Game Master : Alright, let's continue...");
+                // Add code to continue the game without describing the world
+                break;
+            default:
+                Console.WriteLine("Game Master : Invalid choice");
+                // Add code to handle invalid choice
+                break;
+        }
+    }
 }
+

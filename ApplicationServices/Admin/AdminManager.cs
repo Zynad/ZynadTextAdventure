@@ -14,7 +14,7 @@ public class AdminManager : IAdminManager
     public async Task AdminLogin()
     {
         string choice = ParseHelper.AskForString("Would you like to login as an admin? \n1. Yes\n2. No\n");
-        if (choice is "no" or "2")
+        if (choice != "yes" && choice != "1")
         {
             return;
         }
