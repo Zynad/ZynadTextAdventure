@@ -10,7 +10,7 @@ public class AuthResult
     public UserDto? User { get; init; }
     public string? Token { get; init; }
 
-    public static AuthResult Success(UserDto user, string? token = null) => new()
+    public static AuthResult FromSuccess(UserDto user, string? token = null) => new()
     {
         Success = true,
         User = user,

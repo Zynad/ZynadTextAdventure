@@ -34,6 +34,6 @@ public class GetCurrentUserHandler
             return AuthResult.NotFound("Account not found");
         }
 
-        return AuthResult.Success(new UserDto(account.Id, account.Username, account.Email));
+        return AuthResult.FromSuccess(new UserDto(account.Id, account.Username, account.Email));
     }
 }

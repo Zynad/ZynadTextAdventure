@@ -46,6 +46,6 @@ public class LoginUserHandler
         await _sessionRepository.AddAsync(session, cancellationToken);
         _logger.LogInformation("Issued session for {Username}", account.Username);
 
-        return AuthResult.Success(new UserDto(account.Id, account.Username, account.Email), session.Token);
+        return AuthResult.FromSuccess(new UserDto(account.Id, account.Username, account.Email), session.Token);
     }
 }

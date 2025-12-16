@@ -60,7 +60,7 @@ public class RegisterUserHandler
 
         _logger.LogInformation("Registered new user {Username}", account.Username);
 
-        return AuthResult.Success(new UserDto(account.Id, account.Username, account.Email), session.Token);
+        return AuthResult.FromSuccess(new UserDto(account.Id, account.Username, account.Email), session.Token);
     }
 
     private static string? Validate(RegisterUserRequest request)
