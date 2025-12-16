@@ -17,7 +17,7 @@ public class VendorPricingService : IVendorPricingService
     {
         var towns = await _worldRepository.GetTownsAsync(cancellationToken);
         var town = towns.FirstOrDefault(t => string.Equals(t.Name, townName, StringComparison.OrdinalIgnoreCase));
-        return town?.VendorInventory ?? Array.Empty<VendorPrice>();
+        return town?.VendorInventory ?? new List<VendorPrice>();
     }
 
     public async Task<VendorPrice?> GetPriceForItemAsync(string townName, string itemId, CancellationToken cancellationToken = default)
