@@ -9,7 +9,11 @@
         ]
       }
     ],
-    "Monsters": [],
+    "Monsters": [
+      { "Id": "road_bandit", "Name": "Roadside Bandit", "Level": 1, "HitPoints": 10, "Attack": 3 },
+      { "Id": "wild_boar", "Name": "Wild Boar", "Level": 2, "HitPoints": 14, "Attack": 4 },
+      { "Id": "emberbrook_scout", "Name": "Wayward Scout", "Level": 3, "HitPoints": 16, "Attack": 5 }
+    ],
     "CharacterPresets": [
       {
         "Id": "warrior",

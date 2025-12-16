@@ -79,6 +79,11 @@ public class JsonWorldRepository : IWorldRepository
             world.CharacterPresets.AddRange(CreateDefaultCharacterPresets());
         }
 
+        if (world.Monsters.Count == 0)
+        {
+            world.Monsters.AddRange(CreateDefaultMonsters());
+        }
+
         if (world.Locations.Count == 0)
         {
             world.Locations.AddRange(CreateDefaultLocations());
@@ -92,9 +97,40 @@ public class JsonWorldRepository : IWorldRepository
         return new WorldState
         {
             Towns = new List<Town>(),
-            Monsters = new List<Monster>(),
+            Monsters = CreateDefaultMonsters(),
             CharacterPresets = CreateDefaultCharacterPresets(),
             Locations = CreateDefaultLocations()
+        };
+    }
+
+    private static List<Monster> CreateDefaultMonsters()
+    {
+        return new List<Monster>
+        {
+            new()
+            {
+                Id = "road_bandit",
+                Name = "Roadside Bandit",
+                Level = 1,
+                HitPoints = 10,
+                Attack = 3
+            },
+            new()
+            {
+                Id = "wild_boar",
+                Name = "Wild Boar",
+                Level = 2,
+                HitPoints = 14,
+                Attack = 4
+            },
+            new()
+            {
+                Id = "emberbrook_scout",
+                Name = "Wayward Scout",
+                Level = 3,
+                HitPoints = 16,
+                Attack = 5
+            }
         };
     }
 

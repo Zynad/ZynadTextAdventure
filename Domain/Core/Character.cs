@@ -14,4 +14,5 @@ public class Character
     public WorldLocation Location { get; set; } = WorldLocation.Default();
     public List<InventoryItem> Inventory { get; set; } = new();
     public List<CharacterQuestState> QuestStates { get; set; } = new();
+    public List<Encounter> EncounterLog { get; set; } = new();
 }

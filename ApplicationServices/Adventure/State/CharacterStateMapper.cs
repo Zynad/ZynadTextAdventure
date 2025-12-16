@@ -11,6 +11,21 @@ public static class CharacterStateMapper
             .Select(q => new QuestStateDto(q.QuestId, q.Status, q.UpdatedAt))
             .ToList();
 
+        var encounterLog = character.EncounterLog ?? new List<Encounter>();
+
+        var encounters = encounterLog
+            .OrderByDescending(e => e.OccurredAt)
+            .Take(10)
+            .Select(e => new EncounterStateDto(
+                e.Id,
+                e.EncounterType,
+                e.Location,
+                e.MonsterId,
+                e.Outcome,
+                e.OccurredAt,
+                e.Drops.AsReadOnly()))
+            .ToList();
+
         return new CharacterStateDto(
             character.Id,
             character.Name,
@@ -18,6 +33,7 @@ public static class CharacterStateMapper
             character.ClassName,
             character.Location,
             character.Inventory.AsReadOnly(),
-            questStates.AsReadOnly());
+            questStates.AsReadOnly(),
+            encounters.AsReadOnly());
     }
 }
