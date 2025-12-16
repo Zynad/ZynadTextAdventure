@@ -17,3 +17,12 @@ The `TextAdventure.Api` project is a lightweight ASP.NET Core Web API that persi
 - **Domain**: JSON persistence (`JsonDatabase`) and data models such as `UserAccount`, `SaveSlot`, `WorldLocation`, and `MonsterProfile`.
 
 The API exposes endpoints for registration/login (`/api/auth/register`, `/api/auth/login`), fetching monsters (`/api/monsters`), and saving or loading player progress (`/api/progress/save`, `/api/progress?token=...`). Each authentication response returns a simple session token that can be used when saving or restoring progress.
+
+### Authentication and request headers
+- Successful `/api/auth/register` and `/api/auth/login` calls return the session token in the response body and also set an `authToken` HttpOnly cookie scoped to `/` (suitable for SPAs running on `http://localhost:5173` or `http://localhost:3000`).
+- Authorized requests should send an `Authorization: Bearer <token>` header if the cookie is not available. Endpoints that require authentication look for either the header or the cookie.
+- The `/api/progress` endpoint continues to accept a `token` query string parameter but will also fall back to the header/cookie when the query parameter is not present.
+
+### Observability and schema
+- A lightweight health check is available at `/api/status` and returns `{ status: "ok", timestamp: "<utc>" }` when the API is reachable.
+- Swagger/OpenAPI docs are generated from controller XML comments. When running locally, navigate to `/swagger` to view request/response schemas and apply a bearer token for authenticated calls.

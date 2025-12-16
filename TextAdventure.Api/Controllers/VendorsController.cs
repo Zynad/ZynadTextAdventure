@@ -1,4 +1,5 @@
 using ApplicationServices.Contracts.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TextAdventure.Api.Controllers;
@@ -14,7 +15,13 @@ public class VendorsController : ControllerBase
         _vendorPricingService = vendorPricingService;
     }
 
+    /// <summary>
+    /// Get vendor prices for a given town.
+    /// </summary>
+    /// <param name="townName">The town to query.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpGet("{townName}/prices")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPrices(string townName, CancellationToken cancellationToken)
     {
         var prices = await _vendorPricingService.GetPricesAsync(townName, cancellationToken);
