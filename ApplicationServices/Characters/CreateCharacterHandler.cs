@@ -95,6 +95,7 @@ public class CreateCharacterHandler
     internal static CharacterDto ToDto(Character character)
     {
         return new CharacterDto(
+            character.AccountId,
             character.Id,
             character.Name,
             character.Level,
