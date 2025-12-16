@@ -60,25 +60,14 @@ public class EncounterGenerator
         var monsters = (await _worldRepository.GetMonstersAsync(cancellationToken)).ToList();
         var dropTables = await _worldRepository.GetDropTablesAsync(cancellationToken);
         var dropPool = GetDropTable(dropTables, destination.Biome);
-        if (monsters.Count == 0 || _randomService.NextDouble() < 0.25)
+        if (monsters.Count == 0)
         {
-            var discoveryDrops = RollDrops(dropPool, 2);
-            var discovery = new Encounter
-            {
-                CharacterId = character.Id,
-                EncounterType = "Discovery",
-                Location = destination.Name,
-                Outcome = discoveryDrops.Count > 0 ? "Found supplies" : "Uneventful",
-                Drops = discoveryDrops
-            };
+            return BuildDiscovery(character, destination, dropPool);
+        }
 
-            _logger.LogInformation(
-                "Character {CharacterId} experienced discovery at {Location} with {DropCount} drops",
-                character.Id,
-                destination.Name,
-                discoveryDrops.Count);
-
-            return new EncounterResolution(discovery, discoveryDrops);
+        if (_randomService.NextDouble() < 0.05)
+        {
+            return BuildDiscovery(character, destination, dropPool);
         }
 
         var monsterCandidates = FilterMonsters(monsters, destination.Biome, destination.ThreatLevel).ToList();
@@ -186,6 +175,27 @@ public class EncounterGenerator
         return fallback?.Drops.Count > 0
             ? fallback.Drops
             : new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+    }
+
+    private EncounterResolution BuildDiscovery(Character character, WorldLocationNode destination, List<string> dropPool)
+    {
+        var discoveryDrops = RollDrops(dropPool, 2);
+        var discovery = new Encounter
+        {
+            CharacterId = character.Id,
+            EncounterType = "Discovery",
+            Location = destination.Name,
+            Outcome = discoveryDrops.Count > 0 ? "Found supplies" : "Uneventful",
+            Drops = discoveryDrops
+        };
+
+        _logger.LogInformation(
+            "Character {CharacterId} experienced discovery at {Location} with {DropCount} drops",
+            character.Id,
+            destination.Name,
+            discoveryDrops.Count);
+
+        return new EncounterResolution(discovery, discoveryDrops);
     }
 
     private IEnumerable<Monster> FilterMonsters(IEnumerable<Monster> monsters, string biome, string threatLevel)
