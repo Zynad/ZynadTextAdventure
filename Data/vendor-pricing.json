@@ -1,6 +1,11 @@
 [
   {
-    "ValidUntil": "0001-01-01T00:00:00+00:00",
-    "Modifiers": []
+    "ValidUntil": "2099-01-01T00:00:00+00:00",
+    "Modifiers": [
+      { "TownName": "Emberbrook", "ItemId": "whetstone", "BuyMultiplier": 0.95, "SellMultiplier": 1.1, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Mosslight", "ItemId": "healing_herbs", "BuyMultiplier": 1.05, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Stormwatch Harbor", "ItemId": "salted_fish", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Highridge", "ItemId": "ore_fragment", "BuyMultiplier": 1.1, "SellMultiplier": 1.15, "ExpiresAt": "2099-01-01T06:00:00+00:00" }
+    ]
   }
 ]

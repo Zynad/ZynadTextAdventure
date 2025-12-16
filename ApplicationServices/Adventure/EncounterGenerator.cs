@@ -47,9 +47,11 @@ public class EncounterGenerator
         }
 
         var monsters = (await _worldRepository.GetMonstersAsync(cancellationToken)).ToList();
+        var dropTables = await _worldRepository.GetDropTablesAsync(cancellationToken);
+        var dropPool = GetDropTable(dropTables, destination.Biome);
         if (monsters.Count == 0 || _randomService.NextDouble() < 0.25)
         {
-            var discoveryDrops = RollDrops(destination.Biome, 2);
+            var discoveryDrops = RollDrops(dropPool, 2);
             var discovery = new Encounter
             {
                 CharacterId = character.Id,
@@ -70,7 +72,7 @@ public class EncounterGenerator
 
         var monster = monsters[_randomService.NextInt(0, monsters.Count)];
         var victory = ResolveCombat(character.Level, monster.Level);
-        var loot = victory ? RollDrops(destination.Biome, 3) : new List<InventoryItem>();
+        var loot = victory ? RollDrops(dropPool, 3) : new List<InventoryItem>();
 
         var battle = new Encounter
         {
@@ -117,9 +119,12 @@ public class EncounterGenerator
         return roll <= baseChance;
     }
 
-    private List<InventoryItem> RollDrops(string biome, int maxStacks)
+    private List<InventoryItem> RollDrops(List<string> pool, int maxStacks)
     {
-        var pool = GetDropTable(biome);
+        if (pool.Count == 0)
+        {
+            return new List<InventoryItem>();
+        }
         var dropCount = _randomService.NextInt(1, Math.Max(2, maxStacks + 1));
         var drops = new List<InventoryItem>();
 
@@ -145,19 +150,22 @@ public class EncounterGenerator
         drops.Add(new InventoryItem { ItemId = dropId, Quantity = quantity });
     }
 
-    private List<string> GetDropTable(string biome)
+    private List<string> GetDropTable(IReadOnlyCollection<DropTable> dropTables, string biome)
     {
-        var biomeKey = string.IsNullOrWhiteSpace(biome)
-            ? "unknown"
-            : biome.ToLowerInvariant();
-
-        return biomeKey switch
+        if (dropTables.Count == 0)
         {
-            "village" => new List<string> { "loaf_of_bread", "bundle_of_roots", "healing_herbs" },
-            "forest" => new List<string> { "healing_herbs", "tree_sap", "forest_tokens" },
-            "grassland" => new List<string> { "loaf_of_bread", "coin_pouch", "torn_cloth" },
-            "mountain" => new List<string> { "ore_fragment", "sturdy_leather", "coin_pouch" },
-            _ => new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" }
-        };
+            return new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+        }
+
+        var match = dropTables.FirstOrDefault(dt => dt.Biome.Equals(biome, StringComparison.OrdinalIgnoreCase));
+        if (match?.Drops.Count > 0)
+        {
+            return match.Drops;
+        }
+
+        var fallback = dropTables.FirstOrDefault(dt => dt.Biome.Equals("Unknown", StringComparison.OrdinalIgnoreCase));
+        return fallback?.Drops.Count > 0
+            ? fallback.Drops
+            : new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
     }
 }
