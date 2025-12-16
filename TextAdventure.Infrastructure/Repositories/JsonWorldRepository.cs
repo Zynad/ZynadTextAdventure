@@ -246,7 +246,14 @@ public class JsonWorldRepository : IWorldRepository
                     new() { ItemId = "loaf_of_bread", BuyPrice = 2.0m, SellPrice = 1.0m },
                     new() { ItemId = "whetstone", BuyPrice = 8.0m, SellPrice = 3.0m },
                     new() { ItemId = "leather_cap", BuyPrice = 12.0m, SellPrice = 5.0m },
-                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m }
+                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
+                    new() { ItemId = "minor_healing_potion", BuyPrice = 14.0m, SellPrice = 6.0m }
+                },
+                Npcs = new List<TownNpc>
+                {
+                    new() { Id = "emberbrook_mayor", Name = "Mayor Thale", Role = "Mayor", Personality = "Earnest" },
+                    new() { Id = "emberbrook_farmer", Name = "Rhea Grainley", Role = "Farmer", Personality = "Cheerful" },
+                    new() { Id = "emberbrook_barkeep", Name = "Joren Kask", Role = "Barkeep", Personality = "Wry", IsVendor = true }
                 }
             },
             new()
@@ -257,7 +264,14 @@ public class JsonWorldRepository : IWorldRepository
                     new() { ItemId = "forest_tokens", BuyPrice = 5.0m, SellPrice = 2.0m },
                     new() { ItemId = "travel_rations", BuyPrice = 3.5m, SellPrice = 1.5m },
                     new() { ItemId = "quiver_of_arrows", BuyPrice = 14.0m, SellPrice = 6.0m },
-                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m }
+                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
+                    new() { ItemId = "antidote_phial", BuyPrice = 10.0m, SellPrice = 4.0m }
+                },
+                Npcs = new List<TownNpc>
+                {
+                    new() { Id = "mosslight_guard", Name = "Ser Havel", Role = "Guard Captain", Personality = "Stoic" },
+                    new() { Id = "mosslight_scavenger", Name = "Fenna Willow", Role = "Forager", Personality = "Curious" },
+                    new() { Id = "mosslight_caller", Name = "Brin Bell", Role = "Town Crier", Personality = "Booming" }
                 }
             },
             new()
@@ -268,7 +282,14 @@ public class JsonWorldRepository : IWorldRepository
                     new() { ItemId = "salted_fish", BuyPrice = 4.0m, SellPrice = 2.0m },
                     new() { ItemId = "driftwood_charm", BuyPrice = 9.0m, SellPrice = 4.0m },
                     new() { ItemId = "rope_coil", BuyPrice = 7.0m, SellPrice = 3.0m },
-                    new() { ItemId = "sailor_cloak", BuyPrice = 15.0m, SellPrice = 7.0m }
+                    new() { ItemId = "sailor_cloak", BuyPrice = 15.0m, SellPrice = 7.0m },
+                    new() { ItemId = "lesser_mana_potion", BuyPrice = 16.0m, SellPrice = 7.0m }
+                },
+                Npcs = new List<TownNpc>
+                {
+                    new() { Id = "stormwatch_dockmaster", Name = "Dockmaster Leira", Role = "Dockmaster", Personality = "Gruff", IsVendor = true },
+                    new() { Id = "stormwatch_sailor", Name = "Old Wens", Role = "Sailor", Personality = "Storyteller" },
+                    new() { Id = "stormwatch_scrim", Name = "Scrim", Role = "Smuggler", Personality = "Cagey" }
                 }
             },
             new()
@@ -279,7 +300,14 @@ public class JsonWorldRepository : IWorldRepository
                     new() { ItemId = "ore_fragment", BuyPrice = 10.0m, SellPrice = 4.0m },
                     new() { ItemId = "sturdy_leather", BuyPrice = 9.0m, SellPrice = 4.0m },
                     new() { ItemId = "iron_ingot", BuyPrice = 18.0m, SellPrice = 8.0m },
-                    new() { ItemId = "glowing_crystal", BuyPrice = 22.0m, SellPrice = 10.0m }
+                    new() { ItemId = "glowing_crystal", BuyPrice = 22.0m, SellPrice = 10.0m },
+                    new() { ItemId = "iron_shield", BuyPrice = 28.0m, SellPrice = 12.0m }
+                },
+                Npcs = new List<TownNpc>
+                {
+                    new() { Id = "highridge_miner", Name = "Torun Slate", Role = "Miner", Personality = "Pragmatic" },
+                    new() { Id = "highridge_cook", Name = "Elya Pike", Role = "Cook", Personality = "Warm" },
+                    new() { Id = "highridge_quartermaster", Name = "Quartermaster Hale", Role = "Quartermaster", Personality = "Exacting", IsVendor = true }
                 }
             }
         };
@@ -292,47 +320,47 @@ public class JsonWorldRepository : IWorldRepository
             new()
             {
                 Biome = "Village",
-                Drops = new List<string> { "loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations" }
+                Drops = new List<string> { "loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "minor_healing_potion", "wool_vest" }
             },
             new()
             {
                 Biome = "Grassland",
-                Drops = new List<string> { "loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans" }
+                Drops = new List<string> { "loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger" }
             },
             new()
             {
                 Biome = "Forest",
-                Drops = new List<string> { "healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus" }
+                Drops = new List<string> { "healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow" }
             },
             new()
             {
                 Biome = "Mountain",
-                Drops = new List<string> { "ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal" }
+                Drops = new List<string> { "ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield" }
             },
             new()
             {
                 Biome = "Cave",
-                Drops = new List<string> { "glowing_crystal", "bat_wing", "ore_fragment" }
+                Drops = new List<string> { "glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff" }
             },
             new()
             {
                 Biome = "Ruins",
-                Drops = new List<string> { "ancient_coin", "tattered_map", "mysterious_trinket" }
+                Drops = new List<string> { "ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk" }
             },
             new()
             {
                 Biome = "Coast",
-                Drops = new List<string> { "salted_fish", "coin_pouch", "driftwood_charm" }
+                Drops = new List<string> { "salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass" }
             },
             new()
             {
                 Biome = "Swamp",
-                Drops = new List<string> { "reedy_bundle", "marsh_pearl", "mossy_fragment" }
+                Drops = new List<string> { "reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice" }
             },
             new()
             {
                 Biome = "Unknown",
-                Drops = new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" }
+                Drops = new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map", "lesser_mana_potion" }
             }
         };
     }

@@ -8,7 +8,13 @@
           { "ItemId": "whetstone", "BuyPrice": 8.0, "SellPrice": 3.0 },
           { "ItemId": "leather_cap", "BuyPrice": 12.0, "SellPrice": 5.0 },
           { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
+          { "ItemId": "minor_healing_potion", "BuyPrice": 14.0, "SellPrice": 6.0 },
           { "ItemId": "rusted_dagger", "BuyPrice": 10.0, "SellPrice": 4.0 }
+        ],
+        "Npcs": [
+          { "Id": "emberbrook_mayor", "Name": "Mayor Thale", "Role": "Mayor", "Personality": "Earnest" },
+          { "Id": "emberbrook_farmer", "Name": "Rhea Grainley", "Role": "Farmer", "Personality": "Cheerful" },
+          { "Id": "emberbrook_barkeep", "Name": "Joren Kask", "Role": "Barkeep", "Personality": "Wry", "IsVendor": true }
         ]
       },
       {
@@ -18,7 +24,13 @@
           { "ItemId": "travel_rations", "BuyPrice": 3.5, "SellPrice": 1.5 },
           { "ItemId": "quiver_of_arrows", "BuyPrice": 14.0, "SellPrice": 6.0 },
           { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
+          { "ItemId": "antidote_phial", "BuyPrice": 10.0, "SellPrice": 4.0 },
           { "ItemId": "hunter_hat", "BuyPrice": 15.0, "SellPrice": 7.0 }
+        ],
+        "Npcs": [
+          { "Id": "mosslight_guard", "Name": "Ser Havel", "Role": "Guard Captain", "Personality": "Stoic" },
+          { "Id": "mosslight_scavenger", "Name": "Fenna Willow", "Role": "Forager", "Personality": "Curious" },
+          { "Id": "mosslight_caller", "Name": "Brin Bell", "Role": "Town Crier", "Personality": "Booming" }
         ]
       },
       {
@@ -28,7 +40,13 @@
           { "ItemId": "driftwood_charm", "BuyPrice": 9.0, "SellPrice": 4.0 },
           { "ItemId": "rope_coil", "BuyPrice": 7.0, "SellPrice": 3.0 },
           { "ItemId": "sailor_cloak", "BuyPrice": 15.0, "SellPrice": 7.0 },
-          { "ItemId": "sea_blade", "BuyPrice": 22.0, "SellPrice": 9.0 }
+          { "ItemId": "sea_blade", "BuyPrice": 22.0, "SellPrice": 9.0 },
+          { "ItemId": "lesser_mana_potion", "BuyPrice": 16.0, "SellPrice": 7.0 }
+        ],
+        "Npcs": [
+          { "Id": "stormwatch_dockmaster", "Name": "Dockmaster Leira", "Role": "Dockmaster", "Personality": "Gruff", "IsVendor": true },
+          { "Id": "stormwatch_sailor", "Name": "Old Wens", "Role": "Sailor", "Personality": "Storyteller" },
+          { "Id": "stormwatch_scrim", "Name": "Scrim", "Role": "Smuggler", "Personality": "Cagey" }
         ]
       },
       {
@@ -39,6 +57,11 @@
           { "ItemId": "iron_ingot", "BuyPrice": 18.0, "SellPrice": 8.0 },
           { "ItemId": "glowing_crystal", "BuyPrice": 22.0, "SellPrice": 10.0 },
           { "ItemId": "iron_shield", "BuyPrice": 24.0, "SellPrice": 10.0 }
+        ],
+        "Npcs": [
+          { "Id": "highridge_miner", "Name": "Torun Slate", "Role": "Miner", "Personality": "Pragmatic" },
+          { "Id": "highridge_cook", "Name": "Elya Pike", "Role": "Cook", "Personality": "Warm" },
+          { "Id": "highridge_quartermaster", "Name": "Quartermaster Hale", "Role": "Quartermaster", "Personality": "Exacting", "IsVendor": true }
         ]
       },
       {
@@ -48,6 +71,11 @@
           { "ItemId": "reedy_bundle", "BuyPrice": 4.0, "SellPrice": 1.5 },
           { "ItemId": "marsh_hood", "BuyPrice": 14.0, "SellPrice": 6.0 },
           { "ItemId": "bog_spice", "BuyPrice": 7.0, "SellPrice": 2.5 }
+        ],
+        "Npcs": [
+          { "Id": "bramblefen_reed", "Name": "Lysa Reed", "Role": "Boatwright", "Personality": "Patient" },
+          { "Id": "bramblefen_sworn", "Name": "Krell Fen", "Role": "Swamp Ranger", "Personality": "Watchful" },
+          { "Id": "bramblefen_hag", "Name": "Old Miri", "Role": "Herbalist", "Personality": "Gruff", "IsVendor": true }
         ]
       },
       {
@@ -57,6 +85,11 @@
           { "ItemId": "tempered_sword", "BuyPrice": 30.0, "SellPrice": 12.0 },
           { "ItemId": "chain_hauberk", "BuyPrice": 28.0, "SellPrice": 12.0 },
           { "ItemId": "oak_bow", "BuyPrice": 18.0, "SellPrice": 7.0 }
+        ],
+        "Npcs": [
+          { "Id": "silvercross_castellan", "Name": "Castellan Wyne", "Role": "Castellan", "Personality": "Measured" },
+          { "Id": "silvercross_bard", "Name": "Perrin Lyre", "Role": "Bard", "Personality": "Spirited" },
+          { "Id": "silvercross_scribe", "Name": "Ilse Quill", "Role": "Scribe", "Personality": "Curious" }
         ]
       },
       {
@@ -65,6 +98,11 @@
           { "ItemId": "frost_coat", "BuyPrice": 26.0, "SellPrice": 11.0 },
           { "ItemId": "crystal_flask", "BuyPrice": 18.0, "SellPrice": 8.0 },
           { "ItemId": "ashen_staff", "BuyPrice": 22.0, "SellPrice": 9.0 }
+        ],
+        "Npcs": [
+          { "Id": "frostglen_warden", "Name": "Warden Hrold", "Role": "Gate Warden", "Personality": "Stern" },
+          { "Id": "frostglen_healer", "Name": "Maera Snow", "Role": "Healer", "Personality": "Gentle", "IsVendor": true },
+          { "Id": "frostglen_trapper", "Name": "Olan Rime", "Role": "Trapper", "Personality": "Quiet" }
         ]
       }
     ],
@@ -563,16 +601,16 @@
       }
     ],
     "DropTables": [
-      { "Biome": "Village", "Drops": ["loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "coin_pouch", "copper_ring"] },
+      { "Biome": "Village", "Drops": ["loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "coin_pouch", "copper_ring", "minor_healing_potion", "wool_vest"] },
       { "Biome": "Grassland", "Drops": ["loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger", "hunter_hat"] },
-      { "Biome": "Forest", "Drops": ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow"] },
+      { "Biome": "Forest", "Drops": ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow", "antidote_phial"] },
       { "Biome": "Mountain", "Drops": ["ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield"] },
       { "Biome": "Cave", "Drops": ["glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff"] },
       { "Biome": "Ruins", "Drops": ["ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk"] },
-      { "Biome": "Coast", "Drops": ["salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass"] },
+      { "Biome": "Coast", "Drops": ["salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass", "lesser_mana_potion"] },
       { "Biome": "Swamp", "Drops": ["reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice"] },
-      { "Biome": "Snow", "Drops": ["frost_coat", "crystal_flask", "coin_pouch", "ashen_staff"] },
-      { "Biome": "Unknown", "Drops": ["coin_pouch", "mysterious_trinket", "tattered_map"] }
+      { "Biome": "Snow", "Drops": ["frost_coat", "crystal_flask", "coin_pouch", "ashen_staff", "lesser_mana_potion"] },
+      { "Biome": "Unknown", "Drops": ["coin_pouch", "mysterious_trinket", "tattered_map", "antidote_phial"] }
     ]
   }
 ]

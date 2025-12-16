@@ -24,6 +24,13 @@ public class DataSchemaTests
         var uniqueLocationIds = new HashSet<string>(locationDictionary.Keys, StringComparer.OrdinalIgnoreCase);
         uniqueLocationIds.Count.ShouldBe(world.Locations.Count);
 
+        foreach (var town in world.Towns)
+        {
+            town.Npcs.ShouldNotBeNull();
+            town.Npcs.Count.ShouldBeGreaterThanOrEqualTo(2);
+            town.Npcs.ShouldAllBe(n => !string.IsNullOrWhiteSpace(n.Name) && !string.IsNullOrWhiteSpace(n.Role));
+        }
+
         foreach (var location in world.Locations)
         {
             if (!string.IsNullOrWhiteSpace(location.TownName))

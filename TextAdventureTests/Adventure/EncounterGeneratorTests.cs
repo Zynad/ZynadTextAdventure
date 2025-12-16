@@ -1,6 +1,7 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
+using System;
 using System.Linq;
 using Domain.Core;
 using Domain.Entities.Storage;
@@ -43,7 +44,7 @@ public class EncounterGeneratorTests
         });
 
         var generator = new EncounterGenerator(random, repository, NullLogger<EncounterGenerator>.Instance);
-        var character = new Character { Id = "char", Level = 3 };
+        var character = new Character { Id = Guid.NewGuid(), Level = 3 };
         var origin = new WorldLocationNode { Id = "old_watchtower", Name = "Old Watchtower" };
         var destination = new WorldLocationNode
         {
