@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TextAdventure.Api.Models.Requests;
-using TextAdventure.Api.Services;
+using ApplicationServices.Contracts.Requests;
+using ApplicationServices.Services;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -8,9 +8,9 @@ namespace TextAdventure.Api.Controllers;
 [Route("api/[controller]")]
 public class ProgressController : ControllerBase
 {
-    private readonly GameDataService _gameDataService;
+    private readonly IGameDataService _gameDataService;
 
-    public ProgressController(GameDataService gameDataService)
+    public ProgressController(IGameDataService gameDataService)
     {
         _gameDataService = gameDataService;
     }

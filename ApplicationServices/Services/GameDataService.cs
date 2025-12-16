@@ -1,16 +1,17 @@
 using System.Security.Cryptography;
 using System.Text;
-using TextAdventure.Api.Models;
-using TextAdventure.Api.Models.Requests;
-using TextAdventure.Api.Models.Responses;
+using ApplicationServices.Contracts.Requests;
+using ApplicationServices.Contracts.Responses;
+using Domain.Database;
+using Domain.Entities.Storage;
 
-namespace TextAdventure.Api.Services;
+namespace ApplicationServices.Services;
 
-public class GameDataService
+public class GameDataService : IGameDataService
 {
-    private readonly JsonDatabase _database;
+    private readonly IGameDatabase _database;
 
-    public GameDataService(JsonDatabase database)
+    public GameDataService(IGameDatabase database)
     {
         _database = database;
     }
@@ -67,7 +68,7 @@ public class GameDataService
         };
     }
 
-    public async Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<MonsterProfile>> GetMonstersAsync(CancellationToken cancellationToken = default)
     {
         var database = await _database.ReadAsync(cancellationToken);
         if (database.Monsters.Count == 0)
@@ -94,13 +95,16 @@ public class GameDataService
             return null;
         }
 
+        EnsureSaveSlots(progress);
+
         return new ProgressResponse
         {
             UserId = user.Id,
             Level = progress.Level,
             Experience = progress.Experience,
             AdventureState = progress.AdventureState,
-            LastUpdatedUtc = progress.LastUpdatedUtc
+            LastUpdatedUtc = progress.LastUpdatedUtc,
+            SaveSlots = progress.SaveSlots.AsReadOnly()
         };
     }
 
@@ -125,6 +129,28 @@ public class GameDataService
         progress.AdventureState = request.AdventureState;
         progress.LastUpdatedUtc = DateTimeOffset.UtcNow;
 
+        var location = new WorldLocation
+        {
+            Name = string.IsNullOrWhiteSpace(request.LocationName) ? WorldLocation.Default().Name : request.LocationName,
+            Biome = string.IsNullOrWhiteSpace(request.LocationBiome) ? WorldLocation.Default().Biome : request.LocationBiome,
+            ThreatLevel = string.IsNullOrWhiteSpace(request.LocationThreatLevel)
+                ? WorldLocation.Default().ThreatLevel
+                : request.LocationThreatLevel
+        };
+
+        var saveSlot = progress.SaveSlots.FirstOrDefault(s => s.Name.Equals(request.SaveSlotName, StringComparison.OrdinalIgnoreCase));
+        if (saveSlot is null)
+        {
+            saveSlot = new SaveSlot { Name = request.SaveSlotName };
+            progress.SaveSlots.Add(saveSlot);
+        }
+
+        saveSlot.Level = request.Level;
+        saveSlot.Experience = request.Experience;
+        saveSlot.AdventureState = request.AdventureState;
+        saveSlot.LastUpdatedUtc = DateTimeOffset.UtcNow;
+        saveSlot.Location = location;
+
         await _database.WriteAsync(database, cancellationToken);
         return true;
     }
@@ -144,5 +170,21 @@ public class GameDataService
     private static UserAccount? FindUserByToken(DatabaseModel database, string token)
     {
         return database.Users.FirstOrDefault(u => u.SessionTokens.Contains(token));
+    }
+
+    private static void EnsureSaveSlots(PlayerProgress progress)
+    {
+        if (progress.SaveSlots.Count == 0)
+        {
+            progress.SaveSlots.Add(new SaveSlot
+            {
+                Name = "Slot 1",
+                AdventureState = progress.AdventureState,
+                Experience = progress.Experience,
+                Level = progress.Level,
+                LastUpdatedUtc = progress.LastUpdatedUtc,
+                Location = WorldLocation.Default()
+            });
+        }
     }
 }

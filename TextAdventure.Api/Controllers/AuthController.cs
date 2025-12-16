@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TextAdventure.Api.Models.Requests;
-using TextAdventure.Api.Services;
+using ApplicationServices.Contracts.Requests;
+using ApplicationServices.Services;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -8,9 +8,9 @@ namespace TextAdventure.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly GameDataService _gameDataService;
+    private readonly IGameDataService _gameDataService;
 
-    public AuthController(GameDataService gameDataService)
+    public AuthController(IGameDataService gameDataService)
     {
         _gameDataService = gameDataService;
     }

@@ -1,13 +1,11 @@
-using TextAdventure.Api.Services;
+using ApplicationServices.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.Configure<JsonDatabaseOptions>(builder.Configuration.GetSection("JsonDatabase"));
-builder.Services.AddSingleton<JsonDatabase>();
-builder.Services.AddSingleton<GameDataService>();
+builder.Services.AddTextAdventureGame(builder.Configuration);
 
 var app = builder.Build();
 

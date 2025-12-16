@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-
-namespace TextAdventure.Api.Models;
+namespace Domain.Entities.Storage;
 
 public class UserAccount
 {
@@ -8,7 +6,6 @@ public class UserAccount
 
     public string Username { get; set; } = string.Empty;
 
-    [JsonIgnore]
     public string PasswordHash { get; set; } = string.Empty;
 
     public List<string> SessionTokens { get; set; } = new();

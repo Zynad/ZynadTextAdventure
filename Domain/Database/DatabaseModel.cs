@@ -1,4 +1,6 @@
-namespace TextAdventure.Api.Models;
+using Domain.Entities.Storage;
+
+namespace Domain.Database;
 
 public class DatabaseModel
 {
@@ -6,7 +8,7 @@ public class DatabaseModel
 
     public List<PlayerProgress> Progress { get; set; } = new();
 
-    public List<Monster> Monsters { get; set; } = new();
+    public List<MonsterProfile> Monsters { get; set; } = new();
 
     public static DatabaseModel CreateDefault()
     {
@@ -15,9 +17,9 @@ public class DatabaseModel
         return database;
     }
 
-    public static IEnumerable<Monster> CreateDefaultMonsters()
+    public static IEnumerable<MonsterProfile> CreateDefaultMonsters()
     {
-        return new List<Monster>
+        return new List<MonsterProfile>
         {
             new()
             {
@@ -42,6 +44,22 @@ public class DatabaseModel
                 Level = 5,
                 HitPoints = 60,
                 AttackPower = 12
+            },
+            new()
+            {
+                Name = "Marsh Serpent",
+                Description = "A venomous serpent that strikes from the reeds.",
+                Level = 3,
+                HitPoints = 30,
+                AttackPower = 8
+            },
+            new()
+            {
+                Name = "Bandit Captain",
+                Description = "A seasoned raider leading a small gang.",
+                Level = 4,
+                HitPoints = 42,
+                AttackPower = 10
             }
         };
     }
