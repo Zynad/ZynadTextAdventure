@@ -17,6 +17,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddSingleton<FileConcurrencyProvider>();
 
         services.AddSingleton<IUserRepository, JsonUserRepository>();
+        services.AddSingleton<ISessionRepository, JsonSessionRepository>();
         services.AddSingleton<ICharacterRepository, JsonCharacterRepository>();
         services.AddSingleton<IQuestRepository, JsonQuestRepository>();
         services.AddSingleton<IWorldRepository, JsonWorldRepository>();

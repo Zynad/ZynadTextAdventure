@@ -12,6 +12,9 @@ public static class ServiceCollectionExtensions
         services.Configure<JsonDatabaseOptions>(configuration.GetSection("JsonDatabase"));
         services.AddSingleton<IGameDatabase, JsonDatabase>();
         services.AddSingleton<IGameDataService, GameDataService>();
+        services.AddTransient<Authentication.RegisterUserHandler>();
+        services.AddTransient<Authentication.LoginUserHandler>();
+        services.AddTransient<Authentication.GetCurrentUserHandler>();
         return services;
     }
 }

@@ -44,6 +44,12 @@ public class JsonUserRepository : IUserRepository
         return accounts.FirstOrDefault(a => string.Equals(a.Username, username, StringComparison.OrdinalIgnoreCase));
     }
 
+    public async Task<Account?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        var accounts = await _store.ReadAsync(() => new List<Account>(), cancellationToken);
+        return accounts.FirstOrDefault(a => string.Equals(a.Email, email, StringComparison.OrdinalIgnoreCase));
+    }
+
     public async Task<Account?> GetBySessionTokenAsync(string token, CancellationToken cancellationToken = default)
     {
         var accounts = await _store.ReadAsync(() => new List<Account>(), cancellationToken);

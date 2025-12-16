@@ -6,6 +6,43 @@ public class AdminManager : IAdminManager
 {
     private readonly IDbHandler _dbHandler;
 
+    private enum CrudAction
+    {
+        Create = 1,
+        Get = 2,
+        Delete = 3,
+        Update = 4,
+        Exit = 5
+    }
+
+    private enum EntityCategory
+    {
+        Armor = 1,
+        Weapon = 2,
+        Item = 3,
+        GoBack = 4
+    }
+
+    private enum ArmorType
+    {
+        Boots = 1,
+        Chest = 2,
+        Gloves = 3,
+        Helmet = 4,
+        Legs = 5,
+        GoBack = 6
+    }
+
+    private enum WeaponType
+    {
+        Staff = 1,
+        Wand = 2,
+        Axe = 3,
+        Sword = 4,
+        Bow = 5,
+        GoBack = 6
+    }
+
     public AdminManager(IDbHandler dbHandler)
     {
         _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
@@ -32,49 +69,55 @@ public class AdminManager : IAdminManager
         while (true)
         {
             string choice = ParseHelper.AskForString("What would you like to do? \n1. Create\n2. Get\n3. Delete\n4. Update\n5. Exit\n");
-            switch (choice)
+            if (!TryParseSelection(choice, out CrudAction action))
             {
-                case "1" or "create":
-                    await ChooseEntityType("create");
-                    break;
-                case "2" or "get":
-                    await ChooseEntityType("get");
-                    break;
-                case "3" or "delete":
-                    await ChooseEntityType("delete");
-                    break;
-                case "4" or "update":
-                    await ChooseEntityType("update");
-                    break;
-                case "5" or "exit":
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice, please try again.");
-                    break;
+                Console.WriteLine("Invalid choice, please try again.");
+                continue;
             }
+
+            if (action == CrudAction.Exit)
+            {
+                return;
+            }
+
+            await ChooseEntityType(action);
         }
     }
 
-    private async Task ChooseEntityType(string crudMethod)
+    private async Task ChooseEntityType(CrudAction action)
     {
         while (true)
         {
             string entityType = ParseHelper.AskForString("Choose the entity type: \n1. Armor\n2. Weapon\n3. Item\n4. Go back\n");
-            switch (entityType)
+            if (!TryParseSelection(entityType, out EntityCategory category))
             {
-                case "armor" or "1":
+                Console.WriteLine("Invalid choice, please try again.");
+                continue;
+            }
+
+            switch (category)
+            {
+                case EntityCategory.Armor:
                     string armorType = ParseHelper.AskForString("Choose the entity type: \n1. Boots\n2. Chest\n3. Gloves\n4. Helmet\n5. Legs\n6. Go back\n");
-                    if (CheckGoBack(armorType)) return;
-                    await ArmorCrud(crudMethod, armorType);
+                    if (!TryParseSelection(armorType, out ArmorType parsedArmor) || parsedArmor == ArmorType.GoBack)
+                    {
+                        return;
+                    }
+
+                    await ArmorCrud(action, parsedArmor);
                     break;
-                case "weapon" or "2":
+                case EntityCategory.Weapon:
                     string weaponType = ParseHelper.AskForString("Choose the entity type: \n1. Staff\n2. Wand\n3. Axe\n4. Sword\n5. Bow\n6. Go back\n");
-                    if(CheckGoBack(weaponType)) return;
-                    await WeaponCrud(crudMethod, weaponType);
+                    if (!TryParseSelection(weaponType, out WeaponType parsedWeapon) || parsedWeapon == WeaponType.GoBack)
+                    {
+                        return;
+                    }
+
+                    await WeaponCrud(action, parsedWeapon);
                     break;
-                case "item" or "3":
-                    break;
-                case "go back" or "4":
+                case EntityCategory.Item:
+                    return;
+                case EntityCategory.GoBack:
                     return;
                 default:
                     Console.WriteLine("Invalid choice, please try again.");
@@ -83,116 +126,129 @@ public class AdminManager : IAdminManager
         }
     }
 
-    private async Task ArmorCrud(string crudMethod, string armorType)
+    private async Task ArmorCrud(CrudAction action, ArmorType armorType)
     {
-        while (true)
+        switch (action)
         {
-            switch (crudMethod)
-            {
-                case "create":
-                    switch (armorType)
-                    {
-                        case "boots" or "1":
-                            await _dbHandler.AddBoots();
-                            break;
-                        case "chest" or "2":
-                            await _dbHandler.AddChest();
-                            break;
-                        case "gloves" or "3":
-                            await _dbHandler.AddGloves();
-                            break;
-                        case "helmet" or "4":
-                            await _dbHandler.AddHelmet();
-                            break;
-                        case "legs" or "5":
-                            await _dbHandler.AddLegs();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid armor type, please try again.");
-                            break;
-                    }
-                    return;
-                case "get":
-                    switch (armorType)
-                    {
-                        case "boots" or "1":
-                            await _dbHandler.GetBoots();
-                            break;
-                        case "chest" or "2":
-                            await _dbHandler.GetChest();
-                            break;
-                        case "gloves" or "3":
-                            await _dbHandler.GetGloves();
-                            break;
-                        case "helmet" or "4":
-                            await _dbHandler.GetHelmet();
-                            break;
-                        case "legs" or "5":
-                            await _dbHandler.GetLegs();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid armor type, please try again.");
-                            break;
-                    }
-                    return;
-                default:
-                    Console.WriteLine("Invalid CRUD method, please try again.");
-                    break;
-            }
+            case CrudAction.Create:
+                await HandleArmorCreate(armorType);
+                return;
+            case CrudAction.Get:
+                await HandleArmorGet(armorType);
+                return;
+            default:
+                Console.WriteLine("Invalid CRUD method, please try again.");
+                return;
         }
     }
 
-
-    private async Task WeaponCrud(string crudMethod, string weaponType)
+    private async Task HandleArmorCreate(ArmorType armorType)
     {
-        while (true)
+        switch (armorType)
         {
-            switch (crudMethod)
-            {
-                case "create":
-                    switch (weaponType)
-                    {
-                        case "staff" or "1":
-                            await _dbHandler.AddStaff();
-                            break;
-                        case "wand" or "2":
-                            await _dbHandler.AddWand();
-                            break;
-                        case "axe" or "3":
-                            await _dbHandler.AddAxe();
-                            break;
-                        case "sword" or "4":
-                            await _dbHandler.AddSword();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid weapon type, please try again.");
-                            break;
-                    }
-                    break;
-                case "get":
-                    switch (weaponType)
-                    {
-                        case "staff" or "1":
-                            await _dbHandler.GetStaff();
-                            break;
-                        case "wand" or "2":
-                            await _dbHandler.GetWand();
-                            break;
-                        case "axe" or "3":
-                            await _dbHandler.GetAxe();
-                            break;
-                        case "sword" or "4":
-                            await _dbHandler.GetSword();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid weapon type, please try again.");
-                            break;
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Invalid CRUD method, please try again.");
-                    break;
-            }
+            case ArmorType.Boots:
+                await _dbHandler.AddBoots();
+                break;
+            case ArmorType.Chest:
+                await _dbHandler.AddChest();
+                break;
+            case ArmorType.Gloves:
+                await _dbHandler.AddGloves();
+                break;
+            case ArmorType.Helmet:
+                await _dbHandler.AddHelmet();
+                break;
+            case ArmorType.Legs:
+                await _dbHandler.AddLegs();
+                break;
+            default:
+                Console.WriteLine("Invalid armor type, please try again.");
+                break;
+        }
+    }
+
+    private async Task HandleArmorGet(ArmorType armorType)
+    {
+        switch (armorType)
+        {
+            case ArmorType.Boots:
+                await _dbHandler.GetBoots();
+                break;
+            case ArmorType.Chest:
+                await _dbHandler.GetChest();
+                break;
+            case ArmorType.Gloves:
+                await _dbHandler.GetGloves();
+                break;
+            case ArmorType.Helmet:
+                await _dbHandler.GetHelmet();
+                break;
+            case ArmorType.Legs:
+                await _dbHandler.GetLegs();
+                break;
+            default:
+                Console.WriteLine("Invalid armor type, please try again.");
+                break;
+        }
+    }
+
+    private async Task WeaponCrud(CrudAction action, WeaponType weaponType)
+    {
+        switch (action)
+        {
+            case CrudAction.Create:
+                await HandleWeaponCreate(weaponType);
+                break;
+            case CrudAction.Get:
+                await HandleWeaponGet(weaponType);
+                break;
+            default:
+                Console.WriteLine("Invalid CRUD method, please try again.");
+                break;
+        }
+    }
+
+    private async Task HandleWeaponCreate(WeaponType weaponType)
+    {
+        switch (weaponType)
+        {
+            case WeaponType.Staff:
+                await _dbHandler.AddStaff();
+                break;
+            case WeaponType.Wand:
+                await _dbHandler.AddWand();
+                break;
+            case WeaponType.Axe:
+                await _dbHandler.AddAxe();
+                break;
+            case WeaponType.Sword:
+                await _dbHandler.AddSword();
+                break;
+            default:
+                Console.WriteLine("Invalid weapon type, please try again.");
+                break;
+        }
+    }
+
+    private async Task HandleWeaponGet(WeaponType weaponType)
+    {
+        switch (weaponType)
+        {
+            case WeaponType.Staff:
+                await _dbHandler.GetStaff();
+                break;
+            case WeaponType.Wand:
+                await _dbHandler.GetWand();
+                break;
+            case WeaponType.Axe:
+                await _dbHandler.GetAxe();
+                break;
+            case WeaponType.Sword:
+                await _dbHandler.GetSword();
+                break;
+            default:
+                Console.WriteLine("Invalid weapon type, please try again.");
+                break;
         }
     }
 
@@ -201,9 +257,23 @@ public class AdminManager : IAdminManager
 
     }
 
-    private bool CheckGoBack(string input)
+    private static bool TryParseSelection<TEnum>(string input, out TEnum parsed) where TEnum : struct, Enum
     {
-        return input == "go back";
+        string normalized = input.Replace(" ", string.Empty);
+
+        if (Enum.TryParse(normalized, ignoreCase: true, out parsed) && Enum.IsDefined(typeof(TEnum), parsed))
+        {
+            return true;
+        }
+
+        if (int.TryParse(normalized, out int numeric) && Enum.IsDefined(typeof(TEnum), numeric))
+        {
+            parsed = (TEnum)Enum.ToObject(typeof(TEnum), numeric);
+            return true;
+        }
+
+        parsed = default;
+        return false;
     }
 }
 

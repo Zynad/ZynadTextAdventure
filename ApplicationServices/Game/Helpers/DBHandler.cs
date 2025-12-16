@@ -51,7 +51,7 @@ public class DbHandler : IDbHandler
 
     #region Wand
 
-    public async Task AddWand(WandEntity entity = null)
+    public async Task AddWand(WandEntity? entity = null)
     {
         if (entity != null)
         {
@@ -88,7 +88,7 @@ public class DbHandler : IDbHandler
         throw new NotImplementedException();
     }
 
-    public async Task AddStaff(StaffEntity entity = null)
+    public async Task AddStaff(StaffEntity? entity = null)
     {
         if (entity != null)
         {
@@ -115,7 +115,7 @@ public class DbHandler : IDbHandler
 
     #region Sword
 
-    public async Task AddSword(SwordEntity entity = null)
+    public async Task AddSword(SwordEntity? entity = null)
     {
         if (entity != null)
         {
@@ -147,7 +147,7 @@ public class DbHandler : IDbHandler
 
     #region Axe
 
-    public async Task AddAxe(AxeEntity entity = null)
+    public async Task AddAxe(AxeEntity? entity = null)
     {
         if (entity != null)
         {
@@ -174,7 +174,7 @@ public class DbHandler : IDbHandler
     #endregion
 
     #region Boots
-    public async Task AddBoots(BootsEntity entity = null)
+    public async Task AddBoots(BootsEntity? entity = null)
     {
         if (entity != null)
         {
@@ -200,7 +200,7 @@ public class DbHandler : IDbHandler
     #endregion
 
     #region Chest
-    public async Task AddChest(ChestEntity entity = null)
+    public async Task AddChest(ChestEntity? entity = null)
     {
         if (entity != null)
         {
@@ -226,7 +226,7 @@ public class DbHandler : IDbHandler
     #endregion
     
     #region Gloves
-    public async Task AddGloves(GlovesEntity entity = null)
+    public async Task AddGloves(GlovesEntity? entity = null)
     {
         if (entity != null)
         {
@@ -252,7 +252,7 @@ public class DbHandler : IDbHandler
     #endregion
     
     #region Helmet
-    public async Task AddHelmet(HelmetEntity entity = null)
+    public async Task AddHelmet(HelmetEntity? entity = null)
     {
         if (entity != null)
         {
@@ -278,7 +278,7 @@ public class DbHandler : IDbHandler
     #endregion
     
     #region Legs
-    public async Task AddLegs(LegsEntity entity = null)
+    public async Task AddLegs(LegsEntity? entity = null)
     {
         if (entity != null)
         {
