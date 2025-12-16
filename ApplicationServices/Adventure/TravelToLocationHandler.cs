@@ -6,6 +6,7 @@ using ApplicationServices.Authentication;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
 using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Adventure;
@@ -15,17 +16,20 @@ public class TravelToLocationHandler
     private readonly GetCurrentUserHandler _getCurrentUserHandler;
     private readonly ICharacterRepository _characterRepository;
     private readonly IWorldRepository _worldRepository;
+    private readonly EncounterGenerator _encounterGenerator;
     private readonly ILogger<TravelToLocationHandler> _logger;
 
     public TravelToLocationHandler(
         GetCurrentUserHandler getCurrentUserHandler,
         ICharacterRepository characterRepository,
         IWorldRepository worldRepository,
+        EncounterGenerator encounterGenerator,
         ILogger<TravelToLocationHandler> logger)
     {
         _getCurrentUserHandler = getCurrentUserHandler;
         _characterRepository = characterRepository;
         _worldRepository = worldRepository;
+        _encounterGenerator = encounterGenerator;
         _logger = logger;
     }
 
@@ -45,6 +49,8 @@ public class TravelToLocationHandler
         {
             return AdventureResult.NotFound("Character not found");
         }
+
+        character.EncounterLog ??= new List<Encounter>();
 
         if (string.IsNullOrWhiteSpace(request.DestinationId))
         {
@@ -77,6 +83,12 @@ public class TravelToLocationHandler
             ThreatLevel = target.ThreatLevel
         };
 
+        var encounter = await _encounterGenerator.GenerateForTravelAsync(character, current, target, cancellationToken);
+        if (encounter is not null)
+        {
+            ApplyEncounter(character, encounter);
+        }
+
         await _characterRepository.UpdateAsync(character, cancellationToken);
         _logger.LogInformation(
             "Character {CharacterId} traveled from {From} to {To}",
@@ -92,5 +104,32 @@ public class TravelToLocationHandler
         return locations.FirstOrDefault(l =>
             l.Id.Equals(currentLocation.Name, StringComparison.OrdinalIgnoreCase)
             || l.Name.Equals(currentLocation.Name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static void ApplyEncounter(Character character, EncounterResolution resolution)
+    {
+        foreach (var drop in resolution.Loot)
+        {
+            var existing = character.Inventory.FirstOrDefault(i =>
+                i.ItemId.Equals(drop.ItemId, StringComparison.OrdinalIgnoreCase));
+
+            if (existing is null)
+            {
+                character.Inventory.Add(new InventoryItem { ItemId = drop.ItemId, Quantity = drop.Quantity });
+            }
+            else
+            {
+                existing.Quantity += drop.Quantity;
+            }
+        }
+
+        character.EncounterLog.Add(resolution.Encounter);
+        if (character.EncounterLog.Count > 25)
+        {
+            character.EncounterLog = character.EncounterLog
+                .OrderByDescending(e => e.OccurredAt)
+                .Take(25)
+                .ToList();
+        }
     }
 }

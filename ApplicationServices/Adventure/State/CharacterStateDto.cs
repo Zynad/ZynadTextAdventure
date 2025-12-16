@@ -10,4 +10,5 @@ public record CharacterStateDto(
     string ClassName,
     WorldLocation Location,
     IReadOnlyCollection<InventoryItem> Inventory,
-    IReadOnlyCollection<QuestStateDto> QuestLog);
+    IReadOnlyCollection<QuestStateDto> QuestLog,
+    IReadOnlyCollection<EncounterStateDto> Encounters);

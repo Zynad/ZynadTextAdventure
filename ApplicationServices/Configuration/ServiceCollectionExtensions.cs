@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<Authentication.RegisterUserHandler>();
         services.AddTransient<Authentication.LoginUserHandler>();
         services.AddTransient<Authentication.GetCurrentUserHandler>();
+        services.AddSingleton<Adventure.EncounterGenerator>();
         services.AddTransient<Characters.GetCharacterPresetsHandler>();
         services.AddTransient<Characters.CreateCharacterHandler>();
         services.AddTransient<Characters.GetCharactersHandler>();
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<Adventure.TravelToLocationHandler>();
         services.AddTransient<Adventure.AcceptQuestHandler>();
         services.AddTransient<Adventure.CompleteQuestHandler>();
+        services.AddTransient<Adventure.GetEncountersHandler>();
         return services;
     }
 }
