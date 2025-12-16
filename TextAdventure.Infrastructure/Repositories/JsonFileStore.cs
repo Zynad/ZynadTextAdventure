@@ -7,7 +7,7 @@ using TextAdventure.Infrastructure.Configuration;
 
 namespace TextAdventure.Infrastructure.Repositories;
 
-internal class FileConcurrencyProvider
+public class FileConcurrencyProvider
 {
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> Locks = new(StringComparer.OrdinalIgnoreCase);
 
