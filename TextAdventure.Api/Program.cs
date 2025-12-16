@@ -1,8 +1,7 @@
-using System.IO;
 using System.Reflection;
 using ApplicationServices.Configuration;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
-using Microsoft.OpenApi.Models;
 using TextAdventure.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,19 +27,12 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "Send the session token as a Bearer token or rely on the HttpOnly authToken cookie"
     });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    
+    options.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
     {
         {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
+            new OpenApiSecuritySchemeReference("Bearer", doc),
+            []
         }
     });
 
