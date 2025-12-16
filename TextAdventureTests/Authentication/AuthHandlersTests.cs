@@ -70,6 +70,31 @@ public class AuthHandlersTests
     }
 
     [Fact]
+    public async Task RegisterUserHandler_ReturnsConflictForExistingEmail()
+    {
+        var handler = new RegisterUserHandler(_userRepository, _sessionRepository, _authService, NullLogger<RegisterUserHandler>.Instance);
+
+        var first = await handler.HandleAsync(new RegisterUserRequest
+        {
+            Username = "player-existing",
+            Email = "player@example.com",
+            Password = "Password1!"
+        });
+
+        first.Success.ShouldBeTrue();
+
+        var duplicate = await handler.HandleAsync(new RegisterUserRequest
+        {
+            Username = "player-new",
+            Email = "player@example.com",
+            Password = "Password1!"
+        });
+
+        duplicate.Success.ShouldBeFalse();
+        duplicate.ErrorType.ShouldBe(AuthErrorType.Conflict);
+    }
+
+    [Fact]
     public async Task LoginUserHandler_IssuesTokenForValidCredentials()
     {
         var loginHandler = new LoginUserHandler(_userRepository, _sessionRepository, _authService, NullLogger<LoginUserHandler>.Instance);
@@ -93,6 +118,21 @@ public class AuthHandlersTests
         var stored = await _userRepository.GetByUsernameAsync("player3");
         var tokens = await _sessionRepository.GetTokensForAccountAsync(stored!.Id);
         tokens.ShouldContain(t => t.Token == result.Token);
+    }
+
+    [Fact]
+    public async Task LoginUserHandler_ReturnsUnauthorizedWhenUserMissing()
+    {
+        var loginHandler = new LoginUserHandler(_userRepository, _sessionRepository, _authService, NullLogger<LoginUserHandler>.Instance);
+
+        var result = await loginHandler.HandleAsync(new LoginUserRequest
+        {
+            Identifier = "missing",
+            Password = "Password2!"
+        });
+
+        result.Success.ShouldBeFalse();
+        result.ErrorType.ShouldBe(AuthErrorType.Unauthorized);
     }
 
     [Fact]

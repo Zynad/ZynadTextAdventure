@@ -1,6 +1,7 @@
 using System.IO;
 using System.Reflection;
 using ApplicationServices.Configuration;
+using Scalar.AspNetCore;
 using Microsoft.OpenApi.Models;
 using TextAdventure.Infrastructure.Configuration;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -66,8 +68,11 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.Title = "TextAdventure API";
+    });
 }
 
 app.UseHttpsRedirection();
