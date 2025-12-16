@@ -26,3 +26,4 @@ The API exposes endpoints for registration/login (`/api/auth/register`, `/api/au
 ### Observability and schema
 - A lightweight health check is available at `/api/status` and returns `{ status: "ok", timestamp: "<utc>" }` when the API is reachable.
 - Swagger/OpenAPI docs are generated from controller XML comments. When running locally, navigate to `/swagger` to view request/response schemas and apply a bearer token for authenticated calls.
+- To expose documentation in non-development environments (for example, staging), set `ApiDocumentation:Enabled` to `true` (or export `ApiDocumentation__Enabled=true`) before launching the API. Optional `ApiDocumentation:RequireAuthorization` can be toggled to add an authorization requirement around the OpenAPI and Scalar endpoints.
