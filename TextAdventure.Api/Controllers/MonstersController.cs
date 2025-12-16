@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TextAdventure.Api.Services;
+using ApplicationServices.Services;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -7,9 +7,9 @@ namespace TextAdventure.Api.Controllers;
 [Route("api/[controller]")]
 public class MonstersController : ControllerBase
 {
-    private readonly GameDataService _gameDataService;
+    private readonly IGameDataService _gameDataService;
 
-    public MonstersController(GameDataService gameDataService)
+    public MonstersController(IGameDataService gameDataService)
     {
         _gameDataService = gameDataService;
     }

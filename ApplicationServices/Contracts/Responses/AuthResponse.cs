@@ -1,4 +1,4 @@
-namespace TextAdventure.Api.Models.Responses;
+namespace ApplicationServices.Contracts.Responses;
 
 public class AuthResponse
 {

@@ -1,16 +1,17 @@
 using System.Text.Json;
+using Domain.Entities.Storage;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TextAdventure.Api.Models;
 
-namespace TextAdventure.Api.Services;
+namespace Domain.Database;
 
 public class JsonDatabaseOptions
 {
     public string DatabasePath { get; set; } = Path.Combine("Data", "database.json");
 }
 
-public class JsonDatabase
+public class JsonDatabase : IGameDatabase
 {
     private readonly string _databasePath;
     private readonly JsonSerializerOptions _serializerOptions;
