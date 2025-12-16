@@ -1,0 +1,30 @@
+{
+  "Users": [],
+  "Progress": [],
+  "Monsters": [
+    {
+      "Id": "6e9c10d6-1815-465c-b325-53cfc6b35aa1",
+      "Name": "Forest Goblin",
+      "Description": "A sneaky goblin lurking in the underbrush.",
+      "Level": 1,
+      "HitPoints": 18,
+      "AttackPower": 4
+    },
+    {
+      "Id": "5f6e8b58-5e69-4f8f-8b3a-79452ad5edcf",
+      "Name": "Cavern Bat",
+      "Description": "A swift bat that attacks from above.",
+      "Level": 2,
+      "HitPoints": 22,
+      "AttackPower": 6
+    },
+    {
+      "Id": "a6d2e558-e377-4e91-8c6c-ff0e995c0e6f",
+      "Name": "Stone Golem",
+      "Description": "A towering golem guarding the ancient ruins.",
+      "Level": 5,
+      "HitPoints": 60,
+      "AttackPower": 12
+    }
+  ]
+}
