@@ -1,6 +1,17 @@
 [
   {
-    "ValidUntil": "0001-01-01T00:00:00+00:00",
-    "Modifiers": []
+    "ValidUntil": "2099-01-01T00:00:00+00:00",
+    "Modifiers": [
+      { "TownName": "Emberbrook", "ItemId": "whetstone", "BuyMultiplier": 0.95, "SellMultiplier": 1.1, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Mosslight", "ItemId": "healing_herbs", "BuyMultiplier": 1.05, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Stormwatch Harbor", "ItemId": "salted_fish", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Highridge", "ItemId": "ore_fragment", "BuyMultiplier": 1.1, "SellMultiplier": 1.15, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Bramblefen", "ItemId": "marsh_hood", "BuyMultiplier": 1.0, "SellMultiplier": 1.1, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Silvercross", "ItemId": "chain_hauberk", "BuyMultiplier": 0.9, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Frostglen", "ItemId": "frost_coat", "BuyMultiplier": 1.1, "SellMultiplier": 1.2, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Emberbrook", "ItemId": "minor_healing_potion", "BuyMultiplier": 0.95, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Mosslight", "ItemId": "antidote_phial", "BuyMultiplier": 1.0, "SellMultiplier": 1.1, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Stormwatch Harbor", "ItemId": "lesser_mana_potion", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" }
+    ]
   }
 ]

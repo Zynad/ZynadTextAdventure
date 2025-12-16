@@ -314,12 +314,23 @@ public class QuestFlowTests
             return Task.FromResult<IReadOnlyCollection<Town>>(Array.Empty<Town>());
         }
 
+        public Task<IReadOnlyCollection<DropTable>> GetDropTablesAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<IReadOnlyCollection<DropTable>>(Array.Empty<DropTable>());
+        }
+
         public Task<IReadOnlyCollection<WorldLocationNode>> GetLocationsAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_locations);
         }
 
-        public Task SaveWorldAsync(IEnumerable<Town> towns, IEnumerable<Monster> monsters, IEnumerable<CharacterPreset> characterPresets, IEnumerable<WorldLocationNode> locations, CancellationToken cancellationToken = default)
+        public Task SaveWorldAsync(
+            IEnumerable<Town> towns,
+            IEnumerable<Monster> monsters,
+            IEnumerable<CharacterPreset> characterPresets,
+            IEnumerable<WorldLocationNode> locations,
+            IEnumerable<DropTable> dropTables,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

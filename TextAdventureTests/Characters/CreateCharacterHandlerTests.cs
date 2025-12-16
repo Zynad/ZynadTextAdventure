@@ -248,12 +248,23 @@ public class CreateCharacterHandlerTests
             return Task.FromResult<IReadOnlyCollection<WorldLocationNode>>(Array.Empty<WorldLocationNode>());
         }
 
+        public Task<IReadOnlyCollection<DropTable>> GetDropTablesAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<IReadOnlyCollection<DropTable>>(Array.Empty<DropTable>());
+        }
+
         public Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult<IReadOnlyCollection<Monster>>(Array.Empty<Monster>());
         }
 
-        public Task SaveWorldAsync(IEnumerable<Town> towns, IEnumerable<Monster> monsters, IEnumerable<CharacterPreset> characterPresets, IEnumerable<WorldLocationNode> locations, CancellationToken cancellationToken = default)
+        public Task SaveWorldAsync(
+            IEnumerable<Town> towns,
+            IEnumerable<Monster> monsters,
+            IEnumerable<CharacterPreset> characterPresets,
+            IEnumerable<WorldLocationNode> locations,
+            IEnumerable<DropTable> dropTables,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

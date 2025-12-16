@@ -11,5 +11,122 @@
       { "ItemId": "tempered_sword", "Quantity": 1 },
       { "ItemId": "loaf_of_bread", "Quantity": 2 }
     ]
+  },
+  {
+    "Id": "patrol_the_roads",
+    "Name": "Patrol the roads",
+    "Description": "Clear out bandits along the Traveler's Road so caravans can reach Emberbrook safely.",
+    "TownName": "Emberbrook",
+    "AcceptLocationId": "emberbrook_gate",
+    "CompletionLocationId": "roadside_inn",
+    "PrerequisiteQuestIds": ["help_the_blacksmith"],
+    "RewardItems": [
+      { "ItemId": "coin_pouch", "Quantity": 3 },
+      { "ItemId": "whetstone", "Quantity": 1 }
+    ]
+  },
+  {
+    "Id": "mosslight_herbalist",
+    "Name": "Herbalist's request",
+    "Description": "Collect fresh herbs from the Whispering Woods for Mosslight's healer.",
+    "TownName": "Mosslight",
+    "AcceptLocationId": "mosslight_market",
+    "CompletionLocationId": "mosslight_market",
+    "PrerequisiteQuestIds": [],
+    "RewardItems": [
+      { "ItemId": "healing_herbs", "Quantity": 4 },
+      { "ItemId": "forest_tokens", "Quantity": 2 }
+    ]
+  },
+  {
+    "Id": "echoes_in_the_caves",
+    "Name": "Echoes in the caves",
+    "Description": "Investigate the strange singing reported from the Hollow Cave.",
+    "TownName": "Mosslight",
+    "AcceptLocationId": "mosslight_green",
+    "CompletionLocationId": "hollow_cave",
+    "PrerequisiteQuestIds": ["mosslight_herbalist"],
+    "RewardItems": [
+      { "ItemId": "glowing_crystal", "Quantity": 1 },
+      { "ItemId": "travel_rations", "Quantity": 2 }
+    ]
+  },
+  {
+    "Id": "harbor_supply_run",
+    "Name": "Harbor supply run",
+    "Description": "Deliver caravan manifests from Stormwatch Gate to the docks before the tide turns.",
+    "TownName": "Stormwatch Harbor",
+    "AcceptLocationId": "stormwatch_gate",
+    "CompletionLocationId": "stormwatch_docks",
+    "PrerequisiteQuestIds": ["patrol_the_roads"],
+    "RewardItems": [
+      { "ItemId": "salted_fish", "Quantity": 4 },
+      { "ItemId": "driftwood_charm", "Quantity": 1 }
+    ]
+  },
+  {
+    "Id": "forge_the_alloy",
+    "Name": "Forge the alloy",
+    "Description": "Bring ore fragments to Highridge's forge to craft a reinforced breastplate.",
+    "TownName": "Highridge",
+    "AcceptLocationId": "highridge_plaza",
+    "CompletionLocationId": "highridge_forge",
+    "PrerequisiteQuestIds": ["harbor_supply_run"],
+    "RewardItems": [
+      { "ItemId": "iron_ingot", "Quantity": 3 },
+      { "ItemId": "sturdy_leather", "Quantity": 2 }
+    ]
+  },
+  {
+    "Id": "bramblefen_bounty",
+    "Name": "Bramblefen bounty",
+    "Description": "Drive off bog trolls near the Marsh Landing so ferries can travel safely.",
+    "TownName": "Bramblefen",
+    "AcceptLocationId": "bramblefen_square",
+    "CompletionLocationId": "marsh_landing",
+    "PrerequisiteQuestIds": ["harbor_supply_run"],
+    "RewardItems": [
+      { "ItemId": "marsh_pearl", "Quantity": 2 },
+      { "ItemId": "marsh_hood", "Quantity": 1 }
+    ]
+  },
+  {
+    "Id": "silvercross_militia",
+    "Name": "Silvercross militia",
+    "Description": "Train with the Silvercross militia and deliver supplies to Willow Farmstead.",
+    "TownName": "Silvercross",
+    "AcceptLocationId": "silvercross_square",
+    "CompletionLocationId": "willow_farm",
+    "PrerequisiteQuestIds": ["patrol_the_roads"],
+    "RewardItems": [
+      { "ItemId": "chain_hauberk", "Quantity": 1 },
+      { "ItemId": "coin_pouch", "Quantity": 6 }
+    ]
+  },
+  {
+    "Id": "frostglen_watch",
+    "Name": "Frostglen watch",
+    "Description": "Inspect the Frostglen gates and seal any crystal spider holes beneath them.",
+    "TownName": "Frostglen",
+    "AcceptLocationId": "frostglen_hearth",
+    "CompletionLocationId": "frostglen_gate",
+    "PrerequisiteQuestIds": ["forge_the_alloy"],
+    "RewardItems": [
+      { "ItemId": "frost_coat", "Quantity": 1 },
+      { "ItemId": "crystal_flask", "Quantity": 2 }
+    ]
+  },
+  {
+    "Id": "crystal_harvest",
+    "Name": "Crystal harvest",
+    "Description": "Collect crystals from the chamber beyond Hollow Cave for Frostglen's enchanters.",
+    "TownName": "Frostglen",
+    "AcceptLocationId": "frostglen_hearth",
+    "CompletionLocationId": "crystal_chamber",
+    "PrerequisiteQuestIds": ["echoes_in_the_caves", "frostglen_watch"],
+    "RewardItems": [
+      { "ItemId": "ashen_staff", "Quantity": 1 },
+      { "ItemId": "coin_pouch", "Quantity": 8 }
+    ]
   }
 ]

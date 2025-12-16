@@ -20,7 +20,8 @@ public class AdminManager : IAdminManager
         Armor = 1,
         Weapon = 2,
         Item = 3,
-        GoBack = 4
+        GoBack = 4,
+        Exit = 5
     }
 
     private enum ArmorType
@@ -69,6 +70,10 @@ public class AdminManager : IAdminManager
         while (true)
         {
             string choice = ParseHelper.AskForString("What would you like to do? \n1. Create\n2. Get\n3. Delete\n4. Update\n5. Exit\n");
+            if (string.IsNullOrWhiteSpace(choice))
+            {
+                return;
+            }
             if (!TryParseSelection(choice, out CrudAction action))
             {
                 Console.WriteLine("Invalid choice, please try again.");
@@ -88,7 +93,11 @@ public class AdminManager : IAdminManager
     {
         while (true)
         {
-            string entityType = ParseHelper.AskForString("Choose the entity type: \n1. Armor\n2. Weapon\n3. Item\n4. Go back\n");
+            string entityType = ParseHelper.AskForString("Choose the entity type: \n1. Armor\n2. Weapon\n3. Item\n4. Go back\n5. Exit\n");
+            if (string.IsNullOrWhiteSpace(entityType))
+            {
+                return;
+            }
             if (!TryParseSelection(entityType, out EntityCategory category))
             {
                 Console.WriteLine("Invalid choice, please try again.");
@@ -118,6 +127,8 @@ public class AdminManager : IAdminManager
                 case EntityCategory.Item:
                     return;
                 case EntityCategory.GoBack:
+                    return;
+                case EntityCategory.Exit:
                     return;
                 default:
                     Console.WriteLine("Invalid choice, please try again.");

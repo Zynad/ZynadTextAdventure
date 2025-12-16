@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace ApplicationServices.Adventure;
 
 public record EncounterResolution(Encounter Encounter, IReadOnlyCollection<InventoryItem> Loot);
+public record MonsterSpawn(Monster Template, int Level, int HitPoints, int Attack, int Defense, int Coins);
 
 public class EncounterGenerator
 {
@@ -23,6 +24,16 @@ public class EncounterGenerator
         { "moderate", 0.28 },
         { "high", 0.45 },
         { "extreme", 0.6 }
+    };
+
+    private static readonly Dictionary<string, (int Min, int Max)> ThreatLevelRanges = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "safe", (1, 1) },
+        { "calm", (1, 2) },
+        { "low", (1, 4) },
+        { "moderate", (2, 7) },
+        { "high", (4, 10) },
+        { "extreme", (6, 12) }
     };
 
     public EncounterGenerator(IRandomService randomService, IWorldRepository worldRepository, ILogger<EncounterGenerator> logger)
@@ -47,35 +58,27 @@ public class EncounterGenerator
         }
 
         var monsters = (await _worldRepository.GetMonstersAsync(cancellationToken)).ToList();
-        if (monsters.Count == 0 || _randomService.NextDouble() < 0.25)
+        var dropTables = await _worldRepository.GetDropTablesAsync(cancellationToken);
+        var dropPool = GetDropTable(dropTables, destination.Biome);
+        if (monsters.Count == 0)
         {
-            var discoveryDrops = RollDrops(destination.Biome, 2);
-            var discovery = new Encounter
-            {
-                CharacterId = character.Id,
-                EncounterType = "Discovery",
-                Location = destination.Name,
-                Outcome = discoveryDrops.Count > 0 ? "Found supplies" : "Uneventful",
-                Drops = discoveryDrops
-            };
-
-            _logger.LogInformation(
-                "Character {CharacterId} experienced discovery at {Location} with {DropCount} drops",
-                character.Id,
-                destination.Name,
-                discoveryDrops.Count);
-
-            return new EncounterResolution(discovery, discoveryDrops);
+            return BuildDiscovery(character, destination, dropPool);
         }
 
-        var monster = monsters[_randomService.NextInt(0, monsters.Count)];
-        var victory = ResolveCombat(character.Level, monster.Level);
-        var loot = victory ? RollDrops(destination.Biome, 3) : new List<InventoryItem>();
+        if (_randomService.NextDouble() < 0.05)
+        {
+            return BuildDiscovery(character, destination, dropPool);
+        }
+
+        var monsterCandidates = FilterMonsters(monsters, destination.Biome, destination.ThreatLevel).ToList();
+        var spawn = RollMonsterSpawn(monsterCandidates, destination.ThreatLevel);
+        var victory = ResolveCombat(character.Level, spawn);
+        var loot = victory ? RollDrops(dropPool, 3, spawn) : new List<InventoryItem>();
 
         var battle = new Encounter
         {
             CharacterId = character.Id,
-            MonsterId = monster.Id,
+            MonsterId = spawn.Template.Id,
             EncounterType = "Battle",
             Location = destination.Name,
             Outcome = victory ? "Victory" : "Defeat",
@@ -85,7 +88,7 @@ public class EncounterGenerator
         _logger.LogInformation(
             "Character {CharacterId} encountered monster {MonsterId} at {Location} with outcome {Outcome}",
             character.Id,
-            monster.Id,
+            spawn.Template.Id,
             destination.Name,
             battle.Outcome);
 
@@ -107,19 +110,24 @@ public class EncounterGenerator
         return ThreatChances.GetValueOrDefault(threatLevel.ToLowerInvariant(), 0.18);
     }
 
-    private bool ResolveCombat(int characterLevel, int monsterLevel)
+    private bool ResolveCombat(int characterLevel, MonsterSpawn spawn)
     {
-        var advantage = characterLevel - monsterLevel;
-        var baseChance = 0.5 + (advantage * 0.08);
-        baseChance = Math.Clamp(baseChance, 0.25, 0.9);
+        var advantage = characterLevel - spawn.Level;
+        var defensePenalty = spawn.Defense * 0.02;
+        var attackPenalty = Math.Max(0, (spawn.Attack - 4) * 0.01);
+        var baseChance = 0.55 + (advantage * 0.07) - defensePenalty - attackPenalty;
+        baseChance = Math.Clamp(baseChance, 0.2, 0.9);
 
         var roll = _randomService.NextDouble();
         return roll <= baseChance;
     }
 
-    private List<InventoryItem> RollDrops(string biome, int maxStacks)
+    private List<InventoryItem> RollDrops(List<string> pool, int maxStacks, MonsterSpawn? spawn = null)
     {
-        var pool = GetDropTable(biome);
+        if (pool.Count == 0)
+        {
+            return new List<InventoryItem>();
+        }
         var dropCount = _randomService.NextInt(1, Math.Max(2, maxStacks + 1));
         var drops = new List<InventoryItem>();
 
@@ -128,6 +136,11 @@ public class EncounterGenerator
             var dropId = pool[_randomService.NextInt(0, pool.Count)];
             var quantity = _randomService.NextInt(1, 4);
             AddOrIncrementDrop(drops, dropId, quantity);
+        }
+
+        if (spawn is not null && spawn.Coins > 0)
+        {
+            AddOrIncrementDrop(drops, "coins", spawn.Coins);
         }
 
         return drops;
@@ -145,19 +158,82 @@ public class EncounterGenerator
         drops.Add(new InventoryItem { ItemId = dropId, Quantity = quantity });
     }
 
-    private List<string> GetDropTable(string biome)
+    private List<string> GetDropTable(IReadOnlyCollection<DropTable> dropTables, string biome)
     {
-        var biomeKey = string.IsNullOrWhiteSpace(biome)
-            ? "unknown"
-            : biome.ToLowerInvariant();
-
-        return biomeKey switch
+        if (dropTables.Count == 0)
         {
-            "village" => new List<string> { "loaf_of_bread", "bundle_of_roots", "healing_herbs" },
-            "forest" => new List<string> { "healing_herbs", "tree_sap", "forest_tokens" },
-            "grassland" => new List<string> { "loaf_of_bread", "coin_pouch", "torn_cloth" },
-            "mountain" => new List<string> { "ore_fragment", "sturdy_leather", "coin_pouch" },
-            _ => new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" }
+            return new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+        }
+
+        var match = dropTables.FirstOrDefault(dt => dt.Biome.Equals(biome, StringComparison.OrdinalIgnoreCase));
+        if (match?.Drops.Count > 0)
+        {
+            return match.Drops;
+        }
+
+        var fallback = dropTables.FirstOrDefault(dt => dt.Biome.Equals("Unknown", StringComparison.OrdinalIgnoreCase));
+        return fallback?.Drops.Count > 0
+            ? fallback.Drops
+            : new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+    }
+
+    private EncounterResolution BuildDiscovery(Character character, WorldLocationNode destination, List<string> dropPool)
+    {
+        var discoveryDrops = RollDrops(dropPool, 2);
+        var discovery = new Encounter
+        {
+            CharacterId = character.Id,
+            EncounterType = "Discovery",
+            Location = destination.Name,
+            Outcome = discoveryDrops.Count > 0 ? "Found supplies" : "Uneventful",
+            Drops = discoveryDrops
         };
+
+        _logger.LogInformation(
+            "Character {CharacterId} experienced discovery at {Location} with {DropCount} drops",
+            character.Id,
+            destination.Name,
+            discoveryDrops.Count);
+
+        return new EncounterResolution(discovery, discoveryDrops);
+    }
+
+    private IEnumerable<Monster> FilterMonsters(IEnumerable<Monster> monsters, string biome, string threatLevel)
+    {
+        var preferred = monsters
+            .Where(m => m.Biome.Equals(biome, StringComparison.OrdinalIgnoreCase)
+                        && m.PreferredThreatLevels.Any()
+                        && m.PreferredThreatLevels.Contains(threatLevel, StringComparer.OrdinalIgnoreCase));
+
+        var biomeMatches = monsters.Where(m => m.Biome.Equals(biome, StringComparison.OrdinalIgnoreCase));
+
+        return preferred.Any() ? preferred : biomeMatches.Any() ? biomeMatches : monsters;
+    }
+
+    private MonsterSpawn RollMonsterSpawn(IEnumerable<Monster> monsters, string threatLevel)
+    {
+        var monsterList = monsters.ToList();
+        if (monsterList.Count == 0)
+        {
+            return new MonsterSpawn(new Monster { Name = "Unknown", Biome = "Unknown" }, 1, 5, 1, 0, 1);
+        }
+
+        var choice = monsterList[_randomService.NextInt(0, monsterList.Count)];
+        var (minThreatLevel, maxThreatLevel) = ThreatLevelRanges.GetValueOrDefault(threatLevel.ToLowerInvariant(), (1, 6));
+
+        int RollInRange(MonsterStatRange range, int defaultMin)
+        {
+            var min = Math.Max(range.Min, defaultMin);
+            var max = Math.Max(min, range.Max);
+            return _randomService.NextInt(min, max + 1);
+        }
+
+        var level = Math.Clamp(RollInRange(choice.LevelRange, 1), minThreatLevel, maxThreatLevel);
+        var hp = RollInRange(choice.HitPointRange, level * 3);
+        var attack = RollInRange(choice.AttackRange, Math.Max(1, level - 1));
+        var defense = RollInRange(choice.DefenseRange, Math.Max(0, level / 2));
+        var coins = (int)Math.Round(RollInRange(choice.CoinDropRange, level) * (0.75 + _randomService.NextDouble() * 0.5));
+
+        return new MonsterSpawn(choice, level, hp, attack, defense, Math.Max(coins, 0));
     }
 }
