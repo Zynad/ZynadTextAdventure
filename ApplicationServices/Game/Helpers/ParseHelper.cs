@@ -18,13 +18,13 @@ public static class ParseHelper
     public static string AskForString(string question)
     {
         Console.Write(question);
-        return Console.ReadLine().ToLower();
+        return (Console.ReadLine() ?? string.Empty).ToLower();
     }
     
     public static string AskForName(string question)
     {
         Console.Write(question);
-        string input = Console.ReadLine().ToLower();
+        string input = (Console.ReadLine() ?? string.Empty).ToLower();
         TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         return textInfo.ToTitleCase(input);
     }
