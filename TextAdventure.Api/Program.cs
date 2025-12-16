@@ -96,4 +96,7 @@ app.MapControllers();
 
 app.Run();
 
+/// <summary>
+/// Entry point for the TextAdventure API application.
+/// </summary>
 public partial class Program;
