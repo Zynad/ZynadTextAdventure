@@ -1,3 +1,4 @@
+using Domain.Entities.Storage;
 using Domain.ValueObjects;
 
 namespace Domain.Core;
@@ -7,7 +8,10 @@ public class Character
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid AccountId { get; set; }
     public string Name { get; set; } = string.Empty;
+    public string PresetId { get; set; } = string.Empty;
+    public string ClassName { get; set; } = string.Empty;
     public int Level { get; set; } = 1;
+    public WorldLocation Location { get; set; } = WorldLocation.Default();
     public List<InventoryItem> Inventory { get; set; } = new();
     public List<string> ActiveQuestIds { get; set; } = new();
 }
