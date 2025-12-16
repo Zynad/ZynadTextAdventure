@@ -13,5 +13,5 @@ public class Character
     public int Level { get; set; } = 1;
     public WorldLocation Location { get; set; } = WorldLocation.Default();
     public List<InventoryItem> Inventory { get; set; } = new();
-    public List<string> ActiveQuestIds { get; set; } = new();
+    public List<CharacterQuestState> QuestStates { get; set; } = new();
 }

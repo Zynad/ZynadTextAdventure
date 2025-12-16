@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "Id": "help_the_blacksmith",
+    "Name": "Help the blacksmith",
+    "Description": "Gather scrap metal and assist the Emberbrook blacksmith with repairs.",
+    "TownName": "Emberbrook",
+    "AcceptLocationId": "emberbrook_square",
+    "CompletionLocationId": "emberbrook_square",
+    "PrerequisiteQuestIds": [],
+    "RewardItems": [
+      { "ItemId": "tempered_sword", "Quantity": 1 },
+      { "ItemId": "loaf_of_bread", "Quantity": 2 }
+    ]
+  }
+]

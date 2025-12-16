@@ -14,6 +14,7 @@ internal class WorldState
     public List<Town> Towns { get; set; } = new();
     public List<Monster> Monsters { get; set; } = new();
     public List<CharacterPreset> CharacterPresets { get; set; } = new();
+    public List<WorldLocationNode> Locations { get; set; } = new();
 }
 
 public class JsonWorldRepository : IWorldRepository
@@ -44,17 +45,25 @@ public class JsonWorldRepository : IWorldRepository
         return world.Towns;
     }
 
+    public async Task<IReadOnlyCollection<WorldLocationNode>> GetLocationsAsync(CancellationToken cancellationToken = default)
+    {
+        var world = await ReadWorldAsync(cancellationToken);
+        return world.Locations;
+    }
+
     public async Task SaveWorldAsync(
         IEnumerable<Town> towns,
         IEnumerable<Monster> monsters,
         IEnumerable<CharacterPreset> characterPresets,
+        IEnumerable<WorldLocationNode> locations,
         CancellationToken cancellationToken = default)
     {
         var world = new WorldState
         {
             Towns = towns.ToList(),
             Monsters = monsters.ToList(),
-            CharacterPresets = characterPresets.ToList()
+            CharacterPresets = characterPresets.ToList(),
+            Locations = locations.ToList()
         };
 
         await _store.WriteAsync(new[] { world }, cancellationToken);
@@ -70,6 +79,11 @@ public class JsonWorldRepository : IWorldRepository
             world.CharacterPresets.AddRange(CreateDefaultCharacterPresets());
         }
 
+        if (world.Locations.Count == 0)
+        {
+            world.Locations.AddRange(CreateDefaultLocations());
+        }
+
         return world;
     }
 
@@ -79,7 +93,53 @@ public class JsonWorldRepository : IWorldRepository
         {
             Towns = new List<Town>(),
             Monsters = new List<Monster>(),
-            CharacterPresets = CreateDefaultCharacterPresets()
+            CharacterPresets = CreateDefaultCharacterPresets(),
+            Locations = CreateDefaultLocations()
+        };
+    }
+
+    private static List<WorldLocationNode> CreateDefaultLocations()
+    {
+        return new List<WorldLocationNode>
+        {
+            new()
+            {
+                Id = "travelers_road",
+                Name = "Traveler's Road",
+                Description = "A well-worn path where many adventurers begin their journey.",
+                Biome = "Grassland",
+                ThreatLevel = "Low",
+                AdjacentLocationIds = new List<string> { "forked_path" }
+            },
+            new()
+            {
+                Id = "forked_path",
+                Name = "Forked Path",
+                Description = "A crossroads lined with signposts pointing toward nearby settlements.",
+                Biome = "Grassland",
+                ThreatLevel = "Low",
+                AdjacentLocationIds = new List<string> { "travelers_road", "emberbrook_gate" }
+            },
+            new()
+            {
+                Id = "emberbrook_gate",
+                Name = "Emberbrook Gate",
+                Description = "The sturdy wooden gate guarding the village of Emberbrook.",
+                Biome = "Village",
+                ThreatLevel = "Low",
+                AdjacentLocationIds = new List<string> { "forked_path", "emberbrook_square" },
+                TownName = "Emberbrook"
+            },
+            new()
+            {
+                Id = "emberbrook_square",
+                Name = "Emberbrook Square",
+                Description = "A bustling square where villagers trade stories and goods.",
+                Biome = "Village",
+                ThreatLevel = "Safe",
+                AdjacentLocationIds = new List<string> { "emberbrook_gate" },
+                TownName = "Emberbrook"
+            }
         };
     }
 
