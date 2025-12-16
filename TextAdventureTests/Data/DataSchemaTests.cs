@@ -52,8 +52,13 @@ public class DataSchemaTests
             monster.Id.ShouldNotBeNullOrWhiteSpace();
             monster.Name.ShouldNotBeNullOrWhiteSpace();
             monster.Biome.ShouldNotBeNullOrWhiteSpace();
-            monster.Level.ShouldBeGreaterThan(0);
             dropTablesByBiome.ShouldContainKey(monster.Biome);
+
+            AssertRange(monster.LevelRange, nameof(monster.LevelRange));
+            AssertRange(monster.HitPointRange, nameof(monster.HitPointRange));
+            AssertRange(monster.AttackRange, nameof(monster.AttackRange));
+            AssertRange(monster.DefenseRange, nameof(monster.DefenseRange), allowZero: true);
+            AssertRange(monster.CoinDropRange, nameof(monster.CoinDropRange), allowZero: true);
         }
     }
 
@@ -171,5 +176,12 @@ public class DataSchemaTests
         public DateTimeOffset ValidUntil { get; set; }
 
         public List<VendorPriceModifier> Modifiers { get; set; } = new();
+    }
+
+    private static void AssertRange(MonsterStatRange? range, string property, bool allowZero = false)
+    {
+        range.ShouldNotBeNull();
+        range!.Min.ShouldBeGreaterThanOrEqualTo(allowZero ? 0 : 1, property);
+        range.Max.ShouldBeGreaterThanOrEqualTo(range.Min, property);
     }
 }

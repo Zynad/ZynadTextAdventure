@@ -7,7 +7,8 @@
           { "ItemId": "loaf_of_bread", "BuyPrice": 2.0, "SellPrice": 1.0 },
           { "ItemId": "whetstone", "BuyPrice": 8.0, "SellPrice": 3.0 },
           { "ItemId": "leather_cap", "BuyPrice": 12.0, "SellPrice": 5.0 },
-          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 }
+          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
+          { "ItemId": "rusted_dagger", "BuyPrice": 10.0, "SellPrice": 4.0 }
         ]
       },
       {
@@ -16,7 +17,8 @@
           { "ItemId": "forest_tokens", "BuyPrice": 5.0, "SellPrice": 2.0 },
           { "ItemId": "travel_rations", "BuyPrice": 3.5, "SellPrice": 1.5 },
           { "ItemId": "quiver_of_arrows", "BuyPrice": 14.0, "SellPrice": 6.0 },
-          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 }
+          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
+          { "ItemId": "hunter_hat", "BuyPrice": 15.0, "SellPrice": 7.0 }
         ]
       },
       {
@@ -25,7 +27,8 @@
           { "ItemId": "salted_fish", "BuyPrice": 4.0, "SellPrice": 2.0 },
           { "ItemId": "driftwood_charm", "BuyPrice": 9.0, "SellPrice": 4.0 },
           { "ItemId": "rope_coil", "BuyPrice": 7.0, "SellPrice": 3.0 },
-          { "ItemId": "sailor_cloak", "BuyPrice": 15.0, "SellPrice": 7.0 }
+          { "ItemId": "sailor_cloak", "BuyPrice": 15.0, "SellPrice": 7.0 },
+          { "ItemId": "sea_blade", "BuyPrice": 22.0, "SellPrice": 9.0 }
         ]
       },
       {
@@ -34,20 +37,203 @@
           { "ItemId": "ore_fragment", "BuyPrice": 10.0, "SellPrice": 4.0 },
           { "ItemId": "sturdy_leather", "BuyPrice": 9.0, "SellPrice": 4.0 },
           { "ItemId": "iron_ingot", "BuyPrice": 18.0, "SellPrice": 8.0 },
-          { "ItemId": "glowing_crystal", "BuyPrice": 22.0, "SellPrice": 10.0 }
+          { "ItemId": "glowing_crystal", "BuyPrice": 22.0, "SellPrice": 10.0 },
+          { "ItemId": "iron_shield", "BuyPrice": 24.0, "SellPrice": 10.0 }
+        ]
+      },
+      {
+        "Name": "Bramblefen",
+        "VendorInventory": [
+          { "ItemId": "marsh_pearl", "BuyPrice": 12.0, "SellPrice": 5.0 },
+          { "ItemId": "reedy_bundle", "BuyPrice": 4.0, "SellPrice": 1.5 },
+          { "ItemId": "marsh_hood", "BuyPrice": 14.0, "SellPrice": 6.0 },
+          { "ItemId": "bog_spice", "BuyPrice": 7.0, "SellPrice": 2.5 }
+        ]
+      },
+      {
+        "Name": "Silvercross",
+        "VendorInventory": [
+          { "ItemId": "silver_token", "BuyPrice": 20.0, "SellPrice": 9.0 },
+          { "ItemId": "tempered_sword", "BuyPrice": 30.0, "SellPrice": 12.0 },
+          { "ItemId": "chain_hauberk", "BuyPrice": 28.0, "SellPrice": 12.0 },
+          { "ItemId": "oak_bow", "BuyPrice": 18.0, "SellPrice": 7.0 }
+        ]
+      },
+      {
+        "Name": "Frostglen",
+        "VendorInventory": [
+          { "ItemId": "frost_coat", "BuyPrice": 26.0, "SellPrice": 11.0 },
+          { "ItemId": "crystal_flask", "BuyPrice": 18.0, "SellPrice": 8.0 },
+          { "ItemId": "ashen_staff", "BuyPrice": 22.0, "SellPrice": 9.0 }
         ]
       }
     ],
     "Monsters": [
-      { "Id": "road_bandit", "Name": "Roadside Bandit", "Biome": "Grassland", "Level": 1, "HitPoints": 10, "Attack": 3 },
-      { "Id": "wild_boar", "Name": "Wild Boar", "Biome": "Grassland", "Level": 2, "HitPoints": 14, "Attack": 4 },
-      { "Id": "emberbrook_scout", "Name": "Wayward Scout", "Biome": "Village", "Level": 3, "HitPoints": 16, "Attack": 5 },
-      { "Id": "cavern_bat", "Name": "Cavern Bat", "Biome": "Cave", "Level": 2, "HitPoints": 18, "Attack": 6 },
-      { "Id": "ruin_skeleton", "Name": "Restless Skeleton", "Biome": "Ruins", "Level": 4, "HitPoints": 24, "Attack": 8 },
-      { "Id": "coastal_siren", "Name": "Coastal Siren", "Biome": "Coast", "Level": 5, "HitPoints": 30, "Attack": 9 },
-      { "Id": "marsh_wisp", "Name": "Marsh Wisp", "Biome": "Swamp", "Level": 3, "HitPoints": 20, "Attack": 7 },
-      { "Id": "mountain_wolf", "Name": "Highridge Wolf", "Biome": "Mountain", "Level": 4, "HitPoints": 26, "Attack": 8 },
-      { "Id": "harbor_cutthroat", "Name": "Harbor Cutthroat", "Biome": "Coast", "Level": 4, "HitPoints": 28, "Attack": 9 }
+      {
+        "Id": "road_bandit",
+        "Name": "Roadside Bandit",
+        "Biome": "Grassland",
+        "LevelRange": { "Min": 1, "Max": 3 },
+        "HitPointRange": { "Min": 8, "Max": 14 },
+        "AttackRange": { "Min": 2, "Max": 4 },
+        "DefenseRange": { "Min": 1, "Max": 2 },
+        "CoinDropRange": { "Min": 3, "Max": 9 },
+        "PreferredThreatLevels": ["Low"]
+      },
+      {
+        "Id": "wild_boar",
+        "Name": "Wild Boar",
+        "Biome": "Grassland",
+        "LevelRange": { "Min": 2, "Max": 4 },
+        "HitPointRange": { "Min": 12, "Max": 18 },
+        "AttackRange": { "Min": 3, "Max": 5 },
+        "DefenseRange": { "Min": 1, "Max": 3 },
+        "CoinDropRange": { "Min": 2, "Max": 6 },
+        "PreferredThreatLevels": ["Low", "Moderate"]
+      },
+      {
+        "Id": "emberbrook_scout",
+        "Name": "Wayward Scout",
+        "Biome": "Village",
+        "LevelRange": { "Min": 3, "Max": 5 },
+        "HitPointRange": { "Min": 16, "Max": 24 },
+        "AttackRange": { "Min": 4, "Max": 6 },
+        "DefenseRange": { "Min": 2, "Max": 4 },
+        "CoinDropRange": { "Min": 5, "Max": 12 },
+        "PreferredThreatLevels": ["Low", "Moderate"]
+      },
+      {
+        "Id": "cavern_bat",
+        "Name": "Cavern Bat",
+        "Biome": "Cave",
+        "LevelRange": { "Min": 2, "Max": 4 },
+        "HitPointRange": { "Min": 14, "Max": 22 },
+        "AttackRange": { "Min": 4, "Max": 6 },
+        "DefenseRange": { "Min": 1, "Max": 2 },
+        "CoinDropRange": { "Min": 1, "Max": 4 },
+        "PreferredThreatLevels": ["Moderate"]
+      },
+      {
+        "Id": "ruin_skeleton",
+        "Name": "Restless Skeleton",
+        "Biome": "Ruins",
+        "LevelRange": { "Min": 4, "Max": 7 },
+        "HitPointRange": { "Min": 18, "Max": 32 },
+        "AttackRange": { "Min": 5, "Max": 8 },
+        "DefenseRange": { "Min": 3, "Max": 6 },
+        "CoinDropRange": { "Min": 6, "Max": 14 },
+        "PreferredThreatLevels": ["High"]
+      },
+      {
+        "Id": "coastal_siren",
+        "Name": "Coastal Siren",
+        "Biome": "Coast",
+        "LevelRange": { "Min": 5, "Max": 8 },
+        "HitPointRange": { "Min": 24, "Max": 40 },
+        "AttackRange": { "Min": 6, "Max": 10 },
+        "DefenseRange": { "Min": 3, "Max": 6 },
+        "CoinDropRange": { "Min": 8, "Max": 20 },
+        "PreferredThreatLevels": ["Moderate", "High"]
+      },
+      {
+        "Id": "marsh_wisp",
+        "Name": "Marsh Wisp",
+        "Biome": "Swamp",
+        "LevelRange": { "Min": 3, "Max": 6 },
+        "HitPointRange": { "Min": 16, "Max": 28 },
+        "AttackRange": { "Min": 4, "Max": 7 },
+        "DefenseRange": { "Min": 2, "Max": 5 },
+        "CoinDropRange": { "Min": 5, "Max": 12 },
+        "PreferredThreatLevels": ["Moderate"]
+      },
+      {
+        "Id": "mountain_wolf",
+        "Name": "Highridge Wolf",
+        "Biome": "Mountain",
+        "LevelRange": { "Min": 4, "Max": 8 },
+        "HitPointRange": { "Min": 22, "Max": 36 },
+        "AttackRange": { "Min": 6, "Max": 9 },
+        "DefenseRange": { "Min": 3, "Max": 6 },
+        "CoinDropRange": { "Min": 7, "Max": 16 },
+        "PreferredThreatLevels": ["High"]
+      },
+      {
+        "Id": "harbor_cutthroat",
+        "Name": "Harbor Cutthroat",
+        "Biome": "Coast",
+        "LevelRange": { "Min": 4, "Max": 7 },
+        "HitPointRange": { "Min": 20, "Max": 30 },
+        "AttackRange": { "Min": 6, "Max": 9 },
+        "DefenseRange": { "Min": 2, "Max": 5 },
+        "CoinDropRange": { "Min": 7, "Max": 16 },
+        "PreferredThreatLevels": ["Moderate"]
+      },
+      {
+        "Id": "bog_troll",
+        "Name": "Bog Troll",
+        "Biome": "Swamp",
+        "LevelRange": { "Min": 5, "Max": 9 },
+        "HitPointRange": { "Min": 30, "Max": 46 },
+        "AttackRange": { "Min": 7, "Max": 11 },
+        "DefenseRange": { "Min": 4, "Max": 7 },
+        "CoinDropRange": { "Min": 10, "Max": 22 },
+        "PreferredThreatLevels": ["High"]
+      },
+      {
+        "Id": "silverfox_raider",
+        "Name": "Silverfox Raider",
+        "Biome": "Grassland",
+        "LevelRange": { "Min": 3, "Max": 5 },
+        "HitPointRange": { "Min": 18, "Max": 26 },
+        "AttackRange": { "Min": 5, "Max": 7 },
+        "DefenseRange": { "Min": 2, "Max": 4 },
+        "CoinDropRange": { "Min": 6, "Max": 14 },
+        "PreferredThreatLevels": ["Moderate"]
+      },
+      {
+        "Id": "ashen_construct",
+        "Name": "Ashen Construct",
+        "Biome": "Mountain",
+        "LevelRange": { "Min": 6, "Max": 10 },
+        "HitPointRange": { "Min": 32, "Max": 50 },
+        "AttackRange": { "Min": 8, "Max": 12 },
+        "DefenseRange": { "Min": 5, "Max": 9 },
+        "CoinDropRange": { "Min": 12, "Max": 26 },
+        "PreferredThreatLevels": ["High", "Extreme"]
+      },
+      {
+        "Id": "frost_wight",
+        "Name": "Frost Wight",
+        "Biome": "Snow",
+        "LevelRange": { "Min": 6, "Max": 10 },
+        "HitPointRange": { "Min": 28, "Max": 46 },
+        "AttackRange": { "Min": 7, "Max": 11 },
+        "DefenseRange": { "Min": 4, "Max": 8 },
+        "CoinDropRange": { "Min": 10, "Max": 22 },
+        "PreferredThreatLevels": ["High"]
+      },
+      {
+        "Id": "crystal_spider",
+        "Name": "Crystal Spider",
+        "Biome": "Cave",
+        "LevelRange": { "Min": 4, "Max": 7 },
+        "HitPointRange": { "Min": 22, "Max": 34 },
+        "AttackRange": { "Min": 6, "Max": 9 },
+        "DefenseRange": { "Min": 3, "Max": 6 },
+        "CoinDropRange": { "Min": 8, "Max": 18 },
+        "PreferredThreatLevels": ["Moderate", "High"]
+      },
+      {
+        "Id": "harbor_smuggler",
+        "Name": "Harbor Smuggler",
+        "Biome": "Coast",
+        "LevelRange": { "Min": 3, "Max": 6 },
+        "HitPointRange": { "Min": 18, "Max": 28 },
+        "AttackRange": { "Min": 5, "Max": 8 },
+        "DefenseRange": { "Min": 2, "Max": 4 },
+        "CoinDropRange": { "Min": 9, "Max": 18 },
+        "PreferredThreatLevels": ["Moderate"]
+      }
     ],
     "CharacterPresets": [
       {
@@ -103,15 +289,7 @@
         "Description": "A well-worn path where many adventurers begin their journey.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["forked_path", "roadside_inn"]
-      },
-      {
-        "Id": "forked_path",
-        "Name": "Forked Path",
-        "Description": "A crossroads lined with signposts pointing toward nearby settlements.",
-        "Biome": "Grassland",
-        "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["travelers_road", "emberbrook_gate", "mossy_trail", "roadside_inn"]
+        "AdjacentLocationIds": ["forked_path", "roadside_inn", "river_bridge"]
       },
       {
         "Id": "roadside_inn",
@@ -120,6 +298,30 @@
         "Biome": "Grassland",
         "ThreatLevel": "Safe",
         "AdjacentLocationIds": ["travelers_road", "forked_path"]
+      },
+      {
+        "Id": "forked_path",
+        "Name": "Forked Path",
+        "Description": "A crossroads lined with signposts pointing toward nearby settlements.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["travelers_road", "emberbrook_gate", "mossy_trail", "roadside_inn", "river_bridge"]
+      },
+      {
+        "Id": "river_bridge",
+        "Name": "River Bridge",
+        "Description": "A wooden bridge spanning a bright stream and the path to distant hamlets.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["travelers_road", "forked_path", "willow_farm"]
+      },
+      {
+        "Id": "willow_farm",
+        "Name": "Willow Farmstead",
+        "Description": "Quiet farm fields that feed the nearby township of Silvercross.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["river_bridge", "silvercross_square"]
       },
       {
         "Id": "emberbrook_gate",
@@ -170,7 +372,7 @@
         "Description": "A sun-dappled clearing where the villagers of Mosslight gather.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["whispering_woods", "mosslight_market"],
+        "AdjacentLocationIds": ["whispering_woods", "mosslight_market", "sagestone_tavern"],
         "TownName": "Mosslight"
       },
       {
@@ -188,7 +390,7 @@
         "Description": "Travelers swap rumors over mugs etched with old runes.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["mosslight_market", "blackmarsh_crossing"]
+        "AdjacentLocationIds": ["mosslight_green", "mosslight_market", "blackmarsh_crossing"]
       },
       {
         "Id": "hollow_cave",
@@ -196,7 +398,7 @@
         "Description": "A yawning cave mouth breathing cool, damp air.",
         "Biome": "Cave",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["whispering_woods", "sunless_depths"]
+        "AdjacentLocationIds": ["whispering_woods", "sunless_depths", "crystal_chamber"]
       },
       {
         "Id": "sunless_depths",
@@ -207,12 +409,20 @@
         "AdjacentLocationIds": ["hollow_cave", "broken_keep"]
       },
       {
+        "Id": "crystal_chamber",
+        "Name": "Crystal Chamber",
+        "Description": "Shimmering crystals jut from the stone walls, casting pale light.",
+        "Biome": "Cave",
+        "ThreatLevel": "High",
+        "AdjacentLocationIds": ["hollow_cave", "frostglen_gate"]
+      },
+      {
         "Id": "broken_keep",
         "Name": "Broken Keep",
         "Description": "Ruined battlements crumble over a forgotten cellar.",
         "Biome": "Ruins",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["sunless_depths", "blackmarsh_crossing"]
+        "AdjacentLocationIds": ["sunless_depths", "blackmarsh_crossing", "old_watchtower"]
       },
       {
         "Id": "blackmarsh_crossing",
@@ -220,7 +430,33 @@
         "Description": "Soggy boardwalks stretch over the dark marsh water.",
         "Biome": "Swamp",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["sagestone_tavern", "broken_keep", "coastal_road"]
+        "AdjacentLocationIds": ["sagestone_tavern", "broken_keep", "coastal_road", "marsh_landing"]
+      },
+      {
+        "Id": "marsh_landing",
+        "Name": "Marsh Landing",
+        "Description": "A rickety dock among the reeds leading deeper into Bramblefen.",
+        "Biome": "Swamp",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": ["blackmarsh_crossing", "bramblefen_square"]
+      },
+      {
+        "Id": "bramblefen_square",
+        "Name": "Bramblefen Square",
+        "Description": "A lantern-lit boardwalk with traders hawking swamp curios.",
+        "Biome": "Swamp",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["marsh_landing", "bramblefen_docks"],
+        "TownName": "Bramblefen"
+      },
+      {
+        "Id": "bramblefen_docks",
+        "Name": "Bramblefen Docks",
+        "Description": "Flatboats unload reed bundles and mud-crab cages.",
+        "Biome": "Swamp",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["bramblefen_square", "coastal_road"],
+        "TownName": "Bramblefen"
       },
       {
         "Id": "coastal_road",
@@ -228,7 +464,7 @@
         "Description": "A sea-sprayed road dotted with fisher carts and gulls.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["blackmarsh_crossing", "stormwatch_gate", "old_watchtower"]
+        "AdjacentLocationIds": ["blackmarsh_crossing", "stormwatch_gate", "old_watchtower", "bramblefen_docks", "harbor_way"]
       },
       {
         "Id": "stormwatch_gate",
@@ -236,7 +472,7 @@
         "Description": "Weathered stone arches lead into the harbor city.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["coastal_road", "stormwatch_market", "stormwatch_docks"],
+        "AdjacentLocationIds": ["coastal_road", "stormwatch_market", "stormwatch_docks", "harbor_way"],
         "TownName": "Stormwatch Harbor"
       },
       {
@@ -254,8 +490,16 @@
         "Description": "Ships bob in the harbor beside nets heavy with fish.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["stormwatch_gate"],
+        "AdjacentLocationIds": ["stormwatch_gate", "harbor_way"],
         "TownName": "Stormwatch Harbor"
+      },
+      {
+        "Id": "harbor_way",
+        "Name": "Harbor Way",
+        "Description": "A busy lane connecting dockside warehouses to inland trade routes.",
+        "Biome": "Coast",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": ["coastal_road", "stormwatch_gate", "stormwatch_docks", "silvercross_square"]
       },
       {
         "Id": "old_watchtower",
@@ -263,7 +507,7 @@
         "Description": "A leaning tower that still offers a sweeping coastal view.",
         "Biome": "Ruins",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["coastal_road", "highridge_pass"]
+        "AdjacentLocationIds": ["coastal_road", "broken_keep", "highridge_pass"]
       },
       {
         "Id": "highridge_pass",
@@ -271,7 +515,7 @@
         "Description": "A narrow pass winding upward through jagged cliffs.",
         "Biome": "Mountain",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["old_watchtower", "highridge_plaza"]
+        "AdjacentLocationIds": ["old_watchtower", "highridge_plaza", "frostglen_gate"]
       },
       {
         "Id": "highridge_plaza",
@@ -290,17 +534,44 @@
         "ThreatLevel": "Moderate",
         "AdjacentLocationIds": ["highridge_plaza"],
         "TownName": "Highridge"
+      },
+      {
+        "Id": "frostglen_gate",
+        "Name": "Frostglen Gate",
+        "Description": "Heavy gates guard the snowy pass into Frostglen's hearth.",
+        "Biome": "Snow",
+        "ThreatLevel": "High",
+        "AdjacentLocationIds": ["highridge_pass", "crystal_chamber", "frostglen_hearth"]
+      },
+      {
+        "Id": "frostglen_hearth",
+        "Name": "Frostglen Hearth",
+        "Description": "A warm plaza sheltered from the wind by tall timber walls.",
+        "Biome": "Snow",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": ["frostglen_gate", "silvercross_square"],
+        "TownName": "Frostglen"
+      },
+      {
+        "Id": "silvercross_square",
+        "Name": "Silvercross Square",
+        "Description": "A thriving market town that links trade from coast and mountain.",
+        "Biome": "Village",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["willow_farm", "harbor_way", "frostglen_hearth"],
+        "TownName": "Silvercross"
       }
     ],
     "DropTables": [
-      { "Biome": "Village", "Drops": ["loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations"] },
-      { "Biome": "Grassland", "Drops": ["loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans"] },
-      { "Biome": "Forest", "Drops": ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus"] },
-      { "Biome": "Mountain", "Drops": ["ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal"] },
-      { "Biome": "Cave", "Drops": ["glowing_crystal", "bat_wing", "ore_fragment"] },
-      { "Biome": "Ruins", "Drops": ["ancient_coin", "tattered_map", "mysterious_trinket"] },
-      { "Biome": "Coast", "Drops": ["salted_fish", "coin_pouch", "driftwood_charm"] },
-      { "Biome": "Swamp", "Drops": ["reedy_bundle", "marsh_pearl", "mossy_fragment"] },
+      { "Biome": "Village", "Drops": ["loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "coin_pouch", "copper_ring"] },
+      { "Biome": "Grassland", "Drops": ["loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger", "hunter_hat"] },
+      { "Biome": "Forest", "Drops": ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow"] },
+      { "Biome": "Mountain", "Drops": ["ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield"] },
+      { "Biome": "Cave", "Drops": ["glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff"] },
+      { "Biome": "Ruins", "Drops": ["ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk"] },
+      { "Biome": "Coast", "Drops": ["salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass"] },
+      { "Biome": "Swamp", "Drops": ["reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice"] },
+      { "Biome": "Snow", "Drops": ["frost_coat", "crystal_flask", "coin_pouch", "ashen_staff"] },
       { "Biome": "Unknown", "Drops": ["coin_pouch", "mysterious_trinket", "tattered_map"] }
     ]
   }

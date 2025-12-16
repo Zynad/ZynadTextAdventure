@@ -128,81 +128,108 @@ public class JsonWorldRepository : IWorldRepository
                 Id = "road_bandit",
                 Name = "Roadside Bandit",
                 Biome = "Grassland",
-                Level = 1,
-                HitPoints = 10,
-                Attack = 3
+                LevelRange = new MonsterStatRange { Min = 1, Max = 3 },
+                HitPointRange = new MonsterStatRange { Min = 8, Max = 14 },
+                AttackRange = new MonsterStatRange { Min = 2, Max = 4 },
+                DefenseRange = new MonsterStatRange { Min = 1, Max = 2 },
+                CoinDropRange = new MonsterStatRange { Min = 3, Max = 9 },
+                PreferredThreatLevels = new List<string> { "Low" }
             },
             new()
             {
                 Id = "wild_boar",
                 Name = "Wild Boar",
                 Biome = "Grassland",
-                Level = 2,
-                HitPoints = 14,
-                Attack = 4
+                LevelRange = new MonsterStatRange { Min = 2, Max = 4 },
+                HitPointRange = new MonsterStatRange { Min = 12, Max = 18 },
+                AttackRange = new MonsterStatRange { Min = 3, Max = 5 },
+                DefenseRange = new MonsterStatRange { Min = 1, Max = 3 },
+                CoinDropRange = new MonsterStatRange { Min = 2, Max = 6 },
+                PreferredThreatLevels = new List<string> { "Low", "Moderate" }
             },
             new()
             {
                 Id = "emberbrook_scout",
                 Name = "Wayward Scout",
                 Biome = "Village",
-                Level = 3,
-                HitPoints = 16,
-                Attack = 5
+                LevelRange = new MonsterStatRange { Min = 3, Max = 5 },
+                HitPointRange = new MonsterStatRange { Min = 16, Max = 24 },
+                AttackRange = new MonsterStatRange { Min = 4, Max = 6 },
+                DefenseRange = new MonsterStatRange { Min = 2, Max = 4 },
+                CoinDropRange = new MonsterStatRange { Min = 5, Max = 12 },
+                PreferredThreatLevels = new List<string> { "Low", "Moderate" }
             },
             new()
             {
                 Id = "cavern_bat",
                 Name = "Cavern Bat",
                 Biome = "Cave",
-                Level = 2,
-                HitPoints = 18,
-                Attack = 6
+                LevelRange = new MonsterStatRange { Min = 2, Max = 4 },
+                HitPointRange = new MonsterStatRange { Min = 14, Max = 22 },
+                AttackRange = new MonsterStatRange { Min = 4, Max = 6 },
+                DefenseRange = new MonsterStatRange { Min = 1, Max = 2 },
+                CoinDropRange = new MonsterStatRange { Min = 1, Max = 4 },
+                PreferredThreatLevels = new List<string> { "Moderate" }
             },
             new()
             {
                 Id = "ruin_skeleton",
                 Name = "Restless Skeleton",
                 Biome = "Ruins",
-                Level = 4,
-                HitPoints = 24,
-                Attack = 8
+                LevelRange = new MonsterStatRange { Min = 4, Max = 7 },
+                HitPointRange = new MonsterStatRange { Min = 18, Max = 32 },
+                AttackRange = new MonsterStatRange { Min = 5, Max = 8 },
+                DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
+                CoinDropRange = new MonsterStatRange { Min = 6, Max = 14 },
+                PreferredThreatLevels = new List<string> { "High" }
             },
             new()
             {
                 Id = "coastal_siren",
                 Name = "Coastal Siren",
                 Biome = "Coast",
-                Level = 5,
-                HitPoints = 30,
-                Attack = 9
+                LevelRange = new MonsterStatRange { Min = 5, Max = 8 },
+                HitPointRange = new MonsterStatRange { Min = 24, Max = 40 },
+                AttackRange = new MonsterStatRange { Min = 6, Max = 10 },
+                DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
+                CoinDropRange = new MonsterStatRange { Min = 8, Max = 20 },
+                PreferredThreatLevels = new List<string> { "Moderate", "High" }
             },
             new()
             {
                 Id = "marsh_wisp",
                 Name = "Marsh Wisp",
                 Biome = "Swamp",
-                Level = 3,
-                HitPoints = 20,
-                Attack = 7
+                LevelRange = new MonsterStatRange { Min = 3, Max = 6 },
+                HitPointRange = new MonsterStatRange { Min = 16, Max = 28 },
+                AttackRange = new MonsterStatRange { Min = 4, Max = 7 },
+                DefenseRange = new MonsterStatRange { Min = 2, Max = 5 },
+                CoinDropRange = new MonsterStatRange { Min = 5, Max = 12 },
+                PreferredThreatLevels = new List<string> { "Moderate" }
             },
             new()
             {
                 Id = "mountain_wolf",
                 Name = "Highridge Wolf",
                 Biome = "Mountain",
-                Level = 4,
-                HitPoints = 26,
-                Attack = 8
+                LevelRange = new MonsterStatRange { Min = 4, Max = 8 },
+                HitPointRange = new MonsterStatRange { Min = 22, Max = 36 },
+                AttackRange = new MonsterStatRange { Min = 6, Max = 9 },
+                DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
+                CoinDropRange = new MonsterStatRange { Min = 7, Max = 16 },
+                PreferredThreatLevels = new List<string> { "High" }
             },
             new()
             {
                 Id = "harbor_cutthroat",
                 Name = "Harbor Cutthroat",
                 Biome = "Coast",
-                Level = 4,
-                HitPoints = 28,
-                Attack = 9
+                LevelRange = new MonsterStatRange { Min = 4, Max = 7 },
+                HitPointRange = new MonsterStatRange { Min = 20, Max = 30 },
+                AttackRange = new MonsterStatRange { Min = 6, Max = 9 },
+                DefenseRange = new MonsterStatRange { Min = 2, Max = 5 },
+                CoinDropRange = new MonsterStatRange { Min = 7, Max = 16 },
+                PreferredThreatLevels = new List<string> { "Moderate" }
             }
         };
     }
