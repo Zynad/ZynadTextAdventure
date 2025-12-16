@@ -33,8 +33,13 @@ class Program
     private static void ConfigureServices(IServiceCollection services)
     {
         // Add configuration
+        var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var configBasePath = assemblyDirectory is not null
+            ? Path.Combine(assemblyDirectory, "..", "..", "..", "Config")
+            : Path.Combine(AppContext.BaseDirectory, "Config");
+
         var builder = new ConfigurationBuilder()
-            .SetBasePath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..\\..\\..\\Config"))
+            .SetBasePath(configBasePath)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
         IConfiguration configuration = builder.Build();
         services.AddSingleton<IConfiguration>(configuration);

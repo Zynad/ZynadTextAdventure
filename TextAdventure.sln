@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationServices", "Appl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextAdventure.Api", "TextAdventure.Api\TextAdventure.Api.csproj", "{985C2B18-E032-450B-AE36-064454A79ED6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextAdventure.Infrastructure", "TextAdventure.Infrastructure\TextAdventure.Infrastructure.csproj", "{DAF6E23E-E052-4D96-854F-772FF25DB1A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
                 {985C2B18-E032-450B-AE36-064454A79ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
                 {985C2B18-E032-450B-AE36-064454A79ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
                 {985C2B18-E032-450B-AE36-064454A79ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+                {DAF6E23E-E052-4D96-854F-772FF25DB1A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+                {DAF6E23E-E052-4D96-854F-772FF25DB1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+                {DAF6E23E-E052-4D96-854F-772FF25DB1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+                {DAF6E23E-E052-4D96-854F-772FF25DB1A4}.Release|Any CPU.Build.0 = Release|Any CPU
         EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
