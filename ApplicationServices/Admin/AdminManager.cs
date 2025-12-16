@@ -93,19 +93,19 @@ public class AdminManager : IAdminManager
                     switch (armorType)
                     {
                         case "boots" or "1":
-                            await _dbHandler.AddBoots();
+                            await _dbHandler.AddBoots(null!);
                             break;
                         case "chest" or "2":
-                            await _dbHandler.AddChest();
+                            await _dbHandler.AddChest(null!);
                             break;
                         case "gloves" or "3":
-                            await _dbHandler.AddGloves();
+                            await _dbHandler.AddGloves(null!);
                             break;
                         case "helmet" or "4":
-                            await _dbHandler.AddHelmet();
+                            await _dbHandler.AddHelmet(null!);
                             break;
                         case "legs" or "5":
-                            await _dbHandler.AddLegs();
+                            await _dbHandler.AddLegs(null!);
                             break;
                         default:
                             Console.WriteLine("Invalid armor type, please try again.");
@@ -153,16 +153,16 @@ public class AdminManager : IAdminManager
                     switch (weaponType)
                     {
                         case "staff" or "1":
-                            await _dbHandler.AddStaff();
+                            await _dbHandler.AddStaff(null!);
                             break;
                         case "wand" or "2":
-                            await _dbHandler.AddWand();
+                            await _dbHandler.AddWand(null!);
                             break;
                         case "axe" or "3":
-                            await _dbHandler.AddAxe();
+                            await _dbHandler.AddAxe(null!);
                             break;
                         case "sword" or "4":
-                            await _dbHandler.AddSword();
+                            await _dbHandler.AddSword(null!);
                             break;
                         default:
                             Console.WriteLine("Invalid weapon type, please try again.");
