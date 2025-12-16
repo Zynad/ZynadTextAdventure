@@ -1,7 +1,9 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TextAdventure.Api.Extensions;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -20,18 +22,40 @@ public class QuestsController : ControllerBase
         _completeQuestHandler = completeQuestHandler;
     }
 
+    /// <summary>
+    /// Accept a quest for the current player's character.
+    /// </summary>
+    /// <param name="id">Quest identifier.</param>
+    /// <param name="request">Action details including the target character.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpPost("{id}/accept")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Accept(string id, QuestActionRequest request, CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var result = await _acceptQuestHandler.HandleAsync(token, id, request, cancellationToken);
         return Translate(result);
     }
 
+    /// <summary>
+    /// Complete a quest for the current player's character.
+    /// </summary>
+    /// <param name="id">Quest identifier.</param>
+    /// <param name="request">Action details including the target character.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpPost("{id}/complete")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Complete(string id, QuestActionRequest request, CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var result = await _completeQuestHandler.HandleAsync(token, id, request, cancellationToken);
         return Translate(result);
     }
@@ -52,14 +76,4 @@ public class QuestsController : ControllerBase
         };
     }
 
-    private string ExtractBearerToken()
-    {
-        if (Request.Headers.TryGetValue("Authorization", out var header)
-            && header.ToString().StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-        {
-            return header.ToString()[7..].Trim();
-        }
-
-        return string.Empty;
-    }
 }
