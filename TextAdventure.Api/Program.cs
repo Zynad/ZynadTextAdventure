@@ -1,4 +1,5 @@
 using ApplicationServices.Configuration;
+using TextAdventure.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTextAdventureGame(builder.Configuration);
+builder.Services.AddTextAdventureInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
