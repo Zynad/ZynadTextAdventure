@@ -1,7 +1,9 @@
 using ApplicationServices.Characters;
 using ApplicationServices.Characters.Requests;
 using ApplicationServices.Characters.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TextAdventure.Api.Extensions;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -26,17 +28,31 @@ public class CharactersController : ControllerBase
         _getCharacterDetailsHandler = getCharacterDetailsHandler;
     }
 
+    /// <summary>
+    /// Retrieve the available character presets.
+    /// </summary>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpGet("presets")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPresets(CancellationToken cancellationToken)
     {
         var presets = await _getCharacterPresetsHandler.HandleAsync(cancellationToken);
         return Ok(presets);
     }
 
+    /// <summary>
+    /// Create a character for the authenticated user.
+    /// </summary>
+    /// <param name="request">Character creation details.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Create(CreateCharacterRequest request, CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var result = await _createCharacterHandler.HandleAsync(token, request, cancellationToken);
 
         if (result.Success && result.Character is not null)
@@ -47,10 +63,16 @@ public class CharactersController : ControllerBase
         return TranslateError(result.ErrorType, result.Error);
     }
 
+    /// <summary>
+    /// List all characters created by the current user.
+    /// </summary>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetForUser(CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var (characters, errorType, error) = await _getCharactersHandler.HandleAsync(token, cancellationToken);
 
         if (errorType.HasValue)
@@ -61,10 +83,18 @@ public class CharactersController : ControllerBase
         return Ok(characters);
     }
 
+    /// <summary>
+    /// Retrieve a character by id for the current user.
+    /// </summary>
+    /// <param name="id">Character identifier.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var result = await _getCharacterDetailsHandler.HandleAsync(id, token, cancellationToken);
 
         if (result.Success && result.Character is not null)
@@ -86,14 +116,4 @@ public class CharactersController : ControllerBase
         };
     }
 
-    private string ExtractBearerToken()
-    {
-        if (Request.Headers.TryGetValue("Authorization", out var header)
-            && header.ToString().StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-        {
-            return header.ToString()[7..].Trim();
-        }
-
-        return string.Empty;
-    }
 }

@@ -1,7 +1,9 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TextAdventure.Api.Extensions;
 
 namespace TextAdventure.Api.Controllers;
 
@@ -16,10 +18,20 @@ public class WorldController : ControllerBase
         _travelToLocationHandler = travelToLocationHandler;
     }
 
+    /// <summary>
+    /// Move the authenticated player's character to a new location.
+    /// </summary>
+    /// <param name="request">Destination details.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpPost("travel")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Travel(TravelRequest request, CancellationToken cancellationToken)
     {
-        var token = ExtractBearerToken();
+        var token = Request.GetAccessToken();
         var result = await _travelToLocationHandler.HandleAsync(token, request, cancellationToken);
         return Translate(result);
     }
@@ -40,14 +52,4 @@ public class WorldController : ControllerBase
         };
     }
 
-    private string ExtractBearerToken()
-    {
-        if (Request.Headers.TryGetValue("Authorization", out var header)
-            && header.ToString().StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-        {
-            return header.ToString()[7..].Trim();
-        }
-
-        return string.Empty;
-    }
 }

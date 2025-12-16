@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationServices.Services;
 
@@ -14,7 +15,12 @@ public class MonstersController : ControllerBase
         _gameDataService = gameDataService;
     }
 
+    /// <summary>
+    /// Retrieve all monster profiles.
+    /// </summary>
+    /// <param name="cancellationToken">Request cancellation token.</param>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMonsters(CancellationToken cancellationToken)
     {
         var monsters = await _gameDataService.GetMonstersAsync(cancellationToken);
