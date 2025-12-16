@@ -15,6 +15,10 @@ public static class ServiceCollectionExtensions
         services.AddTransient<Authentication.RegisterUserHandler>();
         services.AddTransient<Authentication.LoginUserHandler>();
         services.AddTransient<Authentication.GetCurrentUserHandler>();
+        services.AddTransient<Characters.GetCharacterPresetsHandler>();
+        services.AddTransient<Characters.CreateCharacterHandler>();
+        services.AddTransient<Characters.GetCharactersHandler>();
+        services.AddTransient<Characters.GetCharacterDetailsHandler>();
         return services;
     }
 }
