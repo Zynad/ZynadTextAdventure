@@ -19,6 +19,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<Characters.CreateCharacterHandler>();
         services.AddTransient<Characters.GetCharactersHandler>();
         services.AddTransient<Characters.GetCharacterDetailsHandler>();
+        services.AddTransient<Adventure.TravelToLocationHandler>();
+        services.AddTransient<Adventure.AcceptQuestHandler>();
+        services.AddTransient<Adventure.CompleteQuestHandler>();
         return services;
     }
 }

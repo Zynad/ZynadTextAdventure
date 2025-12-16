@@ -1,6 +1,14 @@
 [
   {
-    "Towns": [],
+    "Towns": [
+      {
+        "Name": "Emberbrook",
+        "VendorInventory": [
+          { "ItemId": "loaf_of_bread", "BuyPrice": 2.0, "SellPrice": 1.0 },
+          { "ItemId": "whetstone", "BuyPrice": 8.0, "SellPrice": 3.0 }
+        ]
+      }
+    ],
     "Monsters": [],
     "CharacterPresets": [
       {
@@ -47,6 +55,42 @@
           { "ItemId": "apprentice_robes", "Quantity": 1 },
           { "ItemId": "healing_herbs", "Quantity": 2 }
         ]
+      }
+    ],
+    "Locations": [
+      {
+        "Id": "travelers_road",
+        "Name": "Traveler's Road",
+        "Description": "A well-worn path where many adventurers begin their journey.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["forked_path"]
+      },
+      {
+        "Id": "forked_path",
+        "Name": "Forked Path",
+        "Description": "A crossroads lined with signposts pointing toward nearby settlements.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["travelers_road", "emberbrook_gate"]
+      },
+      {
+        "Id": "emberbrook_gate",
+        "Name": "Emberbrook Gate",
+        "Description": "The sturdy wooden gate guarding the village of Emberbrook.",
+        "Biome": "Village",
+        "ThreatLevel": "Low",
+        "AdjacentLocationIds": ["forked_path", "emberbrook_square"],
+        "TownName": "Emberbrook"
+      },
+      {
+        "Id": "emberbrook_square",
+        "Name": "Emberbrook Square",
+        "Description": "A bustling square where villagers trade stories and goods.",
+        "Biome": "Village",
+        "ThreatLevel": "Safe",
+        "AdjacentLocationIds": ["emberbrook_gate"],
+        "TownName": "Emberbrook"
       }
     ]
   }
