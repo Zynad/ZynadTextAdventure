@@ -66,21 +66,34 @@ builder.Services.AddTextAdventureInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(options =>
-    {
-        options.Title = "TextAdventure API";
-    });
-}
-
 app.UseHttpsRedirection();
 
 app.UseCors("FrontendOrigins");
 
 app.UseAuthorization();
 
+var apiDocumentationSection = app.Configuration.GetSection("ApiDocumentation");
+var apiDocumentationEnabled = apiDocumentationSection.GetValue<bool?>("Enabled")
+    ?? app.Environment.IsDevelopment();
+var apiDocumentationRequiresAuthorization = apiDocumentationSection.GetValue<bool?>("RequireAuthorization") ?? false;
+
+if (apiDocumentationEnabled)
+{
+    var openApiEndpoint = app.MapOpenApi();
+    var scalarEndpoint = app.MapScalarApiReference(options =>
+    {
+        options.Title = "TextAdventure API";
+    });
+
+    if (apiDocumentationRequiresAuthorization)
+    {
+        openApiEndpoint.RequireAuthorization();
+        scalarEndpoint.RequireAuthorization();
+    }
+}
+
 app.MapControllers();
 
 app.Run();
+
+public partial class Program;
