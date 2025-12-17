@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<Adventure.AcceptQuestHandler>();
         services.AddTransient<Adventure.CompleteQuestHandler>();
         services.AddTransient<Adventure.GetEncountersHandler>();
+        services.AddTransient<Npc.NpcInteractionService>();
         return services;
     }
 }

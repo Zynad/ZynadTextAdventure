@@ -26,14 +26,22 @@ public static class CharacterStateMapper
                 e.Drops.AsReadOnly()))
             .ToList();
 
+        var actions = character.ActionLog
+            .OrderByDescending(a => a.OccurredAt)
+            .Take(10)
+            .ToList();
+
         return new CharacterStateDto(
             character.Id,
             character.Name,
             character.Level,
             character.ClassName,
+            character.Stats,
+            character.Coins,
             character.Location,
             character.Inventory.AsReadOnly(),
             questStates.AsReadOnly(),
-            encounters.AsReadOnly());
+            encounters.AsReadOnly(),
+            actions.AsReadOnly());
     }
 }

@@ -1,3 +1,4 @@
+using Domain.Core;
 using Domain.Entities.Storage;
 using Domain.ValueObjects;
 
@@ -8,7 +9,10 @@ public record CharacterStateDto(
     string Name,
     int Level,
     string ClassName,
+    CharacterStats Stats,
+    decimal Coins,
     WorldLocation Location,
     IReadOnlyCollection<InventoryItem> Inventory,
     IReadOnlyCollection<QuestStateDto> QuestLog,
-    IReadOnlyCollection<EncounterStateDto> Encounters);
+    IReadOnlyCollection<EncounterStateDto> Encounters,
+    IReadOnlyCollection<CharacterActionLogEntry> Actions);

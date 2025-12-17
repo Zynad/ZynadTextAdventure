@@ -251,9 +251,9 @@ public class JsonWorldRepository : IWorldRepository
                 },
                 Npcs = new List<TownNpc>
                 {
-                    new() { Id = "emberbrook_mayor", Name = "Mayor Thale", Role = "Mayor", Personality = "Earnest" },
-                    new() { Id = "emberbrook_farmer", Name = "Rhea Grainley", Role = "Farmer", Personality = "Cheerful" },
-                    new() { Id = "emberbrook_barkeep", Name = "Joren Kask", Role = "Barkeep", Personality = "Wry", IsVendor = true }
+                    BuildNpc("Emberbrook", "emberbrook_mayor", "Mayor Thale", "Mayor", "Earnest", roleType: NpcRoleType.QuestGiver),
+                    BuildNpc("Emberbrook", "emberbrook_farmer", "Rhea Grainley", "Farmer", "Cheerful"),
+                    BuildNpc("Emberbrook", "emberbrook_barkeep", "Joren Kask", "Barkeep", "Wry", true)
                 }
             },
             new()
@@ -269,9 +269,9 @@ public class JsonWorldRepository : IWorldRepository
                 },
                 Npcs = new List<TownNpc>
                 {
-                    new() { Id = "mosslight_guard", Name = "Ser Havel", Role = "Guard Captain", Personality = "Stoic" },
-                    new() { Id = "mosslight_scavenger", Name = "Fenna Willow", Role = "Forager", Personality = "Curious" },
-                    new() { Id = "mosslight_caller", Name = "Brin Bell", Role = "Town Crier", Personality = "Booming" }
+                    BuildNpc("Mosslight", "mosslight_guard", "Ser Havel", "Guard Captain", "Stoic", roleType: NpcRoleType.Guard),
+                    BuildNpc("Mosslight", "mosslight_scavenger", "Fenna Willow", "Forager", "Curious", roleType: NpcRoleType.QuestGiver),
+                    BuildNpc("Mosslight", "mosslight_caller", "Brin Bell", "Town Crier", "Booming")
                 }
             },
             new()
@@ -287,9 +287,9 @@ public class JsonWorldRepository : IWorldRepository
                 },
                 Npcs = new List<TownNpc>
                 {
-                    new() { Id = "stormwatch_dockmaster", Name = "Dockmaster Leira", Role = "Dockmaster", Personality = "Gruff", IsVendor = true },
-                    new() { Id = "stormwatch_sailor", Name = "Old Wens", Role = "Sailor", Personality = "Storyteller" },
-                    new() { Id = "stormwatch_scrim", Name = "Scrim", Role = "Smuggler", Personality = "Cagey" }
+                    BuildNpc("Stormwatch Harbor", "stormwatch_dockmaster", "Dockmaster Leira", "Dockmaster", "Gruff", true, NpcRoleType.QuestGiver),
+                    BuildNpc("Stormwatch Harbor", "stormwatch_sailor", "Old Wens", "Sailor", "Storyteller"),
+                    BuildNpc("Stormwatch Harbor", "stormwatch_scrim", "Scrim", "Smuggler", "Cagey", roleType: NpcRoleType.Flavor)
                 }
             },
             new()
@@ -305,9 +305,65 @@ public class JsonWorldRepository : IWorldRepository
                 },
                 Npcs = new List<TownNpc>
                 {
-                    new() { Id = "highridge_miner", Name = "Torun Slate", Role = "Miner", Personality = "Pragmatic" },
-                    new() { Id = "highridge_cook", Name = "Elya Pike", Role = "Cook", Personality = "Warm" },
-                    new() { Id = "highridge_quartermaster", Name = "Quartermaster Hale", Role = "Quartermaster", Personality = "Exacting", IsVendor = true }
+                    BuildNpc("Highridge", "highridge_miner", "Torun Slate", "Miner", "Pragmatic"),
+                    BuildNpc("Highridge", "highridge_cook", "Elya Pike", "Cook", "Warm"),
+                    BuildNpc("Highridge", "highridge_quartermaster", "Quartermaster Hale", "Quartermaster", "Exacting", true, NpcRoleType.Vendor)
+                }
+            }
+        };
+    }
+
+    private static TownNpc BuildNpc(string townName, string id, string name, string role, string personality, bool isVendor = false, NpcRoleType roleType = NpcRoleType.Flavor)
+    {
+        var type = roleType;
+        if (type == NpcRoleType.Flavor)
+        {
+            if (isVendor)
+            {
+                type = NpcRoleType.Vendor;
+            }
+            else if (role.Contains("guard", StringComparison.OrdinalIgnoreCase) || role.Contains("warden", StringComparison.OrdinalIgnoreCase))
+            {
+                type = NpcRoleType.Guard;
+            }
+        }
+
+        return new TownNpc
+        {
+            Id = id,
+            Name = name,
+            Role = role,
+            Personality = personality,
+            IsVendor = isVendor,
+            RoleType = type,
+            Location = townName,
+            QuestsOffered = new List<string> { $"{id}_rumor" },
+            Dialogue = new NpcDialogueTemplate
+            {
+                Greetings = new List<string>
+                {
+                    $"Greetings, {{playerName}}. I'm {name} of {townName}.",
+                    $"{townName} welcomes you, {{playerName}}."
+                },
+                QuestOffers = new List<string>
+                {
+                    $"If you're brave, {{playerName}}, I could use help with a matter in {townName}.",
+                    $"Spare a moment? {townName} has a task for capable hands."
+                },
+                Farewells = new List<string>
+                {
+                    "Stay safe out there.",
+                    "May your path be clear."
+                },
+                RandomLines = new List<string>
+                {
+                    $"Have you heard the news from {townName}?",
+                    "The roads grow stranger each night."
+                },
+                TradeOpeners = new List<string>
+                {
+                    "Take a look at my wares.",
+                    "Fair prices for a fellow traveler."
                 }
             }
         };
