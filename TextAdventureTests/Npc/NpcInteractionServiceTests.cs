@@ -3,7 +3,6 @@ using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
 using ApplicationServices.Npc;
 using Domain.Core;
-using Domain.Entities.Storage;
 using Domain.ValueObjects;
 using NSubstitute;
 using Shouldly;
@@ -99,7 +98,7 @@ public class NpcInteractionServiceTests
         worldRepo.GetTownsAsync(Arg.Any<CancellationToken>()).Returns(towns);
 
         var userRepo = Substitute.For<IUserRepository>();
-        userRepo.GetByIdAsync(_accountId, Arg.Any<CancellationToken>()).Returns(new UserAccount { Id = _accountId, Username = "tester" });
+        userRepo.GetByIdAsync(_accountId, Arg.Any<CancellationToken>()).Returns(new Account { Id = _accountId, Username = "tester" });
         var sessionRepo = Substitute.For<ISessionRepository>();
         sessionRepo.GetValidTokenAsync("token", Arg.Any<CancellationToken>()).Returns(new SessionToken
         {
