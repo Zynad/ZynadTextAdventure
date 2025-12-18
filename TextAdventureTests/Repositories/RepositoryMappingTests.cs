@@ -102,7 +102,7 @@ public class RepositoryMappingTests : IDisposable
 
         var dropTables = new List<DropTable>
         {
-            new() { Name = "trail_loot", Items = new List<string> { "map", "compass" } }
+            new() { Biome = "Forest", Drops = new List<string> { "map", "compass" } }
         };
 
         await _worldRepository.SaveWorldAsync(
@@ -124,7 +124,6 @@ public class RepositoryMappingTests : IDisposable
 
     public void Dispose()
     {
-        _concurrencyProvider.Dispose();
         if (Directory.Exists(_dataDirectory))
         {
             Directory.Delete(_dataDirectory, true);
