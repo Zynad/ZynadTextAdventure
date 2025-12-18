@@ -3,6 +3,7 @@ using Domain.Entities.Storage;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
 
 namespace Domain.Database;
 
@@ -25,8 +26,12 @@ public class JsonDatabase : IGameDatabase
         _environment = environment;
         _serializerOptions = new JsonSerializerOptions
         {
-            WriteIndented = true
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
+
+        _serializerOptions.Converters.Add(new JsonStringEnumConverter());
 
         var basePath = string.IsNullOrWhiteSpace(_environment.ContentRootPath)
             ? AppContext.BaseDirectory
