@@ -204,6 +204,12 @@ public class QuestFlowTests
             }
             return Task.CompletedTask;
         }
+
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+        {
+            _quests.RemoveAll(q => q.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return Task.CompletedTask;
+        }
     }
 
     private class InMemoryCharacterRepository : ICharacterRepository

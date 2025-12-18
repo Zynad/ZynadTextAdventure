@@ -8,4 +8,5 @@ public interface IQuestRepository
     Task<IReadOnlyCollection<Quest>> GetAllAsync(CancellationToken cancellationToken = default);
     Task AddAsync(Quest quest, CancellationToken cancellationToken = default);
     Task UpdateAsync(Quest quest, CancellationToken cancellationToken = default);
+    Task DeleteAsync(string id, CancellationToken cancellationToken = default);
 }
