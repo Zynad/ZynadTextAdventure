@@ -1,4 +1,6 @@
+using Domain.Entities.Armor.Models;
 using Domain.Entities.Storage;
+using Domain.Entities.Weapons.Models;
 
 namespace Domain.Database;
 
@@ -9,6 +11,24 @@ public class DatabaseModel
     public List<PlayerProgress> Progress { get; set; } = new();
 
     public List<MonsterProfile> Monsters { get; set; } = new();
+
+    public List<WandEntity> Wands { get; set; } = new();
+
+    public List<StaffEntity> Staff { get; set; } = new();
+
+    public List<SwordEntity> Swords { get; set; } = new();
+
+    public List<AxeEntity> Axes { get; set; } = new();
+
+    public List<BootsEntity> Boots { get; set; } = new();
+
+    public List<ChestEntity> Chests { get; set; } = new();
+
+    public List<GlovesEntity> Gloves { get; set; } = new();
+
+    public List<HelmetEntity> Helmets { get; set; } = new();
+
+    public List<LegsEntity> Legs { get; set; } = new();
 
     public static DatabaseModel CreateDefault()
     {
