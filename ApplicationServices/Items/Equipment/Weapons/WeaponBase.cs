@@ -7,7 +7,6 @@ public class WeaponBase : EquipmentBase
 {
     public WeaponMaterial Material { get; set; }
     public WeaponType WeaponType { get; set; }
-    public int ArmorValue { get; set; }
     public int MeleeAttackValue { get; set; }
     public int RangedAttackValue { get; set; }
     public int MagicAttackValue { get; set; }
@@ -24,7 +23,6 @@ public class WeaponBase : EquipmentBase
             Material = EnumMapper.MapToEntity(weaponBase.Material),
             WeaponType = EnumMapper.MapToEntity(weaponBase.WeaponType),
             Rarity = EnumMapper.MapToEntity(weaponBase.Rarity),
-            ArmorValue = weaponBase.ArmorValue,
             MeleeAttackValue = weaponBase.MeleeAttackValue,
             RangedAttackValue = weaponBase.RangedAttackValue,
             MagicAttackValue = weaponBase.MagicAttackValue,
@@ -44,7 +42,6 @@ public class WeaponBase : EquipmentBase
             Material = EnumMapper.MapToModel(entity.Material),
             WeaponType = EnumMapper.MapToModel(entity.WeaponType),
             Rarity = EnumMapper.MapToModel(entity.Rarity),
-            ArmorValue = entity.ArmorValue,
             MeleeAttackValue = entity.MeleeAttackValue,
             RangedAttackValue = entity.RangedAttackValue,
             MagicAttackValue = entity.MagicAttackValue,

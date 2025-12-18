@@ -31,7 +31,8 @@ public abstract class Creature
     public int ManaPoints { get; set; }
     public int Stamina { get; set; }
     public Gender Gender { get; set; }
-    public int ArmorValue { get; set; }
+    public int PhysicalDefense { get; set; }
+    public int MagicResistance { get; set; }
     public int MeleePhysicalAttackDamage { get; set; }
     public int RangedPhysicalAttackDamage { get; set; }
     public int MagicAttackDamage { get; set; }

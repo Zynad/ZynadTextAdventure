@@ -13,8 +13,9 @@ public class Humanoid : Creature
     public WeaponBase MainHand { get; set; } = default!;
     public EquipmentBase OffHand { get; set; } = default!;
 
-    internal void SetArmorValue()
+    internal void SetDefenseValues()
     {
-        ArmorValue = Boots.ArmorValue + Helmet.ArmorValue + Chest.ArmorValue + Gloves.ArmorValue + Legs.ArmorValue + MainHand.ArmorValue;
+        PhysicalDefense = Boots.PhysicalDefense + Helmet.PhysicalDefense + Chest.PhysicalDefense + Gloves.PhysicalDefense + Legs.PhysicalDefense;
+        MagicResistance = Boots.MagicResistance + Helmet.MagicResistance + Chest.MagicResistance + Gloves.MagicResistance + Legs.MagicResistance;
     }
 }

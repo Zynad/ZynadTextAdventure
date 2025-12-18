@@ -6,7 +6,6 @@ public class WeaponBaseEntity : EquipmentBaseEntity
 {
     public WeaponMaterialEntity Material { get; set; }
     public WeaponTypeEntity WeaponType { get; set; }
-    public int ArmorValue { get; set; }
     public int MeleeAttackValue { get; set; }
     public int RangedAttackValue { get; set; }
     public int MagicAttackValue { get; set; }
