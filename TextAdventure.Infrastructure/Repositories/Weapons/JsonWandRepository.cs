@@ -5,9 +5,5 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Weapons;
 
-public class JsonWandRepository : BaseRepo<WandEntity>, IWandRepository
-{
-    public JsonWandRepository(IGameDatabase database) : base(database, db => db.Wands)
-    {
-    }
-}
+public class JsonWandRepository(IGameDatabase database)
+    : BaseRepo<WandEntity>(database, db => db.Wands), IWandRepository;

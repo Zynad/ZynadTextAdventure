@@ -7,37 +7,37 @@ using TextAdventure.Infrastructure.Configuration;
 
 namespace TextAdventure.Infrastructure.Repositories;
 
-public class JsonQuestRepository : IQuestRepository
+public class JsonQuestRepository(
+    IOptions<DataStoreOptions> options,
+    IHostEnvironment environment,
+    ILogger<JsonQuestRepository> logger,
+    FileConcurrencyProvider concurrencyProvider)
+    : IQuestRepository
 {
-    private readonly JsonFileStore<Quest> _store;
-
-    public JsonQuestRepository(IOptions<DataStoreOptions> options, IHostEnvironment environment, ILogger<JsonQuestRepository> logger, FileConcurrencyProvider concurrencyProvider)
-    {
-        _store = new JsonFileStore<Quest>(options, environment, logger, concurrencyProvider, options.Value.QuestsFileName);
-    }
+    private readonly JsonFileStore<Quest> _store = new(options, environment, logger, concurrencyProvider, options.Value.QuestsFileName);
 
     public async Task AddAsync(Quest quest, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => new List<Quest>(), cancellationToken);
+        var quests = await _store.ReadAsync(() => [], cancellationToken);
         quests.Add(quest);
         await _store.WriteAsync(quests, cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Quest>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => new List<Quest>(), cancellationToken);
+        var quests = await _store.ReadAsync(() => [], cancellationToken);
         return quests;
     }
 
     public async Task<Quest?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => new List<Quest>(), cancellationToken);
+        var quests = await _store.ReadAsync(() => [], cancellationToken);
         return quests.FirstOrDefault(q => string.Equals(q.Id, id, StringComparison.OrdinalIgnoreCase));
     }
 
     public async Task UpdateAsync(Quest quest, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => new List<Quest>(), cancellationToken);
+        var quests = await _store.ReadAsync(() => [], cancellationToken);
         var index = quests.FindIndex(q => string.Equals(q.Id, quest.Id, StringComparison.OrdinalIgnoreCase));
         if (index < 0)
         {

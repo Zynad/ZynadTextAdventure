@@ -11,22 +11,15 @@ namespace TextAdventure.Api.Controllers;
 [ApiController]
 [Route("api/admin/items")]
 [Authorize(Policy = AuthPolicies.AuthenticatedUsers)]
-public class AdminItemsController : ControllerBase
+public class AdminItemsController(IAdminItemService itemService) : ControllerBase
 {
-    private readonly IAdminItemService _itemService;
-
-    public AdminItemsController(IAdminItemService itemService)
-    {
-        _itemService = itemService;
-    }
-
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetItems(CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _itemService.GetAllAsync(token, cancellationToken);
+        var result = await itemService.GetAllAsync(token, cancellationToken);
         return Translate(result);
     }
 
@@ -37,7 +30,7 @@ public class AdminItemsController : ControllerBase
     public async Task<IActionResult> CreateItem(ItemDto itemDto, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _itemService.CreateAsync(token, itemDto, cancellationToken);
+        var result = await itemService.CreateAsync(token, itemDto, cancellationToken);
         return Translate(result);
     }
 
@@ -50,7 +43,7 @@ public class AdminItemsController : ControllerBase
     {
         var token = Request.GetAccessToken();
         var payload = itemDto with { Id = id };
-        var result = await _itemService.UpdateAsync(token, payload, cancellationToken);
+        var result = await itemService.UpdateAsync(token, payload, cancellationToken);
         return Translate(result);
     }
 
@@ -61,7 +54,7 @@ public class AdminItemsController : ControllerBase
     public async Task<IActionResult> DeleteItem(Guid id, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _itemService.DeleteAsync(token, id, cancellationToken);
+        var result = await itemService.DeleteAsync(token, id, cancellationToken);
         return Translate(result);
     }
 

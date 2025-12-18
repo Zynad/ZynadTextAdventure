@@ -7,20 +7,13 @@ using Domain.ValueObjects;
 
 namespace ApplicationServices.Services;
 
-public class GameDataService : IGameDataService
+public class GameDataService(IGameDatabase database) : IGameDataService
 {
-    private readonly IGameDatabase _database;
-
-    public GameDataService(IGameDatabase database)
-    {
-        _database = database;
-    }
-
     public async Task<AuthResponse?> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default)
     {
-        var database = await _database.ReadAsync(cancellationToken);
+        var database1 = await database.ReadAsync(cancellationToken);
 
-        if (database.Users.Any(u => u.Username.Equals(request.Username, StringComparison.OrdinalIgnoreCase)))
+        if (database1.Users.Any(u => u.Username.Equals(request.Username, StringComparison.OrdinalIgnoreCase)))
         {
             return null;
         }
@@ -33,8 +26,8 @@ public class GameDataService : IGameDataService
 
         var token = CreateToken();
         user.SessionTokens.Add(token);
-        database.Users.Add(user);
-        await _database.WriteAsync(database, cancellationToken);
+        database1.Users.Add(user);
+        await database.WriteAsync(database1, cancellationToken);
 
         return new AuthResponse
         {
@@ -45,8 +38,8 @@ public class GameDataService : IGameDataService
 
     public async Task<AuthResponse?> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
     {
-        var database = await _database.ReadAsync(cancellationToken);
-        var user = database.Users.FirstOrDefault(u => u.Username.Equals(request.Username, StringComparison.OrdinalIgnoreCase));
+        var database1 = await database.ReadAsync(cancellationToken);
+        var user = database1.Users.FirstOrDefault(u => u.Username.Equals(request.Username, StringComparison.OrdinalIgnoreCase));
         if (user is null)
         {
             return null;
@@ -59,7 +52,7 @@ public class GameDataService : IGameDataService
 
         var token = CreateToken();
         user.SessionTokens.Add(token);
-        await _database.WriteAsync(database, cancellationToken);
+        await database.WriteAsync(database1, cancellationToken);
 
         return new AuthResponse
         {
@@ -70,26 +63,26 @@ public class GameDataService : IGameDataService
 
     public async Task<IReadOnlyCollection<MonsterProfile>> GetMonstersAsync(CancellationToken cancellationToken = default)
     {
-        var database = await _database.ReadAsync(cancellationToken);
-        if (database.Monsters.Count == 0)
+        var database1 = await database.ReadAsync(cancellationToken);
+        if (database1.Monsters.Count == 0)
         {
-            database.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
-            await _database.WriteAsync(database, cancellationToken);
+            database1.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
+            await database.WriteAsync(database1, cancellationToken);
         }
 
-        return database.Monsters.AsReadOnly();
+        return database1.Monsters.AsReadOnly();
     }
 
     public async Task<ProgressResponse?> GetProgressAsync(string token, CancellationToken cancellationToken = default)
     {
-        var database = await _database.ReadAsync(cancellationToken);
-        var user = FindUserByToken(database, token);
+        var database1 = await database.ReadAsync(cancellationToken);
+        var user = FindUserByToken(database1, token);
         if (user is null)
         {
             return null;
         }
 
-        var progress = database.Progress.FirstOrDefault(p => p.UserId == user.Id);
+        var progress = database1.Progress.FirstOrDefault(p => p.UserId == user.Id);
         if (progress is null)
         {
             return null;
@@ -110,18 +103,18 @@ public class GameDataService : IGameDataService
 
     public async Task<bool> SaveProgressAsync(SaveProgressRequest request, CancellationToken cancellationToken = default)
     {
-        var database = await _database.ReadAsync(cancellationToken);
-        var user = FindUserByToken(database, request.Token);
+        var database1 = await database.ReadAsync(cancellationToken);
+        var user = FindUserByToken(database1, request.Token);
         if (user is null)
         {
             return false;
         }
 
-        var progress = database.Progress.FirstOrDefault(p => p.UserId == user.Id);
+        var progress = database1.Progress.FirstOrDefault(p => p.UserId == user.Id);
         if (progress is null)
         {
             progress = new PlayerProgress { UserId = user.Id };
-            database.Progress.Add(progress);
+            database1.Progress.Add(progress);
         }
 
         progress.Level = request.Level;
@@ -151,7 +144,7 @@ public class GameDataService : IGameDataService
         saveSlot.LastUpdatedUtc = DateTimeOffset.UtcNow;
         saveSlot.Location = location;
 
-        await _database.WriteAsync(database, cancellationToken);
+        await database.WriteAsync(database1, cancellationToken);
         return true;
     }
 

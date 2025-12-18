@@ -8,15 +8,8 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProgressController : ControllerBase
+public class ProgressController(IGameDataService gameDataService) : ControllerBase
 {
-    private readonly IGameDataService _gameDataService;
-
-    public ProgressController(IGameDataService gameDataService)
-    {
-        _gameDataService = gameDataService;
-    }
-
     /// <summary>
     /// Load save progress using a query token, bearer header, or auth cookie.
     /// </summary>
@@ -38,7 +31,7 @@ public class ProgressController : ControllerBase
             return BadRequest(new { message = "A session token is required" });
         }
 
-        var progress = await _gameDataService.GetProgressAsync(accessToken, cancellationToken);
+        var progress = await gameDataService.GetProgressAsync(accessToken, cancellationToken);
         if (progress is null)
         {
             return NotFound(new { message = "No saved progress for this session" });
@@ -57,7 +50,7 @@ public class ProgressController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Save(SaveProgressRequest request, CancellationToken cancellationToken)
     {
-        var success = await _gameDataService.SaveProgressAsync(request, cancellationToken);
+        var success = await gameDataService.SaveProgressAsync(request, cancellationToken);
         if (!success)
         {
             return Unauthorized(new { message = "Invalid session token" });

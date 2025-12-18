@@ -13,7 +13,7 @@ public class Quest
 
     public string? CompletionLocationId { get; set; }
 
-    public List<string> PrerequisiteQuestIds { get; set; } = new();
+    public List<string> PrerequisiteQuestIds { get; set; } = [];
 
-    public List<InventoryItem> RewardItems { get; set; } = new();
+    public List<InventoryItem> RewardItems { get; set; } = [];
 }

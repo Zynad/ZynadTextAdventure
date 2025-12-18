@@ -9,15 +9,8 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/world")]
-public class WorldController : ControllerBase
+public class WorldController(TravelToLocationHandler travelToLocationHandler) : ControllerBase
 {
-    private readonly TravelToLocationHandler _travelToLocationHandler;
-
-    public WorldController(TravelToLocationHandler travelToLocationHandler)
-    {
-        _travelToLocationHandler = travelToLocationHandler;
-    }
-
     /// <summary>
     /// Move the authenticated player's character to a new location.
     /// </summary>
@@ -32,7 +25,7 @@ public class WorldController : ControllerBase
     public async Task<IActionResult> Travel(TravelRequest request, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _travelToLocationHandler.HandleAsync(token, request, cancellationToken);
+        var result = await travelToLocationHandler.HandleAsync(token, request, cancellationToken);
         return Translate(result);
     }
 

@@ -11,14 +11,14 @@ using TextAdventure.Infrastructure.Storage.Models;
 
 namespace TextAdventure.Infrastructure.Repositories;
 
-public class JsonWorldRepository : IWorldRepository
+public class JsonWorldRepository(
+    IOptions<DataStoreOptions> options,
+    IHostEnvironment environment,
+    ILogger<JsonWorldRepository> logger,
+    FileConcurrencyProvider concurrencyProvider)
+    : IWorldRepository
 {
-    private readonly JsonFileStore<WorldStateModel> _store;
-
-    public JsonWorldRepository(IOptions<DataStoreOptions> options, IHostEnvironment environment, ILogger<JsonWorldRepository> logger, FileConcurrencyProvider concurrencyProvider)
-    {
-        _store = new JsonFileStore<WorldStateModel>(options, environment, logger, concurrencyProvider, options.Value.WorldFileName);
-    }
+    private readonly JsonFileStore<WorldStateModel> _store = new(options, environment, logger, concurrencyProvider, options.Value.WorldFileName);
 
     public async Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
     {
@@ -68,41 +68,36 @@ public class JsonWorldRepository : IWorldRepository
             DropTables = dropTables.ToList()
         };
 
-        await _store.WriteAsync(new[] { world.ToModel() }, cancellationToken);
+        await _store.WriteAsync([world.ToModel()], cancellationToken);
     }
 
     private async Task<WorldState> ReadWorldAsync(CancellationToken cancellationToken)
     {
         var data = await _store.ReadAsync(
-            () => new List<WorldStateModel> { CreateDefaultWorldState().ToModel() },
+            () => [CreateDefaultWorldState().ToModel()],
             cancellationToken);
         var world = data.FirstOrDefault()?.ToDomain() ?? CreateDefaultWorldState();
 
-        world.CharacterPresets ??= new List<CharacterPreset>();
         if (world.CharacterPresets.Count == 0)
         {
             world.CharacterPresets.AddRange(CreateDefaultCharacterPresets());
         }
 
-        world.Monsters ??= new List<Monster>();
         if (world.Monsters.Count == 0)
         {
             world.Monsters.AddRange(CreateDefaultMonsters());
         }
 
-        world.Towns ??= new List<Town>();
         if (world.Towns.Count == 0)
         {
             world.Towns.AddRange(CreateDefaultTowns());
         }
 
-        world.Locations ??= new List<WorldLocationNode>();
         if (world.Locations.Count == 0)
         {
             world.Locations.AddRange(CreateDefaultLocations());
         }
 
-        world.DropTables ??= new List<DropTable>();
         if (world.DropTables.Count == 0)
         {
             world.DropTables.AddRange(CreateDefaultDropTables());
@@ -125,8 +120,8 @@ public class JsonWorldRepository : IWorldRepository
 
     private static List<Monster> CreateDefaultMonsters()
     {
-        return new List<Monster>
-        {
+        return
+        [
             new()
             {
                 Id = "road_bandit",
@@ -137,8 +132,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 2, Max = 4 },
                 DefenseRange = new MonsterStatRange { Min = 1, Max = 2 },
                 CoinDropRange = new MonsterStatRange { Min = 3, Max = 9 },
-                PreferredThreatLevels = new List<string> { "Low" }
+                PreferredThreatLevels = ["Low"]
             },
+
             new()
             {
                 Id = "wild_boar",
@@ -149,8 +145,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 3, Max = 5 },
                 DefenseRange = new MonsterStatRange { Min = 1, Max = 3 },
                 CoinDropRange = new MonsterStatRange { Min = 2, Max = 6 },
-                PreferredThreatLevels = new List<string> { "Low", "Moderate" }
+                PreferredThreatLevels = ["Low", "Moderate"]
             },
+
             new()
             {
                 Id = "emberbrook_scout",
@@ -161,8 +158,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 4, Max = 6 },
                 DefenseRange = new MonsterStatRange { Min = 2, Max = 4 },
                 CoinDropRange = new MonsterStatRange { Min = 5, Max = 12 },
-                PreferredThreatLevels = new List<string> { "Low", "Moderate" }
+                PreferredThreatLevels = ["Low", "Moderate"]
             },
+
             new()
             {
                 Id = "cavern_bat",
@@ -173,8 +171,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 4, Max = 6 },
                 DefenseRange = new MonsterStatRange { Min = 1, Max = 2 },
                 CoinDropRange = new MonsterStatRange { Min = 1, Max = 4 },
-                PreferredThreatLevels = new List<string> { "Moderate" }
+                PreferredThreatLevels = ["Moderate"]
             },
+
             new()
             {
                 Id = "ruin_skeleton",
@@ -185,8 +184,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 5, Max = 8 },
                 DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
                 CoinDropRange = new MonsterStatRange { Min = 6, Max = 14 },
-                PreferredThreatLevels = new List<string> { "High" }
+                PreferredThreatLevels = ["High"]
             },
+
             new()
             {
                 Id = "coastal_siren",
@@ -197,8 +197,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 6, Max = 10 },
                 DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
                 CoinDropRange = new MonsterStatRange { Min = 8, Max = 20 },
-                PreferredThreatLevels = new List<string> { "Moderate", "High" }
+                PreferredThreatLevels = ["Moderate", "High"]
             },
+
             new()
             {
                 Id = "marsh_wisp",
@@ -209,8 +210,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 4, Max = 7 },
                 DefenseRange = new MonsterStatRange { Min = 2, Max = 5 },
                 CoinDropRange = new MonsterStatRange { Min = 5, Max = 12 },
-                PreferredThreatLevels = new List<string> { "Moderate" }
+                PreferredThreatLevels = ["Moderate"]
             },
+
             new()
             {
                 Id = "mountain_wolf",
@@ -221,8 +223,9 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 6, Max = 9 },
                 DefenseRange = new MonsterStatRange { Min = 3, Max = 6 },
                 CoinDropRange = new MonsterStatRange { Min = 7, Max = 16 },
-                PreferredThreatLevels = new List<string> { "High" }
+                PreferredThreatLevels = ["High"]
             },
+
             new()
             {
                 Id = "harbor_cutthroat",
@@ -233,88 +236,101 @@ public class JsonWorldRepository : IWorldRepository
                 AttackRange = new MonsterStatRange { Min = 6, Max = 9 },
                 DefenseRange = new MonsterStatRange { Min = 2, Max = 5 },
                 CoinDropRange = new MonsterStatRange { Min = 7, Max = 16 },
-                PreferredThreatLevels = new List<string> { "Moderate" }
+                PreferredThreatLevels = ["Moderate"]
             }
-        };
+        ];
     }
 
     private static List<Town> CreateDefaultTowns()
     {
-        return new List<Town>
-        {
+        return
+        [
             new()
             {
                 Name = "Emberbrook",
-                VendorInventory = new List<VendorPrice>
-                {
+                VendorInventory =
+                [
                     new() { ItemId = "loaf_of_bread", BuyPrice = 2.0m, SellPrice = 1.0m },
                     new() { ItemId = "whetstone", BuyPrice = 8.0m, SellPrice = 3.0m },
                     new() { ItemId = "leather_cap", BuyPrice = 12.0m, SellPrice = 5.0m },
                     new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
                     new() { ItemId = "minor_healing_potion", BuyPrice = 14.0m, SellPrice = 6.0m }
-                },
-                Npcs = new List<TownNpc>
-                {
-                    BuildNpc("Emberbrook", "emberbrook_mayor", "Mayor Thale", "Mayor", "Earnest", roleType: NpcRoleType.QuestGiver),
+                ],
+                Npcs =
+                [
+                    BuildNpc("Emberbrook", "emberbrook_mayor", "Mayor Thale", "Mayor", "Earnest",
+                        roleType: NpcRoleType.QuestGiver),
+
                     BuildNpc("Emberbrook", "emberbrook_farmer", "Rhea Grainley", "Farmer", "Cheerful"),
                     BuildNpc("Emberbrook", "emberbrook_barkeep", "Joren Kask", "Barkeep", "Wry", true)
-                }
+                ]
             },
+
             new()
             {
                 Name = "Mosslight",
-                VendorInventory = new List<VendorPrice>
-                {
+                VendorInventory =
+                [
                     new() { ItemId = "forest_tokens", BuyPrice = 5.0m, SellPrice = 2.0m },
                     new() { ItemId = "travel_rations", BuyPrice = 3.5m, SellPrice = 1.5m },
                     new() { ItemId = "quiver_of_arrows", BuyPrice = 14.0m, SellPrice = 6.0m },
                     new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
                     new() { ItemId = "antidote_phial", BuyPrice = 10.0m, SellPrice = 4.0m }
-                },
-                Npcs = new List<TownNpc>
-                {
-                    BuildNpc("Mosslight", "mosslight_guard", "Ser Havel", "Guard Captain", "Stoic", roleType: NpcRoleType.Guard),
-                    BuildNpc("Mosslight", "mosslight_scavenger", "Fenna Willow", "Forager", "Curious", roleType: NpcRoleType.QuestGiver),
+                ],
+                Npcs =
+                [
+                    BuildNpc("Mosslight", "mosslight_guard", "Ser Havel", "Guard Captain", "Stoic",
+                        roleType: NpcRoleType.Guard),
+
+                    BuildNpc("Mosslight", "mosslight_scavenger", "Fenna Willow", "Forager", "Curious",
+                        roleType: NpcRoleType.QuestGiver),
+
                     BuildNpc("Mosslight", "mosslight_caller", "Brin Bell", "Town Crier", "Booming")
-                }
+                ]
             },
+
             new()
             {
                 Name = "Stormwatch Harbor",
-                VendorInventory = new List<VendorPrice>
-                {
+                VendorInventory =
+                [
                     new() { ItemId = "salted_fish", BuyPrice = 4.0m, SellPrice = 2.0m },
                     new() { ItemId = "driftwood_charm", BuyPrice = 9.0m, SellPrice = 4.0m },
                     new() { ItemId = "rope_coil", BuyPrice = 7.0m, SellPrice = 3.0m },
                     new() { ItemId = "sailor_cloak", BuyPrice = 15.0m, SellPrice = 7.0m },
                     new() { ItemId = "lesser_mana_potion", BuyPrice = 16.0m, SellPrice = 7.0m }
-                },
-                Npcs = new List<TownNpc>
-                {
-                    BuildNpc("Stormwatch Harbor", "stormwatch_dockmaster", "Dockmaster Leira", "Dockmaster", "Gruff", true, NpcRoleType.QuestGiver),
+                ],
+                Npcs =
+                [
+                    BuildNpc("Stormwatch Harbor", "stormwatch_dockmaster", "Dockmaster Leira", "Dockmaster", "Gruff",
+                        true, NpcRoleType.QuestGiver),
+
                     BuildNpc("Stormwatch Harbor", "stormwatch_sailor", "Old Wens", "Sailor", "Storyteller"),
-                    BuildNpc("Stormwatch Harbor", "stormwatch_scrim", "Scrim", "Smuggler", "Cagey", roleType: NpcRoleType.Flavor)
-                }
+                    BuildNpc("Stormwatch Harbor", "stormwatch_scrim", "Scrim", "Smuggler", "Cagey",
+                        roleType: NpcRoleType.Flavor)
+                ]
             },
+
             new()
             {
                 Name = "Highridge",
-                VendorInventory = new List<VendorPrice>
-                {
+                VendorInventory =
+                [
                     new() { ItemId = "ore_fragment", BuyPrice = 10.0m, SellPrice = 4.0m },
                     new() { ItemId = "sturdy_leather", BuyPrice = 9.0m, SellPrice = 4.0m },
                     new() { ItemId = "iron_ingot", BuyPrice = 18.0m, SellPrice = 8.0m },
                     new() { ItemId = "glowing_crystal", BuyPrice = 22.0m, SellPrice = 10.0m },
                     new() { ItemId = "iron_shield", BuyPrice = 28.0m, SellPrice = 12.0m }
-                },
-                Npcs = new List<TownNpc>
-                {
+                ],
+                Npcs =
+                [
                     BuildNpc("Highridge", "highridge_miner", "Torun Slate", "Miner", "Pragmatic"),
                     BuildNpc("Highridge", "highridge_cook", "Elya Pike", "Cook", "Warm"),
-                    BuildNpc("Highridge", "highridge_quartermaster", "Quartermaster Hale", "Quartermaster", "Exacting", true, NpcRoleType.Vendor)
-                }
+                    BuildNpc("Highridge", "highridge_quartermaster", "Quartermaster Hale", "Quartermaster", "Exacting",
+                        true, NpcRoleType.Vendor)
+                ]
             }
-        };
+        ];
     }
 
     private static TownNpc BuildNpc(string townName, string id, string name, string role, string personality, bool isVendor = false, NpcRoleType roleType = NpcRoleType.Flavor)
@@ -341,94 +357,106 @@ public class JsonWorldRepository : IWorldRepository
             IsVendor = isVendor,
             RoleType = type,
             Location = townName,
-            QuestsOffered = new List<string> { $"{id}_rumor" },
+            QuestsOffered = [$"{id}_rumor"],
             Dialogue = new NpcDialogueTemplate
             {
-                Greetings = new List<string>
-                {
+                Greetings =
+                [
                     $"Greetings, {{playerName}}. I'm {name} of {townName}.",
                     $"{townName} welcomes you, {{playerName}}."
-                },
-                QuestOffers = new List<string>
-                {
+                ],
+                QuestOffers =
+                [
                     $"If you're brave, {{playerName}}, I could use help with a matter in {townName}.",
                     $"Spare a moment? {townName} has a task for capable hands."
-                },
-                Farewells = new List<string>
-                {
+                ],
+                Farewells =
+                [
                     "Stay safe out there.",
                     "May your path be clear."
-                },
-                RandomLines = new List<string>
-                {
+                ],
+                RandomLines =
+                [
                     $"Have you heard the news from {townName}?",
                     "The roads grow stranger each night."
-                },
-                TradeOpeners = new List<string>
-                {
+                ],
+                TradeOpeners =
+                [
                     "Take a look at my wares.",
                     "Fair prices for a fellow traveler."
-                }
+                ]
             }
         };
     }
 
     private static List<DropTable> CreateDefaultDropTables()
     {
-        return new List<DropTable>
-        {
+        return
+        [
             new()
             {
                 Biome = "Village",
-                Drops = new List<string> { "loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "minor_healing_potion", "wool_vest" }
+                Drops =
+                [
+                    "loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "minor_healing_potion",
+                    "wool_vest"
+                ]
             },
+
             new()
             {
                 Biome = "Grassland",
-                Drops = new List<string> { "loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger" }
+                Drops = ["loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger"]
             },
+
             new()
             {
                 Biome = "Forest",
-                Drops = new List<string> { "healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow" }
+                Drops = ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow"]
             },
+
             new()
             {
                 Biome = "Mountain",
-                Drops = new List<string> { "ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield" }
+                Drops = ["ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield"]
             },
+
             new()
             {
                 Biome = "Cave",
-                Drops = new List<string> { "glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff" }
+                Drops = ["glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff"]
             },
+
             new()
             {
                 Biome = "Ruins",
-                Drops = new List<string> { "ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk" }
+                Drops = ["ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk"]
             },
+
             new()
             {
                 Biome = "Coast",
-                Drops = new List<string> { "salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass" }
+                Drops = ["salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass"]
             },
+
             new()
             {
                 Biome = "Swamp",
-                Drops = new List<string> { "reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice" }
+                Drops = ["reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice"]
             },
+
             new()
             {
                 Biome = "Unknown",
-                Drops = new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map", "lesser_mana_potion" }
+                Drops = ["coin_pouch", "mysterious_trinket", "tattered_map", "lesser_mana_potion"]
             }
-        };
+        ];
     }
 
     private static List<WorldLocationNode> CreateDefaultLocations()
     {
-        return new List<WorldLocationNode>
-        {
+        return
+        [
             new()
             {
                 Id = "travelers_road",
@@ -436,8 +464,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A well-worn path where many adventurers begin their journey.",
                 Biome = "Grassland",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "forked_path", "roadside_inn" }
+                AdjacentLocationIds = ["forked_path", "roadside_inn"]
             },
+
             new()
             {
                 Id = "forked_path",
@@ -445,8 +474,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A crossroads lined with signposts pointing toward nearby settlements.",
                 Biome = "Grassland",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "travelers_road", "emberbrook_gate", "mossy_trail", "roadside_inn" }
+                AdjacentLocationIds = ["travelers_road", "emberbrook_gate", "mossy_trail", "roadside_inn"]
             },
+
             new()
             {
                 Id = "roadside_inn",
@@ -454,8 +484,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A roadside tavern where caravans share news over warm stew.",
                 Biome = "Grassland",
                 ThreatLevel = "Safe",
-                AdjacentLocationIds = new List<string> { "travelers_road", "forked_path" }
+                AdjacentLocationIds = ["travelers_road", "forked_path"]
             },
+
             new()
             {
                 Id = "emberbrook_gate",
@@ -463,9 +494,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "The sturdy wooden gate guarding the village of Emberbrook.",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "forked_path", "emberbrook_square" },
+                AdjacentLocationIds = ["forked_path", "emberbrook_square"],
                 TownName = "Emberbrook"
             },
+
             new()
             {
                 Id = "emberbrook_square",
@@ -473,9 +505,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A bustling square where villagers trade stories and goods.",
                 Biome = "Village",
                 ThreatLevel = "Safe",
-                AdjacentLocationIds = new List<string> { "emberbrook_gate", "emberbrook_inn" },
+                AdjacentLocationIds = ["emberbrook_gate", "emberbrook_inn"],
                 TownName = "Emberbrook"
             },
+
             new()
             {
                 Id = "emberbrook_inn",
@@ -483,9 +516,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A cozy inn with a glowing hearth and plenty of gossip.",
                 Biome = "Village",
                 ThreatLevel = "Safe",
-                AdjacentLocationIds = new List<string> { "emberbrook_square" },
+                AdjacentLocationIds = ["emberbrook_square"],
                 TownName = "Emberbrook"
             },
+
             new()
             {
                 Id = "mossy_trail",
@@ -493,8 +527,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A damp trail leading deeper into the trees with soft moss underfoot.",
                 Biome = "Grassland",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "forked_path", "whispering_woods" }
+                AdjacentLocationIds = ["forked_path", "whispering_woods"]
             },
+
             new()
             {
                 Id = "whispering_woods",
@@ -502,8 +537,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "The wind carries faint whispers through the dense canopy.",
                 Biome = "Forest",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "mossy_trail", "mosslight_green", "hollow_cave" }
+                AdjacentLocationIds = ["mossy_trail", "mosslight_green", "hollow_cave"]
             },
+
             new()
             {
                 Id = "mosslight_green",
@@ -511,9 +547,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A sun-dappled clearing where the villagers of Mosslight gather.",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "whispering_woods", "mosslight_market" },
+                AdjacentLocationIds = ["whispering_woods", "mosslight_market"],
                 TownName = "Mosslight"
             },
+
             new()
             {
                 Id = "mosslight_market",
@@ -521,9 +558,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Stalls with fragrant herbs and carved trinkets line the path.",
                 Biome = "Village",
                 ThreatLevel = "Safe",
-                AdjacentLocationIds = new List<string> { "mosslight_green", "sagestone_tavern" },
+                AdjacentLocationIds = ["mosslight_green", "sagestone_tavern"],
                 TownName = "Mosslight"
             },
+
             new()
             {
                 Id = "sagestone_tavern",
@@ -531,8 +569,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Travelers swap rumors over mugs etched with old runes.",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "mosslight_market", "blackmarsh_crossing" }
+                AdjacentLocationIds = ["mosslight_market", "blackmarsh_crossing"]
             },
+
             new()
             {
                 Id = "hollow_cave",
@@ -540,8 +579,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A yawning cave mouth breathing cool, damp air.",
                 Biome = "Cave",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "whispering_woods", "sunless_depths" }
+                AdjacentLocationIds = ["whispering_woods", "sunless_depths"]
             },
+
             new()
             {
                 Id = "sunless_depths",
@@ -549,8 +589,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "The cave descends into a maze of echoing tunnels.",
                 Biome = "Cave",
                 ThreatLevel = "High",
-                AdjacentLocationIds = new List<string> { "hollow_cave", "broken_keep" }
+                AdjacentLocationIds = ["hollow_cave", "broken_keep"]
             },
+
             new()
             {
                 Id = "broken_keep",
@@ -558,8 +599,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Ruined battlements crumble over a forgotten cellar.",
                 Biome = "Ruins",
                 ThreatLevel = "High",
-                AdjacentLocationIds = new List<string> { "sunless_depths", "blackmarsh_crossing" }
+                AdjacentLocationIds = ["sunless_depths", "blackmarsh_crossing"]
             },
+
             new()
             {
                 Id = "blackmarsh_crossing",
@@ -567,8 +609,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Soggy boardwalks stretch over the dark marsh water.",
                 Biome = "Swamp",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "sagestone_tavern", "broken_keep", "coastal_road" }
+                AdjacentLocationIds = ["sagestone_tavern", "broken_keep", "coastal_road"]
             },
+
             new()
             {
                 Id = "coastal_road",
@@ -576,8 +619,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A sea-sprayed road dotted with fisher carts and gulls.",
                 Biome = "Coast",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "blackmarsh_crossing", "stormwatch_gate", "old_watchtower" }
+                AdjacentLocationIds = ["blackmarsh_crossing", "stormwatch_gate", "old_watchtower"]
             },
+
             new()
             {
                 Id = "stormwatch_gate",
@@ -585,9 +629,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Weathered stone arches lead into the harbor city.",
                 Biome = "Coast",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "coastal_road", "stormwatch_market", "stormwatch_docks" },
+                AdjacentLocationIds = ["coastal_road", "stormwatch_market", "stormwatch_docks"],
                 TownName = "Stormwatch Harbor"
             },
+
             new()
             {
                 Id = "stormwatch_market",
@@ -595,9 +640,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Vendors call out prices for fresh catches and exotic spices.",
                 Biome = "Coast",
                 ThreatLevel = "Safe",
-                AdjacentLocationIds = new List<string> { "stormwatch_gate" },
+                AdjacentLocationIds = ["stormwatch_gate"],
                 TownName = "Stormwatch Harbor"
             },
+
             new()
             {
                 Id = "stormwatch_docks",
@@ -605,9 +651,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Ships bob in the harbor beside nets heavy with fish.",
                 Biome = "Coast",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string> { "stormwatch_gate" },
+                AdjacentLocationIds = ["stormwatch_gate"],
                 TownName = "Stormwatch Harbor"
             },
+
             new()
             {
                 Id = "old_watchtower",
@@ -615,8 +662,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A leaning tower that still offers a sweeping coastal view.",
                 Biome = "Ruins",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "coastal_road", "highridge_pass" }
+                AdjacentLocationIds = ["coastal_road", "highridge_pass"]
             },
+
             new()
             {
                 Id = "highridge_pass",
@@ -624,8 +672,9 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "A narrow pass winding upward through jagged cliffs.",
                 Biome = "Mountain",
                 ThreatLevel = "High",
-                AdjacentLocationIds = new List<string> { "old_watchtower", "highridge_plaza" }
+                AdjacentLocationIds = ["old_watchtower", "highridge_plaza"]
             },
+
             new()
             {
                 Id = "highridge_plaza",
@@ -633,9 +682,10 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "The mountain town's central square overlooking the valley.",
                 Biome = "Mountain",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "highridge_pass", "highridge_forge" },
+                AdjacentLocationIds = ["highridge_pass", "highridge_forge"],
                 TownName = "Highridge"
             },
+
             new()
             {
                 Id = "highridge_forge",
@@ -643,55 +693,57 @@ public class JsonWorldRepository : IWorldRepository
                 Description = "Forgefires light the snow around the mountain smithy.",
                 Biome = "Mountain",
                 ThreatLevel = "Moderate",
-                AdjacentLocationIds = new List<string> { "highridge_plaza" },
+                AdjacentLocationIds = ["highridge_plaza"],
                 TownName = "Highridge"
             }
-        };
+        ];
     }
 
     private static List<CharacterPreset> CreateDefaultCharacterPresets()
     {
-        return new List<CharacterPreset>
-        {
+        return
+        [
             new()
             {
                 Id = "warrior",
                 Name = "Warrior",
                 Description = "A seasoned fighter with dependable gear.",
                 StartingLocation = WorldLocation.Default(),
-                StartingInventory = new List<InventoryItem>
-                {
+                StartingInventory =
+                [
                     new() { ItemId = "rusty_sword", Quantity = 1 },
                     new() { ItemId = "worn_shield", Quantity = 1 },
                     new() { ItemId = "loaf_of_bread", Quantity = 3 }
-                }
+                ]
             },
+
             new()
             {
                 Id = "ranger",
                 Name = "Ranger",
                 Description = "A nimble hunter who travels light and strikes from range.",
                 StartingLocation = WorldLocation.Default(),
-                StartingInventory = new List<InventoryItem>
-                {
+                StartingInventory =
+                [
                     new() { ItemId = "shortbow", Quantity = 1 },
                     new() { ItemId = "quiver_of_arrows", Quantity = 20 },
                     new() { ItemId = "traveler_cloak", Quantity = 1 }
-                }
+                ]
             },
+
             new()
             {
                 Id = "mystic",
                 Name = "Mystic",
                 Description = "A student of the arcane starting their journey with basic focus tools.",
                 StartingLocation = WorldLocation.Default(),
-                StartingInventory = new List<InventoryItem>
-                {
+                StartingInventory =
+                [
                     new() { ItemId = "oak_staff", Quantity = 1 },
                     new() { ItemId = "apprentice_robes", Quantity = 1 },
                     new() { ItemId = "healing_herbs", Quantity = 2 }
-                }
+                ]
             }
-        };
+        ];
     }
 }

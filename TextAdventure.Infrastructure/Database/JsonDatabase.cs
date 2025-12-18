@@ -85,61 +85,61 @@ public class JsonDatabase : IGameDatabase
 
     private static void EnsureDefaults(DatabaseModel databaseModel)
     {
-        databaseModel.Monsters ??= new();
+        databaseModel.Monsters ??= [];
         if (databaseModel.Monsters.Count == 0)
         {
             databaseModel.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
         }
 
-        databaseModel.Helmets ??= new();
+        databaseModel.Helmets ??= [];
         if (databaseModel.Helmets.Count == 0)
         {
             databaseModel.Helmets.AddRange(DatabaseModel.CreateDefaultHelmets());
         }
 
-        databaseModel.Gloves ??= new();
+        databaseModel.Gloves ??= [];
         if (databaseModel.Gloves.Count == 0)
         {
             databaseModel.Gloves.AddRange(DatabaseModel.CreateDefaultGloves());
         }
 
-        databaseModel.Chests ??= new();
+        databaseModel.Chests ??= [];
         if (databaseModel.Chests.Count == 0)
         {
             databaseModel.Chests.AddRange(DatabaseModel.CreateDefaultChests());
         }
 
-        databaseModel.Legs ??= new();
+        databaseModel.Legs ??= [];
         if (databaseModel.Legs.Count == 0)
         {
             databaseModel.Legs.AddRange(DatabaseModel.CreateDefaultLegs());
         }
 
-        databaseModel.Boots ??= new();
+        databaseModel.Boots ??= [];
         if (databaseModel.Boots.Count == 0)
         {
             databaseModel.Boots.AddRange(DatabaseModel.CreateDefaultBoots());
         }
 
-        databaseModel.Swords ??= new();
+        databaseModel.Swords ??= [];
         if (databaseModel.Swords.Count == 0)
         {
             databaseModel.Swords.AddRange(DatabaseModel.CreateDefaultSwords());
         }
 
-        databaseModel.Axes ??= new();
+        databaseModel.Axes ??= [];
         if (databaseModel.Axes.Count == 0)
         {
             databaseModel.Axes.AddRange(DatabaseModel.CreateDefaultAxes());
         }
 
-        databaseModel.Wands ??= new();
+        databaseModel.Wands ??= [];
         if (databaseModel.Wands.Count == 0)
         {
             databaseModel.Wands.AddRange(DatabaseModel.CreateDefaultWands());
         }
 
-        databaseModel.Staff ??= new();
+        databaseModel.Staff ??= [];
         if (databaseModel.Staff.Count == 0)
         {
             databaseModel.Staff.AddRange(DatabaseModel.CreateDefaultStaff());

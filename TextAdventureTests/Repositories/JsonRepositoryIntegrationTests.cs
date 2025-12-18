@@ -77,7 +77,7 @@ public class JsonRepositoryIntegrationTests : IDisposable
             PresetId = "warrior",
             ClassName = "Warrior",
             Location = WorldLocation.Default(),
-            Inventory = new List<InventoryItem> { new() { ItemId = "loaf_of_bread", Quantity = 1 } }
+            Inventory = [new() { ItemId = "loaf_of_bread", Quantity = 1 }]
         };
 
         await _characterRepository.AddAsync(character);

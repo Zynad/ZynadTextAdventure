@@ -10,5 +10,5 @@ public class CharacterPreset
 
     public WorldLocation StartingLocation { get; set; } = WorldLocation.Default();
 
-    public List<InventoryItem> StartingInventory { get; set; } = new();
+    public List<InventoryItem> StartingInventory { get; set; } = [];
 }

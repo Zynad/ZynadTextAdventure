@@ -30,7 +30,7 @@ public class EncounterGeneratorTests
             AttackRange = new MonsterStatRange { Min = 8, Max = 10 },
             DefenseRange = new MonsterStatRange { Min = 4, Max = 6 },
             CoinDropRange = new MonsterStatRange { Min = 5, Max = 5 },
-            PreferredThreatLevels = new List<string> { "Low", "High" }
+            PreferredThreatLevels = ["Low", "High"]
         };
 
         repository.GetMonstersAsync().Returns(new List<Monster> { monster });
@@ -39,7 +39,7 @@ public class EncounterGeneratorTests
             new()
             {
                 Biome = "Mountain",
-                Drops = new List<string> { "iron_shield", "ore_fragment" }
+                Drops = ["iron_shield", "ore_fragment"]
             }
         });
 

@@ -39,7 +39,7 @@ public static class CharacterMapper
             .Select(q => new QuestStateDto(q.QuestId, q.Status, q.UpdatedAt))
             .ToList();
 
-        var encounterLog = character.EncounterLog ?? new List<Encounter>();
+        var encounterLog = character.EncounterLog ?? [];
 
         var encounters = encounterLog
             .OrderByDescending(e => e.OccurredAt)
@@ -54,7 +54,7 @@ public static class CharacterMapper
                 CopyInventory(e.Drops)))
             .ToList();
 
-        var actions = (character.ActionLog ?? new List<CharacterActionLogEntry>())
+        var actions = (character.ActionLog ?? [])
             .OrderByDescending(a => a.OccurredAt)
             .Take(10)
             .ToList();

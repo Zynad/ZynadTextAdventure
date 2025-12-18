@@ -11,5 +11,5 @@ public class Encounter
     public string Outcome { get; set; } = string.Empty;
     public string EncounterType { get; set; } = "Battle";
     public string Location { get; set; } = string.Empty;
-    public List<InventoryItem> Drops { get; set; } = new();
+    public List<InventoryItem> Drops { get; set; } = [];
 }

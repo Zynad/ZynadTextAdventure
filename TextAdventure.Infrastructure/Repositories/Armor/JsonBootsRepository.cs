@@ -5,9 +5,5 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Armor;
 
-public class JsonBootsRepository : BaseRepo<BootsEntity>, IBootsRepository
-{
-    public JsonBootsRepository(IGameDatabase database) : base(database, db => db.Boots)
-    {
-    }
-}
+public class JsonBootsRepository(IGameDatabase database)
+    : BaseRepo<BootsEntity>(database, db => db.Boots), IBootsRepository;

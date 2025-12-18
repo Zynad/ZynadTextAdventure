@@ -6,15 +6,8 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/vendors")]
-public class VendorsController : ControllerBase
+public class VendorsController(IVendorPricingService vendorPricingService) : ControllerBase
 {
-    private readonly IVendorPricingService _vendorPricingService;
-
-    public VendorsController(IVendorPricingService vendorPricingService)
-    {
-        _vendorPricingService = vendorPricingService;
-    }
-
     /// <summary>
     /// Get vendor prices for a given town.
     /// </summary>
@@ -24,7 +17,7 @@ public class VendorsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPrices(string townName, CancellationToken cancellationToken)
     {
-        var prices = await _vendorPricingService.GetPricesAsync(townName, cancellationToken);
+        var prices = await vendorPricingService.GetPricesAsync(townName, cancellationToken);
         return Ok(new
         {
             town = townName,

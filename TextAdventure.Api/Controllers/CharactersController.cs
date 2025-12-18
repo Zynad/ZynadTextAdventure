@@ -9,25 +9,13 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CharactersController : ControllerBase
+public class CharactersController(
+    GetCharacterPresetsHandler getCharacterPresetsHandler,
+    CreateCharacterHandler createCharacterHandler,
+    GetCharactersHandler getCharactersHandler,
+    GetCharacterDetailsHandler getCharacterDetailsHandler)
+    : ControllerBase
 {
-    private readonly GetCharacterPresetsHandler _getCharacterPresetsHandler;
-    private readonly CreateCharacterHandler _createCharacterHandler;
-    private readonly GetCharactersHandler _getCharactersHandler;
-    private readonly GetCharacterDetailsHandler _getCharacterDetailsHandler;
-
-    public CharactersController(
-        GetCharacterPresetsHandler getCharacterPresetsHandler,
-        CreateCharacterHandler createCharacterHandler,
-        GetCharactersHandler getCharactersHandler,
-        GetCharacterDetailsHandler getCharacterDetailsHandler)
-    {
-        _getCharacterPresetsHandler = getCharacterPresetsHandler;
-        _createCharacterHandler = createCharacterHandler;
-        _getCharactersHandler = getCharactersHandler;
-        _getCharacterDetailsHandler = getCharacterDetailsHandler;
-    }
-
     /// <summary>
     /// Retrieve the available character presets.
     /// </summary>
@@ -36,7 +24,7 @@ public class CharactersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPresets(CancellationToken cancellationToken)
     {
-        var presets = await _getCharacterPresetsHandler.HandleAsync(cancellationToken);
+        var presets = await getCharacterPresetsHandler.HandleAsync(cancellationToken);
         return Ok(presets);
     }
 
@@ -53,7 +41,7 @@ public class CharactersController : ControllerBase
     public async Task<IActionResult> Create(CreateCharacterRequestDto request, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _createCharacterHandler.HandleAsync(token, request, cancellationToken);
+        var result = await createCharacterHandler.HandleAsync(token, request, cancellationToken);
 
         if (result.Success && result.Character is not null)
         {
@@ -74,7 +62,7 @@ public class CharactersController : ControllerBase
     public async Task<IActionResult> GetForUser(CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var (characters, errorType, error) = await _getCharactersHandler.HandleAsync(token, cancellationToken);
+        var (characters, errorType, error) = await getCharactersHandler.HandleAsync(token, cancellationToken);
 
         if (errorType.HasValue)
         {
@@ -96,7 +84,7 @@ public class CharactersController : ControllerBase
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _getCharacterDetailsHandler.HandleAsync(id, token, cancellationToken);
+        var result = await getCharacterDetailsHandler.HandleAsync(id, token, cancellationToken);
 
         if (result.Success && result.Character is not null)
         {

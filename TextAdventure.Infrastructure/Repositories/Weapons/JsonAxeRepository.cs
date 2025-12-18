@@ -5,9 +5,4 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Weapons;
 
-public class JsonAxeRepository : BaseRepo<AxeEntity>, IAxeRepository
-{
-    public JsonAxeRepository(IGameDatabase database) : base(database, db => db.Axes)
-    {
-    }
-}
+public class JsonAxeRepository(IGameDatabase database) : BaseRepo<AxeEntity>(database, db => db.Axes), IAxeRepository;

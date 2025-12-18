@@ -2,9 +2,9 @@
 
 namespace ApplicationServices.Admin;
 
-public class AdminManager : IAdminManager
+public class AdminManager(IDbHandler dbHandler) : IAdminManager
 {
-    private readonly IDbHandler _dbHandler;
+    private readonly IDbHandler _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
 
     private enum CrudAction
     {
@@ -42,11 +42,6 @@ public class AdminManager : IAdminManager
         Sword = 4,
         Bow = 5,
         GoBack = 6
-    }
-
-    public AdminManager(IDbHandler dbHandler)
-    {
-        _dbHandler = dbHandler ?? throw new ArgumentNullException(nameof(dbHandler));
     }
 
     public async Task AdminLogin()

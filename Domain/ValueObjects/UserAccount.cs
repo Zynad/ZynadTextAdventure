@@ -8,5 +8,5 @@ public class UserAccount
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public List<string> SessionTokens { get; set; } = new();
+    public List<string> SessionTokens { get; set; } = [];
 }

@@ -8,21 +8,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Authentication;
 
-public class RegisterUserHandler
+public class RegisterUserHandler(
+    IUserRepository userRepository,
+    ISessionRepository sessionRepository,
+    IAuthService authService,
+    ILogger<RegisterUserHandler> logger)
 {
-    private readonly IUserRepository _userRepository;
-    private readonly ISessionRepository _sessionRepository;
-    private readonly IAuthService _authService;
-    private readonly ILogger<RegisterUserHandler> _logger;
-
-    public RegisterUserHandler(IUserRepository userRepository, ISessionRepository sessionRepository, IAuthService authService, ILogger<RegisterUserHandler> logger)
-    {
-        _userRepository = userRepository;
-        _sessionRepository = sessionRepository;
-        _authService = authService;
-        _logger = logger;
-    }
-
     public async Task<AuthResult> HandleAsync(RegisterUserRequest request, CancellationToken cancellationToken = default)
     {
         var validationError = Validate(request);
@@ -31,19 +22,19 @@ public class RegisterUserHandler
             return AuthResult.ValidationError(validationError);
         }
 
-        var existingUsername = await _userRepository.GetByUsernameAsync(request.Username, cancellationToken);
+        var existingUsername = await userRepository.GetByUsernameAsync(request.Username, cancellationToken);
         if (existingUsername is not null)
         {
             return AuthResult.Conflict("Username already exists");
         }
 
-        var existingEmail = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var existingEmail = await userRepository.GetByEmailAsync(request.Email, cancellationToken);
         if (existingEmail is not null)
         {
             return AuthResult.Conflict("Email already exists");
         }
 
-        var passwordHash = _authService.HashPassword(request.Password);
+        var passwordHash = authService.HashPassword(request.Password);
 
         var account = new Domain.Core.Account
         {
@@ -53,12 +44,12 @@ public class RegisterUserHandler
             PasswordSalt = passwordHash.Salt
         };
 
-        await _userRepository.AddAsync(account, cancellationToken);
+        await userRepository.AddAsync(account, cancellationToken);
 
-        var session = _authService.CreateSessionToken(account.Id);
-        await _sessionRepository.AddAsync(session, cancellationToken);
+        var session = authService.CreateSessionToken(account.Id);
+        await sessionRepository.AddAsync(session, cancellationToken);
 
-        _logger.LogInformation("Registered new user {Username}", account.Username);
+        logger.LogInformation("Registered new user {Username}", account.Username);
 
         return AuthResult.FromSuccess(new UserDto(account.Id, account.Username, account.Email), session.Token);
     }

@@ -8,15 +8,8 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/npcs")]
-public class NpcsController : ControllerBase
+public class NpcsController(NpcInteractionService npcInteractionService) : ControllerBase
 {
-    private readonly NpcInteractionService _npcInteractionService;
-
-    public NpcsController(NpcInteractionService npcInteractionService)
-    {
-        _npcInteractionService = npcInteractionService;
-    }
-
     /// <summary>
     /// Get a dialogue line from the given NPC, including player-name interpolation.
     /// </summary>
@@ -32,7 +25,7 @@ public class NpcsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _npcInteractionService.GetDialogueAsync(token, characterId, npcId, cancellationToken);
+        var result = await npcInteractionService.GetDialogueAsync(token, characterId, npcId, cancellationToken);
         return Translate(result);
     }
 
@@ -51,7 +44,7 @@ public class NpcsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _npcInteractionService.OfferQuestAsync(token, characterId, npcId, cancellationToken);
+        var result = await npcInteractionService.OfferQuestAsync(token, characterId, npcId, cancellationToken);
         return Translate(result);
     }
 
@@ -70,7 +63,7 @@ public class NpcsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _npcInteractionService.TradeAsync(
+        var result = await npcInteractionService.TradeAsync(
             token,
             request.CharacterId,
             npcId,
@@ -97,7 +90,7 @@ public class NpcsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _npcInteractionService.ResolveActionAsync(
+        var result = await npcInteractionService.ResolveActionAsync(
             token,
             request.CharacterId,
             npcId,

@@ -10,53 +10,38 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Adventure;
 
-public class TravelToLocationHandler
+public class TravelToLocationHandler(
+    GetCurrentUserHandler getCurrentUserHandler,
+    ICharacterRepository characterRepository,
+    IWorldRepository worldRepository,
+    EncounterGenerator encounterGenerator,
+    ILogger<TravelToLocationHandler> logger)
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly ICharacterRepository _characterRepository;
-    private readonly IWorldRepository _worldRepository;
-    private readonly EncounterGenerator _encounterGenerator;
-    private readonly ILogger<TravelToLocationHandler> _logger;
-
-    public TravelToLocationHandler(
-        GetCurrentUserHandler getCurrentUserHandler,
-        ICharacterRepository characterRepository,
-        IWorldRepository worldRepository,
-        EncounterGenerator encounterGenerator,
-        ILogger<TravelToLocationHandler> logger)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _characterRepository = characterRepository;
-        _worldRepository = worldRepository;
-        _encounterGenerator = encounterGenerator;
-        _logger = logger;
-    }
-
     public async Task<AdventureResult> HandleAsync(
         string token,
         TravelRequest request,
         CancellationToken cancellationToken = default)
     {
-        var userResult = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var userResult = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         if (!userResult.Success || userResult.User is null)
         {
             return AdventureResult.Unauthorized(userResult.Error ?? "Unauthorized");
         }
 
-        var character = await _characterRepository.GetByIdAsync(request.CharacterId, cancellationToken);
+        var character = await characterRepository.GetByIdAsync(request.CharacterId, cancellationToken);
         if (character is null || character.AccountId != userResult.User.Id)
         {
             return AdventureResult.NotFound("Character not found");
         }
 
-        character.EncounterLog ??= new List<Encounter>();
+        character.EncounterLog ??= [];
 
         if (string.IsNullOrWhiteSpace(request.DestinationId))
         {
             return AdventureResult.Validation("DestinationId is required");
         }
 
-        var locations = await _worldRepository.GetLocationsAsync(cancellationToken);
+        var locations = await worldRepository.GetLocationsAsync(cancellationToken);
         var target = locations.FirstOrDefault(l => l.Id.Equals(request.DestinationId, StringComparison.OrdinalIgnoreCase));
         if (target is null)
         {
@@ -82,14 +67,14 @@ public class TravelToLocationHandler
             ThreatLevel = target.ThreatLevel
         };
 
-        var encounter = await _encounterGenerator.GenerateForTravelAsync(character, current, target, cancellationToken);
+        var encounter = await encounterGenerator.GenerateForTravelAsync(character, current, target, cancellationToken);
         if (encounter is not null)
         {
             ApplyEncounter(character, encounter);
         }
 
-        await _characterRepository.UpdateAsync(character, cancellationToken);
-        _logger.LogInformation(
+        await characterRepository.UpdateAsync(character, cancellationToken);
+        logger.LogInformation(
             "Character {CharacterId} traveled from {From} to {To}",
             character.Id,
             current.Name,

@@ -6,17 +6,9 @@ using System.Linq;
 
 namespace ApplicationServices.Admin;
 
-public class AdminItemService : IAdminItemService
+public class AdminItemService(GetCurrentUserHandler getCurrentUserHandler, IItemRepository itemRepository)
+    : IAdminItemService
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IItemRepository _itemRepository;
-
-    public AdminItemService(GetCurrentUserHandler getCurrentUserHandler, IItemRepository itemRepository)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _itemRepository = itemRepository;
-    }
-
     public async Task<AdminOperationResult<IReadOnlyCollection<ItemDto>>> GetAllAsync(string token, CancellationToken cancellationToken = default)
     {
         var authorization = await AuthorizeAsync(token, cancellationToken);
@@ -25,7 +17,7 @@ public class AdminItemService : IAdminItemService
             return AdminOperationResult<IReadOnlyCollection<ItemDto>>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var items = await _itemRepository.GetAllAsync();
+        var items = await itemRepository.GetAllAsync();
         return AdminOperationResult<IReadOnlyCollection<ItemDto>>.FromSuccess(items.Select(ToDto).ToList());
     }
 
@@ -48,7 +40,7 @@ public class AdminItemService : IAdminItemService
             entity.Id = Guid.NewGuid();
         }
 
-        var persisted = await _itemRepository.AddAsync(entity);
+        var persisted = await itemRepository.AddAsync(entity);
         return AdminOperationResult<ItemDto>.FromSuccess(ToDto(persisted));
     }
 
@@ -60,7 +52,7 @@ public class AdminItemService : IAdminItemService
             return AdminOperationResult<ItemDto>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var existing = (await _itemRepository.GetAllAsync()).FirstOrDefault(i => i.Id == itemDto.Id);
+        var existing = (await itemRepository.GetAllAsync()).FirstOrDefault(i => i.Id == itemDto.Id);
         if (existing is null)
         {
             return AdminOperationResult<ItemDto>.NotFound("Item not found");
@@ -68,7 +60,7 @@ public class AdminItemService : IAdminItemService
 
         var entity = ToEntity(itemDto);
         entity.Id = itemDto.Id;
-        var persisted = await _itemRepository.UpdateAsync(entity);
+        var persisted = await itemRepository.UpdateAsync(entity);
         return AdminOperationResult<ItemDto>.FromSuccess(ToDto(persisted));
     }
 
@@ -80,13 +72,13 @@ public class AdminItemService : IAdminItemService
             return AdminOperationResult<bool>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var existing = (await _itemRepository.GetAllAsync()).FirstOrDefault(i => i.Id == id);
+        var existing = (await itemRepository.GetAllAsync()).FirstOrDefault(i => i.Id == id);
         if (existing is null)
         {
             return AdminOperationResult<bool>.NotFound("Item not found");
         }
 
-        await _itemRepository.DeleteAsync(existing);
+        await itemRepository.DeleteAsync(existing);
         return AdminOperationResult<bool>.FromSuccess(true);
     }
 
@@ -116,7 +108,7 @@ public class AdminItemService : IAdminItemService
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)
     {
-        var auth = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var auth = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         return (auth.Success, auth.Error);
     }
 }

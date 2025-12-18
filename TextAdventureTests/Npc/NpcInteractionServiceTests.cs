@@ -25,8 +25,8 @@ public class NpcInteractionServiceTests
             RoleType = NpcRoleType.Guard,
             Dialogue = new NpcDialogueTemplate
             {
-                Greetings = new List<string> { "Halt, {playerName}!" },
-                RandomLines = new List<string> { "Stay sharp." }
+                Greetings = ["Halt, {playerName}!"],
+                RandomLines = ["Stay sharp."]
             }
         };
 
@@ -93,7 +93,7 @@ public class NpcInteractionServiceTests
         characterRepo.UpdateAsync(Arg.Any<Character>(), Arg.Any<CancellationToken>())
             .Returns(Task.CompletedTask);
 
-        var towns = new List<Town> { new() { Name = "Town", Npcs = new List<TownNpc> { npc } } };
+        var towns = new List<Town> { new() { Name = "Town", Npcs = [npc] } };
         var worldRepo = Substitute.For<IWorldRepository>();
         worldRepo.GetTownsAsync(Arg.Any<CancellationToken>()).Returns(towns);
 
@@ -115,7 +115,7 @@ public class NpcInteractionServiceTests
         {
             rng.NextInt(Arg.Any<int>(), Arg.Any<int>()).Returns(randomChoice);
             rng.NextDouble().Returns(0.5);
-            rng.GetBytes(Arg.Any<int>()).Returns(Array.Empty<byte>());
+            rng.GetBytes(Arg.Any<int>()).Returns([]);
         }
 
         return new NpcInteractionService(currentUserHandler, worldRepo, characterRepo, priceSvc, rng);

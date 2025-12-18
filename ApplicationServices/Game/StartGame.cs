@@ -5,15 +5,10 @@ using ApplicationServices.PlayerSettings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationServices.Game;
-public class StartGame : IStartGame
+public class StartGame(IServiceProvider serviceProvider) : IStartGame
 {
     private Player _player = new();
-    private readonly IServiceProvider _serviceProvider;
-
-    public StartGame(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-    }
+    private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
     public async Task<Player> Start()
     {

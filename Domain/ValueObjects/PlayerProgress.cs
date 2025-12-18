@@ -12,5 +12,5 @@ public class PlayerProgress
 
     public DateTimeOffset LastUpdatedUtc { get; set; }
 
-    public List<SaveSlot> SaveSlots { get; set; } = new();
+    public List<SaveSlot> SaveSlots { get; set; } = [];
 }

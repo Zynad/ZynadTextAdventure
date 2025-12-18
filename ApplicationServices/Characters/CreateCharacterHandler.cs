@@ -9,31 +9,18 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Characters;
 
-public class CreateCharacterHandler
+public class CreateCharacterHandler(
+    ICharacterRepository characterRepository,
+    IWorldRepository worldRepository,
+    GetCurrentUserHandler getCurrentUserHandler,
+    ILogger<CreateCharacterHandler> logger)
 {
-    private readonly ICharacterRepository _characterRepository;
-    private readonly IWorldRepository _worldRepository;
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly ILogger<CreateCharacterHandler> _logger;
-
-    public CreateCharacterHandler(
-        ICharacterRepository characterRepository,
-        IWorldRepository worldRepository,
-        GetCurrentUserHandler getCurrentUserHandler,
-        ILogger<CreateCharacterHandler> logger)
-    {
-        _characterRepository = characterRepository;
-        _worldRepository = worldRepository;
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _logger = logger;
-    }
-
     public async Task<CharacterResult> HandleAsync(
         string token,
         CreateCharacterRequestDto request,
         CancellationToken cancellationToken = default)
     {
-        var userResult = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var userResult = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         if (!userResult.Success || userResult.User is null)
         {
             return CharacterResult.Unauthorized(userResult.Error ?? "Unauthorized");
@@ -51,7 +38,7 @@ public class CreateCharacterHandler
             return CharacterResult.Validation("PresetId is required");
         }
 
-        var presets = await _worldRepository.GetCharacterPresetsAsync(cancellationToken);
+        var presets = await worldRepository.GetCharacterPresetsAsync(cancellationToken);
         var preset = presets.FirstOrDefault(p =>
             p.Id.Equals(request.PresetId, StringComparison.OrdinalIgnoreCase));
 
@@ -60,7 +47,7 @@ public class CreateCharacterHandler
             return CharacterResult.Validation("Invalid presetId");
         }
 
-        var characters = await _characterRepository.GetByAccountAsync(userResult.User.Id, cancellationToken);
+        var characters = await characterRepository.GetByAccountAsync(userResult.User.Id, cancellationToken);
         if (characters.Any(c => c.Name.Equals(trimmedName, StringComparison.OrdinalIgnoreCase)))
         {
             return CharacterResult.Conflict("A character with this name already exists for your account");
@@ -76,8 +63,8 @@ public class CreateCharacterHandler
             Inventory = CopyInventory(preset.StartingInventory)
         };
 
-        await _characterRepository.AddAsync(character, cancellationToken);
-        _logger.LogInformation(
+        await characterRepository.AddAsync(character, cancellationToken);
+        logger.LogInformation(
             "Created character {CharacterName} for account {AccountId} using preset {PresetId}",
             character.Name,
             character.AccountId,

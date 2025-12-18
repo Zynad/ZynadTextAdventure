@@ -3,10 +3,5 @@ using Domain.Entities.Items.Models;
 
 namespace Domain.Repos.Items;
 
-public class ItemRepository : BaseRepo<GenericItemEntity>, IItemRepository
-{
-    public ItemRepository(IGameDatabase database)
-        : base(database, db => db.Items)
-    {
-    }
-}
+public class ItemRepository(IGameDatabase database)
+    : BaseRepo<GenericItemEntity>(database, db => db.Items), IItemRepository;

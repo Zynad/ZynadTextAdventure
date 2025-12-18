@@ -8,28 +8,14 @@ using System.Linq;
 
 namespace ApplicationServices.Admin;
 
-public class AdminWeaponService : IAdminWeaponService
+public class AdminWeaponService(
+    GetCurrentUserHandler getCurrentUserHandler,
+    IWandRepository wandRepository,
+    IStaffRepository staffRepository,
+    ISwordRepository swordRepository,
+    IAxeRepository axeRepository)
+    : IAdminWeaponService
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IWandRepository _wandRepository;
-    private readonly IStaffRepository _staffRepository;
-    private readonly ISwordRepository _swordRepository;
-    private readonly IAxeRepository _axeRepository;
-
-    public AdminWeaponService(
-        GetCurrentUserHandler getCurrentUserHandler,
-        IWandRepository wandRepository,
-        IStaffRepository staffRepository,
-        ISwordRepository swordRepository,
-        IAxeRepository axeRepository)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _wandRepository = wandRepository;
-        _staffRepository = staffRepository;
-        _swordRepository = swordRepository;
-        _axeRepository = axeRepository;
-    }
-
     public async Task<AdminOperationResult<IReadOnlyCollection<WeaponDto>>> GetAllAsync(string token, CancellationToken cancellationToken = default)
     {
         var authorization = await AuthorizeAsync(token, cancellationToken);
@@ -39,10 +25,10 @@ public class AdminWeaponService : IAdminWeaponService
         }
 
         var items = new List<WeaponDto>();
-        items.AddRange((await _wandRepository.GetAllAsync()).Select(ToDto));
-        items.AddRange((await _staffRepository.GetAllAsync()).Select(ToDto));
-        items.AddRange((await _swordRepository.GetAllAsync()).Select(ToDto));
-        items.AddRange((await _axeRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await wandRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await staffRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await swordRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await axeRepository.GetAllAsync()).Select(ToDto));
 
         return AdminOperationResult<IReadOnlyCollection<WeaponDto>>.FromSuccess(items);
     }
@@ -62,10 +48,10 @@ public class AdminWeaponService : IAdminWeaponService
 
         return weaponDto.WeaponType switch
         {
-            WeaponTypeEntity.Wand => await CreateAsync(_wandRepository, weaponDto),
-            WeaponTypeEntity.Staff => await CreateAsync(_staffRepository, weaponDto),
-            WeaponTypeEntity.Sword => await CreateAsync(_swordRepository, weaponDto),
-            WeaponTypeEntity.Axe => await CreateAsync(_axeRepository, weaponDto),
+            WeaponTypeEntity.Wand => await CreateAsync(wandRepository, weaponDto),
+            WeaponTypeEntity.Staff => await CreateAsync(staffRepository, weaponDto),
+            WeaponTypeEntity.Sword => await CreateAsync(swordRepository, weaponDto),
+            WeaponTypeEntity.Axe => await CreateAsync(axeRepository, weaponDto),
             _ => AdminOperationResult<WeaponDto>.ValidationFailed("Unsupported weapon type")
         };
     }
@@ -80,10 +66,10 @@ public class AdminWeaponService : IAdminWeaponService
 
         return weaponDto.WeaponType switch
         {
-            WeaponTypeEntity.Wand => await UpdateAsync(_wandRepository, weaponDto),
-            WeaponTypeEntity.Staff => await UpdateAsync(_staffRepository, weaponDto),
-            WeaponTypeEntity.Sword => await UpdateAsync(_swordRepository, weaponDto),
-            WeaponTypeEntity.Axe => await UpdateAsync(_axeRepository, weaponDto),
+            WeaponTypeEntity.Wand => await UpdateAsync(wandRepository, weaponDto),
+            WeaponTypeEntity.Staff => await UpdateAsync(staffRepository, weaponDto),
+            WeaponTypeEntity.Sword => await UpdateAsync(swordRepository, weaponDto),
+            WeaponTypeEntity.Axe => await UpdateAsync(axeRepository, weaponDto),
             _ => AdminOperationResult<WeaponDto>.ValidationFailed("Unsupported weapon type")
         };
     }
@@ -98,10 +84,10 @@ public class AdminWeaponService : IAdminWeaponService
 
         return type switch
         {
-            WeaponTypeEntity.Wand => await DeleteAsync(_wandRepository, id),
-            WeaponTypeEntity.Staff => await DeleteAsync(_staffRepository, id),
-            WeaponTypeEntity.Sword => await DeleteAsync(_swordRepository, id),
-            WeaponTypeEntity.Axe => await DeleteAsync(_axeRepository, id),
+            WeaponTypeEntity.Wand => await DeleteAsync(wandRepository, id),
+            WeaponTypeEntity.Staff => await DeleteAsync(staffRepository, id),
+            WeaponTypeEntity.Sword => await DeleteAsync(swordRepository, id),
+            WeaponTypeEntity.Axe => await DeleteAsync(axeRepository, id),
             _ => AdminOperationResult<bool>.ValidationFailed("Unsupported weapon type")
         };
     }
@@ -194,7 +180,7 @@ public class AdminWeaponService : IAdminWeaponService
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)
     {
-        var auth = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var auth = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         return (auth.Success, auth.Error);
     }
 }

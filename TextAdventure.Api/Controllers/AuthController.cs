@@ -10,19 +10,12 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController(
+    RegisterUserHandler registerUserHandler,
+    LoginUserHandler loginUserHandler,
+    GetCurrentUserHandler getCurrentUserHandler)
+    : ControllerBase
 {
-    private readonly RegisterUserHandler _registerUserHandler;
-    private readonly LoginUserHandler _loginUserHandler;
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-
-    public AuthController(RegisterUserHandler registerUserHandler, LoginUserHandler loginUserHandler, GetCurrentUserHandler getCurrentUserHandler)
-    {
-        _registerUserHandler = registerUserHandler;
-        _loginUserHandler = loginUserHandler;
-        _getCurrentUserHandler = getCurrentUserHandler;
-    }
-
     /// <summary>
     /// Register a new user and create a session token.
     /// </summary>
@@ -35,7 +28,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register(RegisterUserRequest request, CancellationToken cancellationToken)
     {
-        var result = await _registerUserHandler.HandleAsync(request, cancellationToken);
+        var result = await registerUserHandler.HandleAsync(request, cancellationToken);
         return TranslateResult(result);
     }
 
@@ -51,7 +44,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login(LoginUserRequest request, CancellationToken cancellationToken)
     {
-        var result = await _loginUserHandler.HandleAsync(request, cancellationToken);
+        var result = await loginUserHandler.HandleAsync(request, cancellationToken);
         return TranslateResult(result);
     }
 
@@ -67,7 +60,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Me(CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var result = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         if (!result.Success)
         {
             return result.ErrorType == AuthErrorType.NotFound

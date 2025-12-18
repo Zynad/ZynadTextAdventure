@@ -72,7 +72,7 @@ public class RepositoryMappingTests : IDisposable
             Description = "A winding path used for mapping exercises.",
             Biome = "Forest",
             ThreatLevel = "Moderate",
-            AdjacentLocationIds = new List<string> { "cartographer_camp" }
+            AdjacentLocationIds = ["cartographer_camp"]
         };
 
         var preset = new CharacterPreset
@@ -81,7 +81,7 @@ public class RepositoryMappingTests : IDisposable
             Name = "Mapper",
             Description = "Starts with a map and compass.",
             StartingLocation = new WorldLocation { Name = "Cartographer Camp", Biome = "Forest", ThreatLevel = "Low" },
-            StartingInventory = new List<InventoryItem> { new() { ItemId = "map", Quantity = 1 } }
+            StartingInventory = [new() { ItemId = "map", Quantity = 1 }]
         };
 
         var monsters = new List<Monster>
@@ -96,20 +96,20 @@ public class RepositoryMappingTests : IDisposable
                 AttackRange = new MonsterStatRange { Min = 3, Max = 5 },
                 DefenseRange = new MonsterStatRange { Min = 1, Max = 2 },
                 CoinDropRange = new MonsterStatRange { Min = 1, Max = 3 },
-                PreferredThreatLevels = new List<string> { "Moderate" }
+                PreferredThreatLevels = ["Moderate"]
             }
         };
 
         var dropTables = new List<DropTable>
         {
-            new() { Biome = "Forest", Drops = new List<string> { "map", "compass" } }
+            new() { Biome = "Forest", Drops = ["map", "compass"] }
         };
 
         await _worldRepository.SaveWorldAsync(
-            new[] { new Town { Name = "Cartographer Camp" } },
+            [new Town { Name = "Cartographer Camp" }],
             monsters,
-            new[] { preset },
-            new[] { location },
+            [preset],
+            [location],
             dropTables);
 
         var reloadedLocation = (await _worldRepository.GetLocationsAsync()).Single(l => l.Id == location.Id);

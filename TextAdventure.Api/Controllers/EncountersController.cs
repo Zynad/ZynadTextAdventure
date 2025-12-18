@@ -8,15 +8,8 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/encounters")]
-public class EncountersController : ControllerBase
+public class EncountersController(GetEncountersHandler getEncountersHandler) : ControllerBase
 {
-    private readonly GetEncountersHandler _getEncountersHandler;
-
-    public EncountersController(GetEncountersHandler getEncountersHandler)
-    {
-        _getEncountersHandler = getEncountersHandler;
-    }
-
     /// <summary>
     /// Get the encounters available for a character.
     /// </summary>
@@ -31,7 +24,7 @@ public class EncountersController : ControllerBase
     public async Task<IActionResult> Get(Guid characterId, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _getEncountersHandler.HandleAsync(token, characterId, cancellationToken);
+        var result = await getEncountersHandler.HandleAsync(token, characterId, cancellationToken);
 
         if (result.Success && result.Character is not null)
         {

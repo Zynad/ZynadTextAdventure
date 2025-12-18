@@ -182,7 +182,7 @@ public class DataSchemaTests
     {
         public DateTimeOffset ValidUntil { get; set; }
 
-        public List<VendorPriceModifier> Modifiers { get; set; } = new();
+        public List<VendorPriceModifier> Modifiers { get; set; } = [];
     }
 
     private static void AssertRange(MonsterStatRange? range, string property, bool allowZero = false)

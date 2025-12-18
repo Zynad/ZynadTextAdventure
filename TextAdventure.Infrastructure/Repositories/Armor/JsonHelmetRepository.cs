@@ -5,9 +5,5 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Armor;
 
-public class JsonHelmetRepository : BaseRepo<HelmetEntity>, IHelmetRepository
-{
-    public JsonHelmetRepository(IGameDatabase database) : base(database, db => db.Helmets)
-    {
-    }
-}
+public class JsonHelmetRepository(IGameDatabase database)
+    : BaseRepo<HelmetEntity>(database, db => db.Helmets), IHelmetRepository;

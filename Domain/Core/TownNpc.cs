@@ -18,7 +18,7 @@ public class TownNpc
 
     public string Location { get; set; } = string.Empty;
 
-    public List<string> QuestsOffered { get; set; } = new();
+    public List<string> QuestsOffered { get; set; } = [];
 
     public NpcDialogueTemplate Dialogue { get; set; } = new();
 }

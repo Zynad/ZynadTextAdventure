@@ -12,7 +12,7 @@ public class WorldLocationNode
 
     public string ThreatLevel { get; set; } = string.Empty;
 
-    public List<string> AdjacentLocationIds { get; set; } = new();
+    public List<string> AdjacentLocationIds { get; set; } = [];
 
     public string? TownName { get; set; }
 }

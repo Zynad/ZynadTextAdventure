@@ -9,19 +9,11 @@ namespace TextAdventure.Api.Controllers;
 
 [ApiController]
 [Route("api/quests")]
-public class QuestsController : ControllerBase
+public class QuestsController(
+    AcceptQuestHandler acceptQuestHandler,
+    CompleteQuestHandler completeQuestHandler)
+    : ControllerBase
 {
-    private readonly AcceptQuestHandler _acceptQuestHandler;
-    private readonly CompleteQuestHandler _completeQuestHandler;
-
-    public QuestsController(
-        AcceptQuestHandler acceptQuestHandler,
-        CompleteQuestHandler completeQuestHandler)
-    {
-        _acceptQuestHandler = acceptQuestHandler;
-        _completeQuestHandler = completeQuestHandler;
-    }
-
     /// <summary>
     /// Accept a quest for the current player's character.
     /// </summary>
@@ -37,7 +29,7 @@ public class QuestsController : ControllerBase
     public async Task<IActionResult> Accept(string id, QuestActionRequest request, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _acceptQuestHandler.HandleAsync(token, id, request, cancellationToken);
+        var result = await acceptQuestHandler.HandleAsync(token, id, request, cancellationToken);
         return Translate(result);
     }
 
@@ -56,7 +48,7 @@ public class QuestsController : ControllerBase
     public async Task<IActionResult> Complete(string id, QuestActionRequest request, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _completeQuestHandler.HandleAsync(token, id, request, cancellationToken);
+        var result = await completeQuestHandler.HandleAsync(token, id, request, cancellationToken);
         return Translate(result);
     }
 

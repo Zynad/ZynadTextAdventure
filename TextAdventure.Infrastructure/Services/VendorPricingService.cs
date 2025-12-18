@@ -13,48 +13,39 @@ namespace TextAdventure.Infrastructure.Services;
 internal class VendorPricingState
 {
     public DateTimeOffset ValidUntil { get; set; } = DateTimeOffset.MinValue;
-    public List<VendorPriceModifier> Modifiers { get; set; } = new();
+    public List<VendorPriceModifier> Modifiers { get; set; } = [];
 }
 
-public class VendorPricingService : IVendorPricingService
+public class VendorPricingService(
+    IWorldRepository worldRepository,
+    IRandomService randomService,
+    IOptions<DataStoreOptions> options,
+    IHostEnvironment environment,
+    ILogger<VendorPricingService> logger,
+    FileConcurrencyProvider concurrencyProvider)
+    : IVendorPricingService
 {
-    private readonly IWorldRepository _worldRepository;
-    private readonly IRandomService _randomService;
-    private readonly JsonFileStore<VendorPricingState> _store;
-    private readonly ILogger<VendorPricingService> _logger;
-    private static readonly TimeSpan RefreshWindow = TimeSpan.FromHours(6);
+    private readonly JsonFileStore<VendorPricingState> _store = new(
+        options,
+        environment,
+        logger,
+        concurrencyProvider,
+        options.Value.VendorPricingFileName);
 
-    public VendorPricingService(
-        IWorldRepository worldRepository,
-        IRandomService randomService,
-        IOptions<DataStoreOptions> options,
-        IHostEnvironment environment,
-        ILogger<VendorPricingService> logger,
-        FileConcurrencyProvider concurrencyProvider)
-    {
-        _worldRepository = worldRepository;
-        _randomService = randomService;
-        _logger = logger;
-        _store = new JsonFileStore<VendorPricingState>(
-            options,
-            environment,
-            logger,
-            concurrencyProvider,
-            options.Value.VendorPricingFileName);
-    }
+    private static readonly TimeSpan RefreshWindow = TimeSpan.FromHours(6);
 
     public async Task<IReadOnlyCollection<VendorPrice>> GetPricesAsync(string townName, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(townName))
         {
-            return Array.Empty<VendorPrice>();
+            return [];
         }
 
-        var towns = await _worldRepository.GetTownsAsync(cancellationToken);
+        var towns = await worldRepository.GetTownsAsync(cancellationToken);
         var town = towns.FirstOrDefault(t => string.Equals(t.Name, townName, StringComparison.OrdinalIgnoreCase));
         if (town is null)
         {
-            return Array.Empty<VendorPrice>();
+            return [];
         }
 
         var state = await ReadStateAsync(cancellationToken);
@@ -82,7 +73,7 @@ public class VendorPricingService : IVendorPricingService
 
     private async Task<VendorPricingState> ReadStateAsync(CancellationToken cancellationToken)
     {
-        var states = await _store.ReadAsync(() => new List<VendorPricingState> { new() }, cancellationToken);
+        var states = await _store.ReadAsync(() => [new()], cancellationToken);
         return states.First();
     }
 
@@ -110,8 +101,8 @@ public class VendorPricingService : IVendorPricingService
             Modifiers = modifiers
         };
 
-        await _store.WriteAsync(new[] { state }, cancellationToken);
-        _logger.LogInformation("Vendor pricing refreshed with {ModifierCount} modifiers", modifiers.Count);
+        await _store.WriteAsync([state], cancellationToken);
+        logger.LogInformation("Vendor pricing refreshed with {ModifierCount} modifiers", modifiers.Count);
 
         return state;
     }
@@ -140,7 +131,7 @@ public class VendorPricingService : IVendorPricingService
     private decimal SampleMultiplier(decimal min, decimal max)
     {
         var range = max - min;
-        var roll = (decimal)_randomService.NextDouble();
+        var roll = (decimal)randomService.NextDouble();
         return min + (range * roll);
     }
 }

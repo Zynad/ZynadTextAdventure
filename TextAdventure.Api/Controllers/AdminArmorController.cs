@@ -11,22 +11,15 @@ namespace TextAdventure.Api.Controllers;
 [ApiController]
 [Route("api/admin/armor")]
 [Authorize(Policy = AuthPolicies.AuthenticatedUsers)]
-public class AdminArmorController : ControllerBase
+public class AdminArmorController(IAdminArmorService adminArmorService) : ControllerBase
 {
-    private readonly IAdminArmorService _adminArmorService;
-
-    public AdminArmorController(IAdminArmorService adminArmorService)
-    {
-        _adminArmorService = adminArmorService;
-    }
-
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetArmor(CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _adminArmorService.GetAllAsync(token, cancellationToken);
+        var result = await adminArmorService.GetAllAsync(token, cancellationToken);
         return Translate(result);
     }
 
@@ -43,7 +36,7 @@ public class AdminArmorController : ControllerBase
 
         var token = Request.GetAccessToken();
         var payload = armorPieceDto with { Slot = parsedSlot };
-        var result = await _adminArmorService.CreateAsync(token, payload, cancellationToken);
+        var result = await adminArmorService.CreateAsync(token, payload, cancellationToken);
         return Translate(result);
     }
 
@@ -61,7 +54,7 @@ public class AdminArmorController : ControllerBase
 
         var token = Request.GetAccessToken();
         var payload = armorPieceDto with { Id = id, Slot = parsedSlot };
-        var result = await _adminArmorService.UpdateAsync(token, payload, cancellationToken);
+        var result = await adminArmorService.UpdateAsync(token, payload, cancellationToken);
         return Translate(result);
     }
 
@@ -78,7 +71,7 @@ public class AdminArmorController : ControllerBase
         }
 
         var token = Request.GetAccessToken();
-        var result = await _adminArmorService.DeleteAsync(token, id, parsedSlot, cancellationToken);
+        var result = await adminArmorService.DeleteAsync(token, id, parsedSlot, cancellationToken);
         return Translate(result);
     }
 

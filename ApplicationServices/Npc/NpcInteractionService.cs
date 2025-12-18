@@ -23,28 +23,13 @@ public enum TradeAction
     Sell
 }
 
-public class NpcInteractionService
+public class NpcInteractionService(
+    GetCurrentUserHandler getCurrentUserHandler,
+    IWorldRepository worldRepository,
+    ICharacterRepository characterRepository,
+    IVendorPricingService vendorPricingService,
+    IRandomService randomService)
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IWorldRepository _worldRepository;
-    private readonly ICharacterRepository _characterRepository;
-    private readonly IVendorPricingService _vendorPricingService;
-    private readonly IRandomService _randomService;
-
-    public NpcInteractionService(
-        GetCurrentUserHandler getCurrentUserHandler,
-        IWorldRepository worldRepository,
-        ICharacterRepository characterRepository,
-        IVendorPricingService vendorPricingService,
-        IRandomService randomService)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _worldRepository = worldRepository;
-        _characterRepository = characterRepository;
-        _vendorPricingService = vendorPricingService;
-        _randomService = randomService;
-    }
-
     public async Task<NpcInteractionResult<NpcDialogueResponse>> GetDialogueAsync(
         string token,
         Guid characterId,
@@ -80,7 +65,7 @@ public class NpcInteractionService
             candidateLines.Add($"Hello there, {character.Name}.");
         }
 
-        var selected = candidateLines[_randomService.NextInt(0, candidateLines.Count)];
+        var selected = candidateLines[randomService.NextInt(0, candidateLines.Count)];
         var personalized = selected.Replace("{playerName}", character.Name);
 
         var payload = new NpcDialogueResponse(npc.Id, npc.Name, town.Name, personalized, npc.RoleType.ToString());
@@ -108,7 +93,7 @@ public class NpcInteractionService
             return NpcInteractionResult<NpcQuestOfferResponse>.Failure("This NPC has no quests available.");
         }
 
-        var questId = npc.QuestsOffered[_randomService.NextInt(0, npc.QuestsOffered.Count)];
+        var questId = npc.QuestsOffered[randomService.NextInt(0, npc.QuestsOffered.Count)];
         var prompt = npc.Dialogue.QuestOffers.FirstOrDefault()
                      ?? $"{npc.Name} has a task for you, {character.Name}.";
 
@@ -144,7 +129,7 @@ public class NpcInteractionService
             return NpcInteractionResult<NpcTradeResponse>.Failure("NPC is not configured as a vendor.");
         }
 
-        var price = await _vendorPricingService.GetPriceForItemAsync(town.Name, itemId, cancellationToken);
+        var price = await vendorPricingService.GetPriceForItemAsync(town.Name, itemId, cancellationToken);
         if (price is null)
         {
             return NpcInteractionResult<NpcTradeResponse>.Failure("Item not available from this vendor.");
@@ -176,7 +161,7 @@ public class NpcInteractionService
             character.Coins += (decimal)rounded;
         }
 
-        await _characterRepository.UpdateAsync(character, cancellationToken);
+        await characterRepository.UpdateAsync(character, cancellationToken);
         var payload = new NpcTradeResponse(
             npc.Id,
             npc.Name,
@@ -207,7 +192,7 @@ public class NpcInteractionService
         var character = resolution.Character;
         var npc = resolution.Npc;
 
-        var roll = _randomService.NextInt(1, 21);
+        var roll = randomService.NextInt(1, 21);
         var modifier = actionType switch
         {
             NpcActionType.Combat => character.Stats.Combat,
@@ -229,7 +214,7 @@ public class NpcInteractionService
             OccurredAt = DateTimeOffset.UtcNow
         });
 
-        await _characterRepository.UpdateAsync(character, cancellationToken);
+        await characterRepository.UpdateAsync(character, cancellationToken);
 
         var payload = new NpcActionResponse(
             npc.Id,
@@ -250,19 +235,19 @@ public class NpcInteractionService
         string npcId,
         CancellationToken cancellationToken)
     {
-        var userResult = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var userResult = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         if (!userResult.Success || userResult.User is null)
         {
             return (false, "Unauthorized", new Character(), new TownNpc(), new Town());
         }
 
-        var character = await _characterRepository.GetByIdAsync(characterId, cancellationToken);
+        var character = await characterRepository.GetByIdAsync(characterId, cancellationToken);
         if (character is null || character.AccountId != userResult.User.Id)
         {
             return (false, "Character not found", new Character(), new TownNpc(), new Town());
         }
 
-        var towns = await _worldRepository.GetTownsAsync(cancellationToken);
+        var towns = await worldRepository.GetTownsAsync(cancellationToken);
         foreach (var town in towns)
         {
             var npc = town.Npcs.FirstOrDefault(n => n.Id.Equals(npcId, StringComparison.OrdinalIgnoreCase));

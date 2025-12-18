@@ -8,22 +8,14 @@ using TextAdventure.Infrastructure.Configuration;
 
 namespace TextAdventure.Infrastructure.Services;
 
-public class AuthService : IAuthService
+public class AuthService(IRandomService randomService, ILogger<AuthService> logger, IOptions<AuthOptions> options)
+    : IAuthService
 {
-    private readonly IRandomService _randomService;
-    private readonly ILogger<AuthService> _logger;
-    private readonly AuthOptions _options;
-
-    public AuthService(IRandomService randomService, ILogger<AuthService> logger, IOptions<AuthOptions> options)
-    {
-        _randomService = randomService;
-        _logger = logger;
-        _options = options.Value;
-    }
+    private readonly AuthOptions _options = options.Value;
 
     public SessionToken CreateSessionToken(Guid accountId)
     {
-        var randomBytes = _randomService.GetBytes(32);
+        var randomBytes = randomService.GetBytes(32);
         var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_options.TokenSecret));
         var signature = hmac.ComputeHash(randomBytes);
         var tokenPayload = Convert.ToBase64String(randomBytes);
@@ -39,7 +31,7 @@ public class AuthService : IAuthService
 
     public PasswordHash HashPassword(string password)
     {
-        var salt = _randomService.GetBytes(16);
+        var salt = randomService.GetBytes(16);
         var hash = DeriveHash(password, salt);
 
         return new PasswordHash
@@ -53,7 +45,7 @@ public class AuthService : IAuthService
     {
         if (string.IsNullOrWhiteSpace(passwordSalt) || string.IsNullOrWhiteSpace(passwordHash))
         {
-            _logger.LogWarning("Account missing password details");
+            logger.LogWarning("Account missing password details");
             return false;
         }
 

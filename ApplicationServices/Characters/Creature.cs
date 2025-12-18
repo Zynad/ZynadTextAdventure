@@ -37,9 +37,9 @@ public abstract class Creature
     public int RangedPhysicalAttackDamage { get; set; }
     public int MagicAttackDamage { get; set; }
     public int DefenseValue { get; set; }
-    public List<ArmorMaterial> CanCarryArmorType { get; set; } = new();
-    public List<WeaponType> CanCarryWeaponType { get; set; } = new();
-    public List<ItemsBase> Inventory { get; set; } = new();
+    public List<ArmorMaterial> CanCarryArmorType { get; set; } = [];
+    public List<WeaponType> CanCarryWeaponType { get; set; } = [];
+    public List<ItemsBase> Inventory { get; set; } = [];
     public int MaxCarryWeigth { get; set; }
     public int WorthXp { get; set; }
     private int xp;

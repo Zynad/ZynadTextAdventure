@@ -2,9 +2,4 @@ using Domain.Database;
 using Domain.Entities.Armor.Models;
 
 namespace Domain.Repos.Armor;
-public class LegsRepository : BaseRepo<LegsEntity>, ILegsRepository
-{
-    public LegsRepository(IGameDatabase database) : base(database, db => db.Legs)
-    {
-    }
-}
+public class LegsRepository(IGameDatabase database) : BaseRepo<LegsEntity>(database, db => db.Legs), ILegsRepository;

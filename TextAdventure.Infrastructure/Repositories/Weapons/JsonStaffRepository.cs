@@ -5,9 +5,5 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Weapons;
 
-public class JsonStaffRepository : BaseRepo<StaffEntity>, IStaffRepository
-{
-    public JsonStaffRepository(IGameDatabase database) : base(database, db => db.Staff)
-    {
-    }
-}
+public class JsonStaffRepository(IGameDatabase database)
+    : BaseRepo<StaffEntity>(database, db => db.Staff), IStaffRepository;

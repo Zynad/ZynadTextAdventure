@@ -6,72 +6,50 @@ using Domain.Repos.Armor;
 using Domain.Repos.Weapons;
 namespace ApplicationServices.Game.Helpers;
 
-public class DbHandler : IDbHandler
+public class DbHandler(
+    IWandRepository wandRepository,
+    IStaffRepository staffRepository,
+    ISwordRepository swordRepository,
+    IAxeRepository axeRepository,
+    IBootsRepository bootsRepository,
+    IChestRepository chestRepository,
+    IGlovesRepository glovesRepository,
+    IHelmetRepository helmetRepository,
+    ILegsRepository legsRepository,
+    IWandFactory wandFactory,
+    IStaffFactory staffFactory,
+    ISwordFactory swordFactory,
+    IAxeFactory axeFactory,
+    IBootsFactory bootsFactory,
+    IChestFactory chestFactory,
+    IGlovesFactory glovesFactory,
+    IHelmetFactory helmetFactory,
+    ILegsFactory legsFactory)
+    : IDbHandler
 {
-    private readonly IWandRepository _wandRepository;
-    private readonly IStaffRepository _staffRepository;
-    private readonly ISwordRepository _swordRepository;
-    private readonly IAxeRepository _axeRepository;
-    private readonly IBootsRepository _bootsRepository;
-    private readonly IChestRepository _chestRepository;
-    private readonly IGlovesRepository _glovesRepository;
-    private readonly IHelmetRepository _helmetRepository;
-    private readonly ILegsRepository _legsRepository;
-    private readonly IWandFactory _wandFactory;
-    private readonly IStaffFactory _staffFactory;
-    private readonly ISwordFactory _swordFactory;
-    private readonly IAxeFactory _axeFactory;
-    private readonly IBootsFactory _bootsFactory;
-    private readonly IChestFactory _chestFactory;
-    private readonly IGlovesFactory _glovesFactory;
-    private readonly IHelmetFactory _helmetFactory;
-    private readonly ILegsFactory _legsFactory;
-
-    public DbHandler(IWandRepository wandRepository, IStaffRepository staffRepository, ISwordRepository swordRepository, IAxeRepository axeRepository, IBootsRepository bootsRepository, IChestRepository chestRepository, IGlovesRepository glovesRepository, IHelmetRepository helmetRepository, ILegsRepository legsRepository, IWandFactory wandFactory, IStaffFactory staffFactory, ISwordFactory swordFactory, IAxeFactory axeFactory, IBootsFactory bootsFactory, IChestFactory chestFactory, IGlovesFactory glovesFactory, IHelmetFactory helmetFactory, ILegsFactory legsFactory)
-    {
-        _wandRepository = wandRepository;
-        _staffRepository = staffRepository;
-        _swordRepository = swordRepository;
-        _axeRepository = axeRepository;
-        _bootsRepository = bootsRepository;
-        _chestRepository = chestRepository;
-        _glovesRepository = glovesRepository;
-        _helmetRepository = helmetRepository;
-        _legsRepository = legsRepository;
-        _wandFactory = wandFactory;
-        _staffFactory = staffFactory;
-        _swordFactory = swordFactory;
-        _axeFactory = axeFactory;
-        _bootsFactory = bootsFactory;
-        _chestFactory = chestFactory;
-        _glovesFactory = glovesFactory;
-        _helmetFactory = helmetFactory;
-        _legsFactory = legsFactory;
-    }
-
     #region Wand
 
     public async Task AddWand(WandEntity? entity = null)
     {
         if (entity != null)
         {
-            await _wandRepository.AddAsync(entity);
+            await wandRepository.AddAsync(entity);
             return;
         }
 
-        var wand = _wandFactory.CreateNewWand();
-        var createdItem = await _wandRepository.AddAsync(wand);
+        var wand = wandFactory.CreateNewWand();
+        var createdItem = await wandRepository.AddAsync(wand);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateWand(WandEntity entity)
     {
-        await _wandRepository.UpdateAsync(entity);
+        await wandRepository.UpdateAsync(entity);
     }
 
     public async Task DeleteWand(WandEntity entity)
     {
-        await _wandRepository.DeleteAsync(entity);
+        await wandRepository.DeleteAsync(entity);
     }
 
     public async Task GetWand()
@@ -92,23 +70,23 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _staffRepository.AddAsync(entity);
+            await staffRepository.AddAsync(entity);
             return;
         }
 
-        var staff = _staffFactory.CreateNewStaff();
-        var createdItem = await _staffRepository.AddAsync(staff);
+        var staff = staffFactory.CreateNewStaff();
+        var createdItem = await staffRepository.AddAsync(staff);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateStaff(StaffEntity entity)
     {
-        await _staffRepository.UpdateAsync(entity);
+        await staffRepository.UpdateAsync(entity);
     }
 
     public async Task DeleteStaff(StaffEntity entity)
     {
-        await _staffRepository.DeleteAsync(entity);
+        await staffRepository.DeleteAsync(entity);
     }
 
     #endregion
@@ -119,23 +97,23 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _swordRepository.AddAsync(entity);
+            await swordRepository.AddAsync(entity);
             return;
         }
 
-        var sword = _swordFactory.CreateNewSword();
-        var createdItem = await _swordRepository.AddAsync(sword);
+        var sword = swordFactory.CreateNewSword();
+        var createdItem = await swordRepository.AddAsync(sword);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
 
     public async Task UpdateSword(SwordEntity entity)
     {
-        await _swordRepository.UpdateAsync(entity);
+        await swordRepository.UpdateAsync(entity);
     }
 
     public async Task DeleteSword(SwordEntity entity)
     {
-        await _swordRepository.DeleteAsync(entity);
+        await swordRepository.DeleteAsync(entity);
     }
 
     public async Task GetSword()
@@ -151,20 +129,20 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _axeRepository.AddAsync(entity);
+            await axeRepository.AddAsync(entity);
             return;
         }
-        var axe = _axeFactory.CreateNewAxe();
-        var createdItem = await _axeRepository.AddAsync(axe);
+        var axe = axeFactory.CreateNewAxe();
+        var createdItem = await axeRepository.AddAsync(axe);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateAxe(AxeEntity entity)
     {
-        await _axeRepository.UpdateAsync(entity);
+        await axeRepository.UpdateAsync(entity);
     }
     public async Task DeleteAxe(AxeEntity entity)
     {
-        await _axeRepository.DeleteAsync(entity);
+        await axeRepository.DeleteAsync(entity);
     }
     public async Task GetAxe()
     {
@@ -178,20 +156,20 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _bootsRepository.AddAsync(entity);
+            await bootsRepository.AddAsync(entity);
             return;
         }
-        var boots = _bootsFactory.CreateNewBoots();
-        var createdItem = await _bootsRepository.AddAsync(boots);
+        var boots = bootsFactory.CreateNewBoots();
+        var createdItem = await bootsRepository.AddAsync(boots);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateBoots(BootsEntity entity)
     {
-        await _bootsRepository.UpdateAsync(entity);
+        await bootsRepository.UpdateAsync(entity);
     }
     public async Task DeleteBoots(BootsEntity entity)
     {
-        await _bootsRepository.DeleteAsync(entity);
+        await bootsRepository.DeleteAsync(entity);
     }
     public async Task GetBoots()
     {
@@ -204,20 +182,20 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _chestRepository.AddAsync(entity);
+            await chestRepository.AddAsync(entity);
             return;
         }
-        var chest = _chestFactory.CreateNewChest();
-        var createdItem = await _chestRepository.AddAsync(chest);
+        var chest = chestFactory.CreateNewChest();
+        var createdItem = await chestRepository.AddAsync(chest);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateChest(ChestEntity entity)
     {
-        await _chestRepository.UpdateAsync(entity);
+        await chestRepository.UpdateAsync(entity);
     }
     public async Task DeleteChest(ChestEntity entity)
     {
-        await _chestRepository.DeleteAsync(entity);
+        await chestRepository.DeleteAsync(entity);
     }
     public async Task GetChest()
     {
@@ -230,20 +208,20 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _glovesRepository.AddAsync(entity);
+            await glovesRepository.AddAsync(entity);
             return;
         }
-        var gloves = _glovesFactory.CreateNewGloves();
-        var createdItem = await _glovesRepository.AddAsync(gloves);
+        var gloves = glovesFactory.CreateNewGloves();
+        var createdItem = await glovesRepository.AddAsync(gloves);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateGloves(GlovesEntity entity)
     {
-        await _glovesRepository.UpdateAsync(entity);
+        await glovesRepository.UpdateAsync(entity);
     }
     public async Task DeleteGloves(GlovesEntity entity)
     {
-        await _glovesRepository.DeleteAsync(entity);
+        await glovesRepository.DeleteAsync(entity);
     }
     public async Task GetGloves()
     {
@@ -256,20 +234,20 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _helmetRepository.AddAsync(entity);
+            await helmetRepository.AddAsync(entity);
             return;
         }
-        var helmet = _helmetFactory.CreateNewHelmet();
-        var createdItem = await _helmetRepository.AddAsync(helmet);
+        var helmet = helmetFactory.CreateNewHelmet();
+        var createdItem = await helmetRepository.AddAsync(helmet);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
     }
     public async Task UpdateHelmet(HelmetEntity entity)
     {
-        await _helmetRepository.UpdateAsync(entity);
+        await helmetRepository.UpdateAsync(entity);
     }
     public async Task DeleteHelmet(HelmetEntity entity)
     {
-        await _helmetRepository.DeleteAsync(entity);
+        await helmetRepository.DeleteAsync(entity);
     }
     public async Task GetHelmet()
     {
@@ -282,21 +260,21 @@ public class DbHandler : IDbHandler
     {
         if (entity != null)
         {
-            await _legsRepository.AddAsync(entity);
+            await legsRepository.AddAsync(entity);
             return;
         }
-        var legs = _legsFactory.CreateNewLegs();
-        var createdItem = await _legsRepository.AddAsync(legs);
+        var legs = legsFactory.CreateNewLegs();
+        var createdItem = await legsRepository.AddAsync(legs);
         Console.WriteLine($"{createdItem.Name} was added in the database!");
         
     }
     public async Task UpdateLegs(LegsEntity entity)
     {
-        await _legsRepository.UpdateAsync(entity);
+        await legsRepository.UpdateAsync(entity);
     }
     public async Task DeleteLegs(LegsEntity entity)
     {
-        await _legsRepository.DeleteAsync(entity);
+        await legsRepository.DeleteAsync(entity);
     }
     public async Task GetLegs()
     {

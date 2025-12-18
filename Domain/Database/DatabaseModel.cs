@@ -8,31 +8,31 @@ namespace Domain.Database;
 
 public class DatabaseModel
 {
-    public List<UserAccount> Users { get; set; } = new();
+    public List<UserAccount> Users { get; set; } = [];
 
-    public List<PlayerProgress> Progress { get; set; } = new();
+    public List<PlayerProgress> Progress { get; set; } = [];
 
-    public List<MonsterProfile> Monsters { get; set; } = new();
+    public List<MonsterProfile> Monsters { get; set; } = [];
 
-    public List<GenericItemEntity> Items { get; set; } = new();
+    public List<GenericItemEntity> Items { get; set; } = [];
 
-    public List<WandEntity> Wands { get; set; } = new();
+    public List<WandEntity> Wands { get; set; } = [];
 
-    public List<StaffEntity> Staff { get; set; } = new();
+    public List<StaffEntity> Staff { get; set; } = [];
 
-    public List<SwordEntity> Swords { get; set; } = new();
+    public List<SwordEntity> Swords { get; set; } = [];
 
-    public List<AxeEntity> Axes { get; set; } = new();
+    public List<AxeEntity> Axes { get; set; } = [];
 
-    public List<BootsEntity> Boots { get; set; } = new();
+    public List<BootsEntity> Boots { get; set; } = [];
 
-    public List<ChestEntity> Chests { get; set; } = new();
+    public List<ChestEntity> Chests { get; set; } = [];
 
-    public List<GlovesEntity> Gloves { get; set; } = new();
+    public List<GlovesEntity> Gloves { get; set; } = [];
 
-    public List<HelmetEntity> Helmets { get; set; } = new();
+    public List<HelmetEntity> Helmets { get; set; } = [];
 
-    public List<LegsEntity> Legs { get; set; } = new();
+    public List<LegsEntity> Legs { get; set; } = [];
 
     public static DatabaseModel CreateDefault()
     {

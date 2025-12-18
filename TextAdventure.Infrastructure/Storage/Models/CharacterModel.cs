@@ -23,11 +23,11 @@ public class CharacterModel
 
     public WorldLocationModel Location { get; set; } = new();
 
-    public List<InventoryItem> Inventory { get; set; } = new();
+    public List<InventoryItem> Inventory { get; set; } = [];
 
-    public List<CharacterQuestState> QuestStates { get; set; } = new();
+    public List<CharacterQuestState> QuestStates { get; set; } = [];
 
-    public List<Encounter> EncounterLog { get; set; } = new();
+    public List<Encounter> EncounterLog { get; set; } = [];
 
-    public List<CharacterActionLogEntry> ActionLog { get; set; } = new();
+    public List<CharacterActionLogEntry> ActionLog { get; set; } = [];
 }

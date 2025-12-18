@@ -5,9 +5,5 @@ using Domain.Repos;
 
 namespace TextAdventure.Infrastructure.Repositories.Weapons;
 
-public class JsonSwordRepository : BaseRepo<SwordEntity>, ISwordRepository
-{
-    public JsonSwordRepository(IGameDatabase database) : base(database, db => db.Swords)
-    {
-    }
-}
+public class JsonSwordRepository(IGameDatabase database)
+    : BaseRepo<SwordEntity>(database, db => db.Swords), ISwordRepository;

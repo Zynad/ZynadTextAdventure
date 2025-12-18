@@ -11,22 +11,15 @@ namespace TextAdventure.Api.Controllers;
 [ApiController]
 [Route("api/admin/monsters")]
 [Authorize(Policy = AuthPolicies.AuthenticatedUsers)]
-public class AdminMonstersController : ControllerBase
+public class AdminMonstersController(IAdminMonsterService monsterService) : ControllerBase
 {
-    private readonly IAdminMonsterService _monsterService;
-
-    public AdminMonstersController(IAdminMonsterService monsterService)
-    {
-        _monsterService = monsterService;
-    }
-
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetMonsters(CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _monsterService.GetAllAsync(token, cancellationToken);
+        var result = await monsterService.GetAllAsync(token, cancellationToken);
         return Translate(result);
     }
 
@@ -38,7 +31,7 @@ public class AdminMonstersController : ControllerBase
     public async Task<IActionResult> CreateMonster(MonsterDto monsterDto, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _monsterService.CreateAsync(token, monsterDto, cancellationToken);
+        var result = await monsterService.CreateAsync(token, monsterDto, cancellationToken);
         return Translate(result);
     }
 
@@ -50,7 +43,7 @@ public class AdminMonstersController : ControllerBase
     public async Task<IActionResult> UpdateMonster(string name, MonsterDto monsterDto, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _monsterService.UpdateAsync(token, name, monsterDto, cancellationToken);
+        var result = await monsterService.UpdateAsync(token, name, monsterDto, cancellationToken);
         return Translate(result);
     }
 
@@ -61,7 +54,7 @@ public class AdminMonstersController : ControllerBase
     public async Task<IActionResult> DeleteMonster(string name, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
-        var result = await _monsterService.DeleteAsync(token, name, cancellationToken);
+        var result = await monsterService.DeleteAsync(token, name, cancellationToken);
         return Translate(result);
     }
 

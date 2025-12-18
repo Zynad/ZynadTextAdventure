@@ -17,18 +17,13 @@ public class AuthHandlersTests
 {
     private readonly InMemoryUserRepository _userRepository = new();
     private readonly InMemorySessionRepository _sessionRepository = new();
-    private readonly IAuthService _authService;
-
-    public AuthHandlersTests()
+    private readonly IAuthService _authService = new AuthService(new RandomService(), NullLogger<AuthService>.Instance, Options.Create(new AuthOptions
     {
-        _authService = new AuthService(new RandomService(), NullLogger<AuthService>.Instance, Options.Create(new AuthOptions
-        {
-            PasswordPepper = "pepper",
-            TokenSecret = "secret",
-            TokenExpiryMinutes = 60,
-            PasswordIterations = 10_000
-        }));
-    }
+        PasswordPepper = "pepper",
+        TokenSecret = "secret",
+        TokenExpiryMinutes = 60,
+        PasswordIterations = 10_000
+    }));
 
     [Fact]
     public async Task RegisterUserHandler_AddsUserAndSession()
@@ -210,7 +205,7 @@ public class AuthHandlersTests
 
     private class InMemoryUserRepository : IUserRepository
     {
-        private readonly List<Account> _accounts = new();
+        private readonly List<Account> _accounts = [];
 
         public Task AddAsync(Account account, CancellationToken cancellationToken = default)
         {
@@ -256,7 +251,7 @@ public class AuthHandlersTests
 
     private class InMemorySessionRepository : ISessionRepository
     {
-        private readonly List<SessionToken> _tokens = new();
+        private readonly List<SessionToken> _tokens = [];
 
         public Task AddAsync(SessionToken sessionToken, CancellationToken cancellationToken = default)
         {

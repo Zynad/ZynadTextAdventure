@@ -10,35 +10,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Adventure;
 
-public class CompleteQuestHandler
+public class CompleteQuestHandler(
+    GetCurrentUserHandler getCurrentUserHandler,
+    IQuestRepository questRepository,
+    ICharacterRepository characterRepository,
+    IWorldRepository worldRepository,
+    ILogger<CompleteQuestHandler> logger)
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IQuestRepository _questRepository;
-    private readonly ICharacterRepository _characterRepository;
-    private readonly IWorldRepository _worldRepository;
-    private readonly ILogger<CompleteQuestHandler> _logger;
-
-    public CompleteQuestHandler(
-        GetCurrentUserHandler getCurrentUserHandler,
-        IQuestRepository questRepository,
-        ICharacterRepository characterRepository,
-        IWorldRepository worldRepository,
-        ILogger<CompleteQuestHandler> logger)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _questRepository = questRepository;
-        _characterRepository = characterRepository;
-        _worldRepository = worldRepository;
-        _logger = logger;
-    }
-
     public async Task<AdventureResult> HandleAsync(
         string token,
         string questId,
         QuestActionRequest request,
         CancellationToken cancellationToken = default)
     {
-        var userResult = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var userResult = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         if (!userResult.Success || userResult.User is null)
         {
             return AdventureResult.Unauthorized(userResult.Error ?? "Unauthorized");
@@ -49,13 +34,13 @@ public class CompleteQuestHandler
             return AdventureResult.Validation("Quest id is required");
         }
 
-        var quest = await _questRepository.GetByIdAsync(questId, cancellationToken);
+        var quest = await questRepository.GetByIdAsync(questId, cancellationToken);
         if (quest is null)
         {
             return AdventureResult.NotFound("Quest not found");
         }
 
-        var character = await _characterRepository.GetByIdAsync(request.CharacterId, cancellationToken);
+        var character = await characterRepository.GetByIdAsync(request.CharacterId, cancellationToken);
         if (character is null || character.AccountId != userResult.User.Id)
         {
             return AdventureResult.NotFound("Character not found");
@@ -76,7 +61,7 @@ public class CompleteQuestHandler
 
         if (!string.IsNullOrWhiteSpace(quest.CompletionLocationId))
         {
-            var locations = await _worldRepository.GetLocationsAsync(cancellationToken);
+            var locations = await worldRepository.GetLocationsAsync(cancellationToken);
             var isAtLocation = locations.Any(l =>
                 l.Id.Equals(quest.CompletionLocationId, StringComparison.OrdinalIgnoreCase)
                 && l.Name.Equals(character.Location.Name, StringComparison.OrdinalIgnoreCase));
@@ -95,9 +80,9 @@ public class CompleteQuestHandler
             GrantRewards(character, quest.RewardItems);
         }
 
-        await _characterRepository.UpdateAsync(character, cancellationToken);
+        await characterRepository.UpdateAsync(character, cancellationToken);
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Character {CharacterId} completed quest {QuestId}",
             character.Id,
             quest.Id);

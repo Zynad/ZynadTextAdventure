@@ -13,8 +13,8 @@ public class Character
     public decimal Coins { get; set; } = 20;
     public CharacterStats Stats { get; set; } = CharacterStats.Default();
     public WorldLocation Location { get; set; } = WorldLocation.Default();
-    public List<InventoryItem> Inventory { get; set; } = new();
-    public List<CharacterQuestState> QuestStates { get; set; } = new();
-    public List<Encounter> EncounterLog { get; set; } = new();
-    public List<CharacterActionLogEntry> ActionLog { get; set; } = new();
+    public List<InventoryItem> Inventory { get; set; } = [];
+    public List<CharacterQuestState> QuestStates { get; set; } = [];
+    public List<Encounter> EncounterLog { get; set; } = [];
+    public List<CharacterActionLogEntry> ActionLog { get; set; } = [];
 }

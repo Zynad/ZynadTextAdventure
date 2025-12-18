@@ -26,12 +26,7 @@ public class EquipmentRepositoryTests
         }
     }
 
-    private class TestWandRepository : WandRepository
-    {
-        public TestWandRepository(IGameDatabase database) : base(database)
-        {
-        }
-    }
+    private class TestWandRepository(IGameDatabase database) : WandRepository(database);
 
     [Fact]
     public async Task AddAsync_PersistsEntityToDatabase()

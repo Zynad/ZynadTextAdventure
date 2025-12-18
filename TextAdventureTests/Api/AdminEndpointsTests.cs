@@ -165,7 +165,7 @@ public class AdminEndpointsTests
 
     private class InMemorySessionRepository : ISessionRepository
     {
-        private readonly List<Domain.ValueObjects.SessionToken> _tokens = new();
+        private readonly List<Domain.ValueObjects.SessionToken> _tokens = [];
 
         public Task AddAsync(Domain.ValueObjects.SessionToken sessionToken, CancellationToken cancellationToken = default)
         {

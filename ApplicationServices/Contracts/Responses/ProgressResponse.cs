@@ -14,5 +14,5 @@ public class ProgressResponse
 
     public DateTimeOffset LastUpdatedUtc { get; set; }
 
-    public IReadOnlyCollection<SaveSlot> SaveSlots { get; set; } = Array.Empty<SaveSlot>();
+    public IReadOnlyCollection<SaveSlot> SaveSlots { get; set; } = [];
 }

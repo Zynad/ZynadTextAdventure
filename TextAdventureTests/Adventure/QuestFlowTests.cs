@@ -39,7 +39,7 @@ public class QuestFlowTests
         {
             Id = "help_the_blacksmith",
             AcceptLocationId = "emberbrook_gate",
-            PrerequisiteQuestIds = new List<string> { "intro" }
+            PrerequisiteQuestIds = ["intro"]
         });
 
         character.QuestStates.Add(new CharacterQuestState
@@ -67,10 +67,7 @@ public class QuestFlowTests
         {
             Id = "help_the_blacksmith",
             CompletionLocationId = "emberbrook_square",
-            RewardItems = new List<InventoryItem>
-            {
-                new() { ItemId = "tempered_sword", Quantity = 1 }
-            }
+            RewardItems = [new() { ItemId = "tempered_sword", Quantity = 1 }]
         };
         _quests.Add(quest);
 
@@ -122,7 +119,7 @@ public class QuestFlowTests
 
     private class InMemoryQuestRepository : IQuestRepository
     {
-        private readonly List<Quest> _quests = new();
+        private readonly List<Quest> _quests = [];
 
         public void Add(Quest quest) => _quests.Add(quest);
 
@@ -155,7 +152,7 @@ public class QuestFlowTests
 
     private class InMemoryCharacterRepository : ICharacterRepository
     {
-        private readonly List<Character> _characters = new();
+        private readonly List<Character> _characters = [];
 
         public IReadOnlyCollection<Character> AllCharacters => _characters;
 
@@ -193,7 +190,7 @@ public class QuestFlowTests
 
     private class InMemoryUserRepository : IUserRepository
     {
-        private readonly List<Account> _accounts = new();
+        private readonly List<Account> _accounts = [];
 
         public Task AddAsync(Account account, CancellationToken cancellationToken = default)
         {
@@ -240,7 +237,7 @@ public class QuestFlowTests
 
     private class InMemorySessionRepository : ISessionRepository
     {
-        private readonly List<SessionToken> _tokens = new();
+        private readonly List<SessionToken> _tokens = [];
 
         public Task AddAsync(SessionToken sessionToken, CancellationToken cancellationToken = default)
         {
@@ -278,7 +275,7 @@ public class QuestFlowTests
                 Name = "Emberbrook Gate",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string>()
+                AdjacentLocationIds = []
             },
             new()
             {
@@ -286,13 +283,13 @@ public class QuestFlowTests
                 Name = "Emberbrook Square",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = new List<string>()
+                AdjacentLocationIds = []
             }
         };
 
         public Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<IReadOnlyCollection<Monster>>(Array.Empty<Monster>());
+            return Task.FromResult<IReadOnlyCollection<Monster>>([]);
         }
 
         public Task<IReadOnlyCollection<CharacterPreset>> GetCharacterPresetsAsync(CancellationToken cancellationToken = default)
@@ -304,19 +301,19 @@ public class QuestFlowTests
                     Id = "warrior",
                     Name = "Warrior",
                     StartingLocation = WorldLocation.Default(),
-                    StartingInventory = new List<InventoryItem>()
+                    StartingInventory = []
                 }
             });
         }
 
         public Task<IReadOnlyCollection<Town>> GetTownsAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<IReadOnlyCollection<Town>>(Array.Empty<Town>());
+            return Task.FromResult<IReadOnlyCollection<Town>>([]);
         }
 
         public Task<IReadOnlyCollection<DropTable>> GetDropTablesAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<IReadOnlyCollection<DropTable>>(Array.Empty<DropTable>());
+            return Task.FromResult<IReadOnlyCollection<DropTable>>([]);
         }
 
         public Task<IReadOnlyCollection<WorldLocationNode>> GetLocationsAsync(CancellationToken cancellationToken = default)

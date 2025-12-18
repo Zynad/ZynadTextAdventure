@@ -17,7 +17,7 @@ public class CharacterMapperTests
         {
             AccountId = Guid.NewGuid(),
             Name = "Hero",
-            Inventory = new List<InventoryItem> { new() { ItemId = "potion", Quantity = 2 } }
+            Inventory = [new() { ItemId = "potion", Quantity = 2 }]
         };
 
         var dto = CharacterMapper.ToCharacterDto(character);
@@ -39,7 +39,7 @@ public class CharacterMapperTests
             Name = "Warrior",
             Description = "Test preset",
             StartingLocation = new WorldLocation { Name = "Start" },
-            StartingInventory = new List<InventoryItem> { new() { ItemId = "sword", Quantity = 1 } }
+            StartingInventory = [new() { ItemId = "sword", Quantity = 1 }]
         };
 
         var dto = CharacterMapper.ToPresetDto(preset);
@@ -56,7 +56,7 @@ public class CharacterMapperTests
             {
                 EncounterType = "battle",
                 OccurredAt = DateTimeOffset.UtcNow.AddMinutes(-i),
-                Drops = new List<InventoryItem> { new() { ItemId = $"loot_{i}", Quantity = 1 } }
+                Drops = [new() { ItemId = $"loot_{i}", Quantity = 1 }]
             })
             .ToList();
 
@@ -72,8 +72,8 @@ public class CharacterMapperTests
             Stats = new CharacterStats { Combat = 1, Stealth = 2, Pickpocket = 3 },
             Coins = 10,
             Location = new WorldLocation { Name = "Town" },
-            Inventory = new List<InventoryItem> { new() { ItemId = "coin", Quantity = 5 } },
-            QuestStates = new List<CharacterQuestState> { new() { QuestId = "quest1" } },
+            Inventory = [new() { ItemId = "coin", Quantity = 5 }],
+            QuestStates = [new() { QuestId = "quest1" }],
             EncounterLog = encounters,
             ActionLog = actions
         };

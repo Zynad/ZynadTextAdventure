@@ -12,5 +12,5 @@ public class CharacterPresetModel
 
     public WorldLocationModel StartingLocation { get; set; } = new();
 
-    public List<InventoryItem> StartingInventory { get; set; } = new();
+    public List<InventoryItem> StartingInventory { get; set; } = [];
 }

@@ -7,31 +7,15 @@ using System.Linq;
 
 namespace ApplicationServices.Admin;
 
-public class AdminArmorService : IAdminArmorService
+public class AdminArmorService(
+    GetCurrentUserHandler getCurrentUserHandler,
+    IHelmetRepository helmetRepository,
+    IChestRepository chestRepository,
+    IGlovesRepository glovesRepository,
+    ILegsRepository legsRepository,
+    IBootsRepository bootsRepository)
+    : IAdminArmorService
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IHelmetRepository _helmetRepository;
-    private readonly IChestRepository _chestRepository;
-    private readonly IGlovesRepository _glovesRepository;
-    private readonly ILegsRepository _legsRepository;
-    private readonly IBootsRepository _bootsRepository;
-
-    public AdminArmorService(
-        GetCurrentUserHandler getCurrentUserHandler,
-        IHelmetRepository helmetRepository,
-        IChestRepository chestRepository,
-        IGlovesRepository glovesRepository,
-        ILegsRepository legsRepository,
-        IBootsRepository bootsRepository)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-        _helmetRepository = helmetRepository;
-        _chestRepository = chestRepository;
-        _glovesRepository = glovesRepository;
-        _legsRepository = legsRepository;
-        _bootsRepository = bootsRepository;
-    }
-
     public async Task<AdminOperationResult<IReadOnlyCollection<ArmorPieceDto>>> GetAllAsync(string token, CancellationToken cancellationToken = default)
     {
         var authorization = await AuthorizeAsync(token, cancellationToken);
@@ -41,11 +25,11 @@ public class AdminArmorService : IAdminArmorService
         }
 
         var items = new List<ArmorPieceDto>();
-        items.AddRange((await _helmetRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Helmet)));
-        items.AddRange((await _chestRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Chest)));
-        items.AddRange((await _glovesRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Gloves)));
-        items.AddRange((await _legsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Legs)));
-        items.AddRange((await _bootsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Boots)));
+        items.AddRange((await helmetRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Helmet)));
+        items.AddRange((await chestRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Chest)));
+        items.AddRange((await glovesRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Gloves)));
+        items.AddRange((await legsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Legs)));
+        items.AddRange((await bootsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Boots)));
 
         return AdminOperationResult<IReadOnlyCollection<ArmorPieceDto>>.FromSuccess(items);
     }
@@ -65,11 +49,11 @@ public class AdminArmorService : IAdminArmorService
 
         return armorPieceDto.Slot switch
         {
-            ArmorSlot.Helmet => await CreateAsync(_helmetRepository, armorPieceDto, ArmorSlot.Helmet),
-            ArmorSlot.Chest => await CreateAsync(_chestRepository, armorPieceDto, ArmorSlot.Chest),
-            ArmorSlot.Gloves => await CreateAsync(_glovesRepository, armorPieceDto, ArmorSlot.Gloves),
-            ArmorSlot.Legs => await CreateAsync(_legsRepository, armorPieceDto, ArmorSlot.Legs),
-            ArmorSlot.Boots => await CreateAsync(_bootsRepository, armorPieceDto, ArmorSlot.Boots),
+            ArmorSlot.Helmet => await CreateAsync(helmetRepository, armorPieceDto, ArmorSlot.Helmet),
+            ArmorSlot.Chest => await CreateAsync(chestRepository, armorPieceDto, ArmorSlot.Chest),
+            ArmorSlot.Gloves => await CreateAsync(glovesRepository, armorPieceDto, ArmorSlot.Gloves),
+            ArmorSlot.Legs => await CreateAsync(legsRepository, armorPieceDto, ArmorSlot.Legs),
+            ArmorSlot.Boots => await CreateAsync(bootsRepository, armorPieceDto, ArmorSlot.Boots),
             _ => AdminOperationResult<ArmorPieceDto>.ValidationFailed("Unsupported armor slot")
         };
     }
@@ -84,11 +68,11 @@ public class AdminArmorService : IAdminArmorService
 
         return armorPieceDto.Slot switch
         {
-            ArmorSlot.Helmet => await UpdateAsync(_helmetRepository, armorPieceDto, ArmorSlot.Helmet),
-            ArmorSlot.Chest => await UpdateAsync(_chestRepository, armorPieceDto, ArmorSlot.Chest),
-            ArmorSlot.Gloves => await UpdateAsync(_glovesRepository, armorPieceDto, ArmorSlot.Gloves),
-            ArmorSlot.Legs => await UpdateAsync(_legsRepository, armorPieceDto, ArmorSlot.Legs),
-            ArmorSlot.Boots => await UpdateAsync(_bootsRepository, armorPieceDto, ArmorSlot.Boots),
+            ArmorSlot.Helmet => await UpdateAsync(helmetRepository, armorPieceDto, ArmorSlot.Helmet),
+            ArmorSlot.Chest => await UpdateAsync(chestRepository, armorPieceDto, ArmorSlot.Chest),
+            ArmorSlot.Gloves => await UpdateAsync(glovesRepository, armorPieceDto, ArmorSlot.Gloves),
+            ArmorSlot.Legs => await UpdateAsync(legsRepository, armorPieceDto, ArmorSlot.Legs),
+            ArmorSlot.Boots => await UpdateAsync(bootsRepository, armorPieceDto, ArmorSlot.Boots),
             _ => AdminOperationResult<ArmorPieceDto>.ValidationFailed("Unsupported armor slot")
         };
     }
@@ -103,11 +87,11 @@ public class AdminArmorService : IAdminArmorService
 
         return slot switch
         {
-            ArmorSlot.Helmet => await DeleteAsync(_helmetRepository, id),
-            ArmorSlot.Chest => await DeleteAsync(_chestRepository, id),
-            ArmorSlot.Gloves => await DeleteAsync(_glovesRepository, id),
-            ArmorSlot.Legs => await DeleteAsync(_legsRepository, id),
-            ArmorSlot.Boots => await DeleteAsync(_bootsRepository, id),
+            ArmorSlot.Helmet => await DeleteAsync(helmetRepository, id),
+            ArmorSlot.Chest => await DeleteAsync(chestRepository, id),
+            ArmorSlot.Gloves => await DeleteAsync(glovesRepository, id),
+            ArmorSlot.Legs => await DeleteAsync(legsRepository, id),
+            ArmorSlot.Boots => await DeleteAsync(bootsRepository, id),
             _ => AdminOperationResult<bool>.ValidationFailed("Unsupported armor slot")
         };
     }
@@ -189,7 +173,7 @@ public class AdminArmorService : IAdminArmorService
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)
     {
-        var auth = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
+        var auth = await getCurrentUserHandler.HandleAsync(token, cancellationToken);
         return (auth.Success, auth.Error);
     }
 }

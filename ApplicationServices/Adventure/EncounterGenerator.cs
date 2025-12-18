@@ -9,12 +9,11 @@ namespace ApplicationServices.Adventure;
 public record EncounterResolution(Encounter Encounter, IReadOnlyCollection<InventoryItem> Loot);
 public record MonsterSpawn(Monster Template, int Level, int HitPoints, int Attack, int Defense, int Coins);
 
-public class EncounterGenerator
+public class EncounterGenerator(
+    IRandomService randomService,
+    IWorldRepository worldRepository,
+    ILogger<EncounterGenerator> logger)
 {
-    private readonly IRandomService _randomService;
-    private readonly IWorldRepository _worldRepository;
-    private readonly ILogger<EncounterGenerator> _logger;
-
     private static readonly Dictionary<string, double> ThreatChances = new(StringComparer.OrdinalIgnoreCase)
     {
         { "safe", 0.05 },
@@ -35,13 +34,6 @@ public class EncounterGenerator
         { "extreme", (6, 12) }
     };
 
-    public EncounterGenerator(IRandomService randomService, IWorldRepository worldRepository, ILogger<EncounterGenerator> logger)
-    {
-        _randomService = randomService;
-        _worldRepository = worldRepository;
-        _logger = logger;
-    }
-
     public async Task<EncounterResolution?> GenerateForTravelAsync(
         Character character,
         WorldLocationNode origin,
@@ -49,22 +41,22 @@ public class EncounterGenerator
         CancellationToken cancellationToken = default)
     {
         var chance = CalculateEncounterChance(destination.ThreatLevel);
-        var roll = _randomService.NextDouble();
+        var roll = randomService.NextDouble();
         if (roll > chance)
         {
-            _logger.LogDebug("No encounter rolled for {CharacterId} between {Origin} and {Destination} (roll: {Roll})", character.Id, origin.Name, destination.Name, roll);
+            logger.LogDebug("No encounter rolled for {CharacterId} between {Origin} and {Destination} (roll: {Roll})", character.Id, origin.Name, destination.Name, roll);
             return null;
         }
 
-        var monsters = (await _worldRepository.GetMonstersAsync(cancellationToken)).ToList();
-        var dropTables = await _worldRepository.GetDropTablesAsync(cancellationToken);
+        var monsters = (await worldRepository.GetMonstersAsync(cancellationToken)).ToList();
+        var dropTables = await worldRepository.GetDropTablesAsync(cancellationToken);
         var dropPool = GetDropTable(dropTables, destination.Biome);
         if (monsters.Count == 0)
         {
             return BuildDiscovery(character, destination, dropPool);
         }
 
-        if (_randomService.NextDouble() < 0.05)
+        if (randomService.NextDouble() < 0.05)
         {
             return BuildDiscovery(character, destination, dropPool);
         }
@@ -72,7 +64,7 @@ public class EncounterGenerator
         var monsterCandidates = FilterMonsters(monsters, destination.Biome, destination.ThreatLevel).ToList();
         var spawn = RollMonsterSpawn(monsterCandidates, destination.ThreatLevel);
         var victory = ResolveCombat(character.Level, spawn);
-        var loot = victory ? RollDrops(dropPool, 3, spawn) : new List<InventoryItem>();
+        var loot = victory ? RollDrops(dropPool, 3, spawn) : [];
 
         var battle = new Encounter
         {
@@ -84,7 +76,7 @@ public class EncounterGenerator
             Drops = loot
         };
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Character {CharacterId} encountered monster {MonsterId} at {Location} with outcome {Outcome}",
             character.Id,
             spawn.Template.Id,
@@ -117,7 +109,7 @@ public class EncounterGenerator
         var baseChance = 0.55 + (advantage * 0.07) - defensePenalty - attackPenalty;
         baseChance = Math.Clamp(baseChance, 0.2, 0.9);
 
-        var roll = _randomService.NextDouble();
+        var roll = randomService.NextDouble();
         return roll <= baseChance;
     }
 
@@ -125,15 +117,15 @@ public class EncounterGenerator
     {
         if (pool.Count == 0)
         {
-            return new List<InventoryItem>();
+            return [];
         }
-        var dropCount = _randomService.NextInt(1, Math.Max(2, maxStacks + 1));
+        var dropCount = randomService.NextInt(1, Math.Max(2, maxStacks + 1));
         var drops = new List<InventoryItem>();
 
         for (var i = 0; i < dropCount; i++)
         {
-            var dropId = pool[_randomService.NextInt(0, pool.Count)];
-            var quantity = _randomService.NextInt(1, 4);
+            var dropId = pool[randomService.NextInt(0, pool.Count)];
+            var quantity = randomService.NextInt(1, 4);
             AddOrIncrementDrop(drops, dropId, quantity);
         }
 
@@ -161,7 +153,7 @@ public class EncounterGenerator
     {
         if (dropTables.Count == 0)
         {
-            return new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+            return ["coin_pouch", "mysterious_trinket", "tattered_map"];
         }
 
         var match = dropTables.FirstOrDefault(dt => dt.Biome.Equals(biome, StringComparison.OrdinalIgnoreCase));
@@ -173,7 +165,7 @@ public class EncounterGenerator
         var fallback = dropTables.FirstOrDefault(dt => dt.Biome.Equals("Unknown", StringComparison.OrdinalIgnoreCase));
         return fallback?.Drops.Count > 0
             ? fallback.Drops
-            : new List<string> { "coin_pouch", "mysterious_trinket", "tattered_map" };
+            : ["coin_pouch", "mysterious_trinket", "tattered_map"];
     }
 
     private EncounterResolution BuildDiscovery(Character character, WorldLocationNode destination, List<string> dropPool)
@@ -188,7 +180,7 @@ public class EncounterGenerator
             Drops = discoveryDrops
         };
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Character {CharacterId} experienced discovery at {Location} with {DropCount} drops",
             character.Id,
             destination.Name,
@@ -217,21 +209,21 @@ public class EncounterGenerator
             return new MonsterSpawn(new Monster { Name = "Unknown", Biome = "Unknown" }, 1, 5, 1, 0, 1);
         }
 
-        var choice = monsterList[_randomService.NextInt(0, monsterList.Count)];
+        var choice = monsterList[randomService.NextInt(0, monsterList.Count)];
         var (minThreatLevel, maxThreatLevel) = ThreatLevelRanges.GetValueOrDefault(threatLevel.ToLowerInvariant(), (1, 6));
 
         int RollInRange(MonsterStatRange range, int defaultMin)
         {
             var min = Math.Max(range.Min, defaultMin);
             var max = Math.Max(min, range.Max);
-            return _randomService.NextInt(min, max + 1);
+            return randomService.NextInt(min, max + 1);
         }
 
         var level = Math.Clamp(RollInRange(choice.LevelRange, 1), minThreatLevel, maxThreatLevel);
         var hp = RollInRange(choice.HitPointRange, level * 3);
         var attack = RollInRange(choice.AttackRange, Math.Max(1, level - 1));
         var defense = RollInRange(choice.DefenseRange, Math.Max(0, level / 2));
-        var coins = (int)Math.Round(RollInRange(choice.CoinDropRange, level) * (0.75 + _randomService.NextDouble() * 0.5));
+        var coins = (int)Math.Round(RollInRange(choice.CoinDropRange, level) * (0.75 + randomService.NextDouble() * 0.5));
 
         return new MonsterSpawn(choice, level, hp, attack, defense, Math.Max(coins, 0));
     }

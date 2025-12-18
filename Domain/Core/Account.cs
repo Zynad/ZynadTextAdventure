@@ -9,5 +9,5 @@ public class Account
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string PasswordSalt { get; set; } = string.Empty;
-    public List<SessionToken> Sessions { get; set; } = new();
+    public List<SessionToken> Sessions { get; set; } = [];
 }

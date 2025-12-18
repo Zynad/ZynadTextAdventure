@@ -7,21 +7,14 @@ using TextAdventure.Api.Extensions;
 
 namespace TextAdventure.Api.Authentication;
 
-public class SessionTokenAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class SessionTokenAuthenticationHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder,
+    ISystemClock clock,
+    GetCurrentUserHandler getCurrentUserHandler)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder, clock)
 {
-    private readonly GetCurrentUserHandler _getCurrentUserHandler;
-
-    public SessionTokenAuthenticationHandler(
-        IOptionsMonitor<AuthenticationSchemeOptions> options,
-        ILoggerFactory logger,
-        UrlEncoder encoder,
-        ISystemClock clock,
-        GetCurrentUserHandler getCurrentUserHandler)
-        : base(options, logger, encoder, clock)
-    {
-        _getCurrentUserHandler = getCurrentUserHandler;
-    }
-
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         var token = Request.GetAccessToken();
@@ -30,7 +23,7 @@ public class SessionTokenAuthenticationHandler : AuthenticationHandler<Authentic
             return AuthenticateResult.NoResult();
         }
 
-        var result = await _getCurrentUserHandler.HandleAsync(token, Context.RequestAborted);
+        var result = await getCurrentUserHandler.HandleAsync(token, Context.RequestAborted);
         if (!result.Success || result.User is null)
         {
             return AuthenticateResult.Fail(result.Error ?? "Invalid token");
