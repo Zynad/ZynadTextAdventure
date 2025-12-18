@@ -1,51 +1,71 @@
-﻿using Domain.Contexts;
+using Domain.Database;
+using Domain.Entities.Items.Models;
+using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Repos;
 
-public abstract class BaseRepo<TEntity> where TEntity : class
+public abstract class BaseRepo<TEntity> where TEntity : ItemsBaseEntity
 {
-    private readonly DataContext _context;
+    private readonly IGameDatabase _database;
+    private readonly Func<DatabaseModel, List<TEntity>> _setAccessor;
 
-    public BaseRepo(DataContext context)
+    protected BaseRepo(IGameDatabase database, Func<DatabaseModel, List<TEntity>> setAccessor)
     {
-        _context = context;
+        _database = database;
+        _setAccessor = setAccessor;
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity)
     {
-        _context.Set<TEntity>().Add(entity);
-        await _context.SaveChangesAsync();
+        var databaseModel = await _database.ReadAsync();
+        _setAccessor(databaseModel).Add(entity);
+        await _database.WriteAsync(databaseModel);
 
         return entity;
     }
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        return await _context.Set<TEntity>().ToListAsync() ?? [];
+        var databaseModel = await _database.ReadAsync();
+        return _setAccessor(databaseModel).ToList();
     }
 
     public virtual async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate) ?? null!;
+        var databaseModel = await _database.ReadAsync();
+        return _setAccessor(databaseModel).AsQueryable().FirstOrDefault(predicate) ?? null!;
     }
 
     public virtual async Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate)
     {
-        return await _context.Set<TEntity>().Where(predicate).ToListAsync() ?? [];
+        var databaseModel = await _database.ReadAsync();
+        return _setAccessor(databaseModel).AsQueryable().Where(predicate).ToList();
     }
 
     public virtual async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        _context.Set<TEntity>().Update(entity);
-        await _context.SaveChangesAsync();
+        var databaseModel = await _database.ReadAsync();
+        var set = _setAccessor(databaseModel);
+        var index = set.FindIndex(e => e.Id == entity.Id);
+        if (index >= 0)
+        {
+            set[index] = entity;
+        }
+        else
+        {
+            set.Add(entity);
+        }
+
+        await _database.WriteAsync(databaseModel);
         return entity;
     }
+
     public virtual async Task DeleteAsync(TEntity entity)
     {
-        _context.Set<TEntity>().Remove(entity);
-        await _context.SaveChangesAsync();
+        var databaseModel = await _database.ReadAsync();
+        var set = _setAccessor(databaseModel);
+        set.RemoveAll(e => e.Id == entity.Id);
+        await _database.WriteAsync(databaseModel);
     }
 }
-

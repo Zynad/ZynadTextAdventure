@@ -1,12 +1,10 @@
-﻿using Domain.Contexts;
+using Domain.Database;
 using Domain.Entities.Weapons.Models;
 
 namespace Domain.Repos.Weapons;
-
 public class WandRepository : BaseRepo<WandEntity>, IWandRepository
 {
-    public WandRepository(DataContext context) : base(context)
+    public WandRepository(IGameDatabase database) : base(database, db => db.Wands)
     {
     }
 }
-

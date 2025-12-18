@@ -1,8 +1,9 @@
-﻿using System.Linq.Expressions;
+using Domain.Entities.Items.Models;
+using System.Linq.Expressions;
 
 namespace Domain.Repos;
 
-public interface IBaseRepo<TEntity> where TEntity : class
+public interface IBaseRepo<TEntity> where TEntity : ItemsBaseEntity
 {
     Task<TEntity> AddAsync(TEntity entity);
     Task<IEnumerable<TEntity>> GetAllAsync();
@@ -11,4 +12,3 @@ public interface IBaseRepo<TEntity> where TEntity : class
     Task<TEntity> UpdateAsync(TEntity entity);
     Task DeleteAsync(TEntity entity);
 }
-
