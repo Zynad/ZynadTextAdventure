@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Shouldly;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TextAdventure.Infrastructure.Configuration;
 using TextAdventure.Infrastructure.Repositories;
 
@@ -108,6 +110,34 @@ public class JsonRepositoryIntegrationTests : IDisposable
 
         var monsters = await _worldRepository.GetMonstersAsync();
         monsters.ShouldContain(m => m.Id == "road_bandit");
+    }
+
+    [Fact]
+    public async Task UserRepository_ReadsCamelCaseSerializedAccounts()
+    {
+        var camelCaseAccount = new Account
+        {
+            Username = "camel_user",
+            Email = "camel@example.com",
+            PasswordHash = "hash",
+            PasswordSalt = "salt"
+        };
+
+        var serializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+        await using (var stream = File.Create(Path.Combine(_tempDataDirectory, "accounts.json")))
+        {
+            await JsonSerializer.SerializeAsync(stream, new List<Account> { camelCaseAccount }, serializerOptions);
+        }
+
+        var account = await _userRepository.GetByUsernameAsync(camelCaseAccount.Username);
+
+        account.ShouldNotBeNull();
+        account!.Email.ShouldBe(camelCaseAccount.Email);
     }
 
     public void Dispose()

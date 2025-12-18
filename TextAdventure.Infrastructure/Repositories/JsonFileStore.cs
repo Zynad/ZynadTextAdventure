@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -30,8 +31,11 @@ internal class JsonFileStore<T>
         _serializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
+
+        _serializerOptions.Converters.Add(new JsonStringEnumConverter());
 
         var basePath = string.IsNullOrWhiteSpace(environment.ContentRootPath)
             ? AppContext.BaseDirectory
