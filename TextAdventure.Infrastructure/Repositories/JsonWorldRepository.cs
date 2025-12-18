@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
 using Domain.ValueObjects;
@@ -6,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TextAdventure.Infrastructure.Configuration;
+using Domain.Database;
 using TextAdventure.Infrastructure.Storage.Mappers;
 using TextAdventure.Infrastructure.Storage.Models;
 
@@ -241,97 +241,7 @@ public class JsonWorldRepository(
         ];
     }
 
-    private static List<Town> CreateDefaultTowns()
-    {
-        return
-        [
-            new()
-            {
-                Name = "Emberbrook",
-                VendorInventory =
-                [
-                    new() { ItemId = "loaf_of_bread", BuyPrice = 2.0m, SellPrice = 1.0m },
-                    new() { ItemId = "whetstone", BuyPrice = 8.0m, SellPrice = 3.0m },
-                    new() { ItemId = "leather_cap", BuyPrice = 12.0m, SellPrice = 5.0m },
-                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
-                    new() { ItemId = "minor_healing_potion", BuyPrice = 14.0m, SellPrice = 6.0m }
-                ],
-                Npcs =
-                [
-                    BuildNpc("Emberbrook", "emberbrook_mayor", "Mayor Thale", "Mayor", "Earnest",
-                        roleType: NpcRoleType.QuestGiver),
-
-                    BuildNpc("Emberbrook", "emberbrook_farmer", "Rhea Grainley", "Farmer", "Cheerful"),
-                    BuildNpc("Emberbrook", "emberbrook_barkeep", "Joren Kask", "Barkeep", "Wry", true)
-                ]
-            },
-
-            new()
-            {
-                Name = "Mosslight",
-                VendorInventory =
-                [
-                    new() { ItemId = "forest_tokens", BuyPrice = 5.0m, SellPrice = 2.0m },
-                    new() { ItemId = "travel_rations", BuyPrice = 3.5m, SellPrice = 1.5m },
-                    new() { ItemId = "quiver_of_arrows", BuyPrice = 14.0m, SellPrice = 6.0m },
-                    new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
-                    new() { ItemId = "antidote_phial", BuyPrice = 10.0m, SellPrice = 4.0m }
-                ],
-                Npcs =
-                [
-                    BuildNpc("Mosslight", "mosslight_guard", "Ser Havel", "Guard Captain", "Stoic",
-                        roleType: NpcRoleType.Guard),
-
-                    BuildNpc("Mosslight", "mosslight_scavenger", "Fenna Willow", "Forager", "Curious",
-                        roleType: NpcRoleType.QuestGiver),
-
-                    BuildNpc("Mosslight", "mosslight_caller", "Brin Bell", "Town Crier", "Booming")
-                ]
-            },
-
-            new()
-            {
-                Name = "Stormwatch Harbor",
-                VendorInventory =
-                [
-                    new() { ItemId = "salted_fish", BuyPrice = 4.0m, SellPrice = 2.0m },
-                    new() { ItemId = "driftwood_charm", BuyPrice = 9.0m, SellPrice = 4.0m },
-                    new() { ItemId = "rope_coil", BuyPrice = 7.0m, SellPrice = 3.0m },
-                    new() { ItemId = "sailor_cloak", BuyPrice = 15.0m, SellPrice = 7.0m },
-                    new() { ItemId = "lesser_mana_potion", BuyPrice = 16.0m, SellPrice = 7.0m }
-                ],
-                Npcs =
-                [
-                    BuildNpc("Stormwatch Harbor", "stormwatch_dockmaster", "Dockmaster Leira", "Dockmaster", "Gruff",
-                        true, NpcRoleType.QuestGiver),
-
-                    BuildNpc("Stormwatch Harbor", "stormwatch_sailor", "Old Wens", "Sailor", "Storyteller"),
-                    BuildNpc("Stormwatch Harbor", "stormwatch_scrim", "Scrim", "Smuggler", "Cagey",
-                        roleType: NpcRoleType.Flavor)
-                ]
-            },
-
-            new()
-            {
-                Name = "Highridge",
-                VendorInventory =
-                [
-                    new() { ItemId = "ore_fragment", BuyPrice = 10.0m, SellPrice = 4.0m },
-                    new() { ItemId = "sturdy_leather", BuyPrice = 9.0m, SellPrice = 4.0m },
-                    new() { ItemId = "iron_ingot", BuyPrice = 18.0m, SellPrice = 8.0m },
-                    new() { ItemId = "glowing_crystal", BuyPrice = 22.0m, SellPrice = 10.0m },
-                    new() { ItemId = "iron_shield", BuyPrice = 28.0m, SellPrice = 12.0m }
-                ],
-                Npcs =
-                [
-                    BuildNpc("Highridge", "highridge_miner", "Torun Slate", "Miner", "Pragmatic"),
-                    BuildNpc("Highridge", "highridge_cook", "Elya Pike", "Cook", "Warm"),
-                    BuildNpc("Highridge", "highridge_quartermaster", "Quartermaster Hale", "Quartermaster", "Exacting",
-                        true, NpcRoleType.Vendor)
-                ]
-            }
-        ];
-    }
+    private static List<Town> CreateDefaultTowns() => DbCreateDefault.World.Towns();
 
     private static TownNpc BuildNpc(string townName, string id, string name, string role, string personality, bool isVendor = false, NpcRoleType roleType = NpcRoleType.Flavor)
     {

@@ -1,7 +1,6 @@
 ﻿using ApplicationServices.Game.Helpers;
 using ApplicationServices.Items.Equipment.Armor;
 using ApplicationServices.Items.Equipment.Weapons;
-using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
 using ApplicationServices.PlayerSettings;
 using ApplicationServices.Services.Armor;
 using ApplicationServices.Services.Weapons.WeaponServices;

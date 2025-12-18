@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationServices.Authentication;
 using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;

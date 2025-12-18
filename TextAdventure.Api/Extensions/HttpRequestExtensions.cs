@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using TextAdventure.Api.Authentication;
 
 namespace TextAdventure.Api.Extensions;

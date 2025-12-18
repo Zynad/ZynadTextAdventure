@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationServices.Characters.Dto;
 using ApplicationServices.Contracts.Repositories;
 

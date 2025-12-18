@@ -1,7 +1,6 @@
 using ApplicationServices.Characters;
 using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TextAdventure.Api.Extensions;
 

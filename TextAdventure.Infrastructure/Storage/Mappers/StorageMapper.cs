@@ -1,4 +1,3 @@
-using System.Linq;
 using Domain.Core;
 using Domain.ValueObjects;
 using TextAdventure.Infrastructure.Storage.Models;

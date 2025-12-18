@@ -2,7 +2,6 @@ using ApplicationServices.Admin.Models;
 using ApplicationServices.Authentication;
 using Domain.Database;
 using Domain.ValueObjects;
-using System.Linq;
 
 namespace ApplicationServices.Admin;
 

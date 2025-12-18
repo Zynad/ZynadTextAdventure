@@ -2,7 +2,6 @@ using Domain.Database;
 using Domain.Entities.Weapons.Models;
 using Domain.Repos.Weapons;
 using Shouldly;
-using System.Linq;
 
 namespace TextAdventureTests.Repositories;
 

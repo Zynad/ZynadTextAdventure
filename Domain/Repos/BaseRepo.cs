@@ -1,6 +1,5 @@
 using Domain.Database;
 using Domain.Entities.Items.Models;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Domain.Repos;

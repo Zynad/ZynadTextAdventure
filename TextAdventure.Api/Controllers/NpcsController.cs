@@ -1,6 +1,5 @@
 using ApplicationServices.Npc;
 using ApplicationServices.Npc.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TextAdventure.Api.Extensions;
 

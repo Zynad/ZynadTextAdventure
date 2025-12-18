@@ -1,5 +1,4 @@
-﻿using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
-using ApplicationServices.Mapping;
+﻿using ApplicationServices.Mapping;
 using Domain.Entities.Weapons.Models;
 
 namespace ApplicationServices.Items.Equipment.Weapons;

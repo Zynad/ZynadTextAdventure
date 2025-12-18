@@ -1,7 +1,5 @@
-using System.Linq;
 using ApplicationServices.Authentication;
 using ApplicationServices.Characters;
-using ApplicationServices.Characters.Dto;
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
 using ApplicationServices.Npc.Models;

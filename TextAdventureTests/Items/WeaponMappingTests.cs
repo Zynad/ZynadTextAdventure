@@ -2,7 +2,6 @@ using ApplicationServices.Items.Equipment.Weapons.BaseWeapons;
 using Domain.Entities.Weapons.Models;
 using Domain.Enums;
 using Shouldly;
-using Xunit;
 
 namespace TextAdventureTests.Items;
 

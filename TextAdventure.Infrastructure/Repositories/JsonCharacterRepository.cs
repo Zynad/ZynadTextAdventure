@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
 using Microsoft.Extensions.Hosting;

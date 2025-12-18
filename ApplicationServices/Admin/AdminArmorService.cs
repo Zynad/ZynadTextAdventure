@@ -3,7 +3,6 @@ using ApplicationServices.Authentication;
 using Domain.Entities.Armor.Models;
 using Domain.Repos;
 using Domain.Repos.Armor;
-using System.Linq;
 
 namespace ApplicationServices.Admin;
 

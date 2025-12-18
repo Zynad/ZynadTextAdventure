@@ -1,7 +1,6 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TextAdventure.Api.Extensions;
 

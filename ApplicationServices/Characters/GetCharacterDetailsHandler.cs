@@ -1,5 +1,4 @@
 using ApplicationServices.Authentication;
-using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 

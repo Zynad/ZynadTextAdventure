@@ -1,6 +1,5 @@
 using Domain.Core;
 using Domain.ValueObjects;
-using Domain.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;

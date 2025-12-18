@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
 using ApplicationServices.Authentication;

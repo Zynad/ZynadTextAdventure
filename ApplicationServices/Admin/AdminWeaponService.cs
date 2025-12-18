@@ -4,7 +4,6 @@ using Domain.Entities.Weapons.Models;
 using Domain.Enums;
 using Domain.Repos;
 using Domain.Repos.Weapons;
-using System.Linq;
 
 namespace ApplicationServices.Admin;
 

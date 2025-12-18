@@ -1,6 +1,5 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Contracts.Services;
-using System.Linq;
 using Shouldly;
 
 namespace TextAdventureTests.Adventure;

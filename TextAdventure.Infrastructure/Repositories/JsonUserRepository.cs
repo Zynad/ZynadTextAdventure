@@ -1,6 +1,5 @@
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
-using Domain.ValueObjects;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

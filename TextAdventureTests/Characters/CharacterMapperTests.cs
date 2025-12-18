@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using ApplicationServices.Characters;
-using ApplicationServices.Characters.Dto;
 using Domain.Core;
 using Domain.ValueObjects;
 using Shouldly;
