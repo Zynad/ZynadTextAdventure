@@ -54,6 +54,35 @@ public class JsonDatabaseSerializationTests : IDisposable
         result.Monsters.ShouldContain(m => m.Name == databaseModel.Monsters.First().Name);
     }
 
+    [Fact]
+    public async Task ReadAsync_SeedsDefaultEquipment_WhenFileMissing()
+    {
+        var result = await _database.ReadAsync();
+
+        result.Helmets.ShouldNotBeEmpty();
+        result.Gloves.ShouldNotBeEmpty();
+        result.Chests.ShouldNotBeEmpty();
+        result.Legs.ShouldNotBeEmpty();
+        result.Boots.ShouldNotBeEmpty();
+        result.Swords.ShouldNotBeEmpty();
+        result.Axes.ShouldNotBeEmpty();
+        result.Wands.ShouldNotBeEmpty();
+        result.Staff.ShouldNotBeEmpty();
+    }
+
+    [Fact]
+    public async Task ReadAsync_RecreatesDefaults_WhenJsonMalformed()
+    {
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, "database.json"), "{ invalid json }");
+
+        var result = await _database.ReadAsync();
+
+        result.Monsters.ShouldNotBeEmpty();
+        result.Helmets.ShouldContain(h => h.Name == "Leather Hood");
+        result.Swords.ShouldContain(s => s.Name == "Steel Longsword");
+        result.Wands.ShouldContain(w => w.Name == "Apprentice Wand");
+    }
+
     public void Dispose()
     {
         try

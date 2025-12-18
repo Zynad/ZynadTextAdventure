@@ -1,6 +1,7 @@
 using Domain.Entities.Armor.Models;
 using Domain.ValueObjects;
 using Domain.Entities.Weapons.Models;
+using Domain.Enums;
 
 namespace Domain.Database;
 
@@ -34,6 +35,15 @@ public class DatabaseModel
     {
         var database = new DatabaseModel();
         database.Monsters.AddRange(CreateDefaultMonsters());
+        database.Helmets.AddRange(CreateDefaultHelmets());
+        database.Gloves.AddRange(CreateDefaultGloves());
+        database.Chests.AddRange(CreateDefaultChests());
+        database.Legs.AddRange(CreateDefaultLegs());
+        database.Boots.AddRange(CreateDefaultBoots());
+        database.Swords.AddRange(CreateDefaultSwords());
+        database.Axes.AddRange(CreateDefaultAxes());
+        database.Wands.AddRange(CreateDefaultWands());
+        database.Staff.AddRange(CreateDefaultStaff());
         return database;
     }
 
@@ -80,6 +90,201 @@ public class DatabaseModel
                 Level = 4,
                 HitPoints = 42,
                 AttackPower = 10
+            }
+        };
+    }
+
+    public static IEnumerable<HelmetEntity> CreateDefaultHelmets()
+    {
+        return new List<HelmetEntity>
+        {
+            new()
+            {
+                Name = "Leather Hood",
+                LevelRequirement = 1,
+                Rarity = RarityEntity.Common,
+                Value = 15,
+                Weight = 2,
+                Durability = 30,
+                Material = ArmorMaterialEntity.Leather,
+                PhysicalDefense = 3,
+                MagicResistance = 1
+            }
+        };
+    }
+
+    public static IEnumerable<GlovesEntity> CreateDefaultGloves()
+    {
+        return new List<GlovesEntity>
+        {
+            new()
+            {
+                Name = "Scout's Wraps",
+                LevelRequirement = 1,
+                Rarity = RarityEntity.Common,
+                Value = 12,
+                Weight = 1,
+                Durability = 25,
+                Material = ArmorMaterialEntity.Leather,
+                PhysicalDefense = 2,
+                MagicResistance = 1
+            }
+        };
+    }
+
+    public static IEnumerable<ChestEntity> CreateDefaultChests()
+    {
+        return new List<ChestEntity>
+        {
+            new()
+            {
+                Name = "Ranger's Vest",
+                LevelRequirement = 2,
+                Rarity = RarityEntity.Uncommon,
+                Value = 45,
+                Weight = 5,
+                Durability = 60,
+                Material = ArmorMaterialEntity.Leather,
+                PhysicalDefense = 8,
+                MagicResistance = 3
+            }
+        };
+    }
+
+    public static IEnumerable<LegsEntity> CreateDefaultLegs()
+    {
+        return new List<LegsEntity>
+        {
+            new()
+            {
+                Name = "Hardened Greaves",
+                LevelRequirement = 3,
+                Rarity = RarityEntity.Uncommon,
+                Value = 60,
+                Weight = 6,
+                Durability = 70,
+                Material = ArmorMaterialEntity.Scale,
+                PhysicalDefense = 10,
+                MagicResistance = 4
+            }
+        };
+    }
+
+    public static IEnumerable<BootsEntity> CreateDefaultBoots()
+    {
+        return new List<BootsEntity>
+        {
+            new()
+            {
+                Name = "Traveler's Boots",
+                LevelRequirement = 1,
+                Rarity = RarityEntity.Common,
+                Value = 18,
+                Weight = 2,
+                Durability = 35,
+                Material = ArmorMaterialEntity.Leather,
+                PhysicalDefense = 3,
+                MagicResistance = 1
+            }
+        };
+    }
+
+    public static IEnumerable<SwordEntity> CreateDefaultSwords()
+    {
+        return new List<SwordEntity>
+        {
+            new()
+            {
+                Name = "Steel Longsword",
+                LevelRequirement = 2,
+                Rarity = RarityEntity.Common,
+                Value = 70,
+                Weight = 7,
+                Durability = 65,
+                Material = WeaponMaterialEntity.Steel,
+                WeaponType = WeaponTypeEntity.Sword,
+                MeleeAttackValue = 9,
+                RangedAttackValue = 0,
+                MagicAttackValue = 0,
+                IsRanged = false,
+                TwoHanded = false,
+                Range = 1,
+                MagicPower = 0
+            }
+        };
+    }
+
+    public static IEnumerable<AxeEntity> CreateDefaultAxes()
+    {
+        return new List<AxeEntity>
+        {
+            new()
+            {
+                Name = "Woodcutter's Axe",
+                LevelRequirement = 1,
+                Rarity = RarityEntity.Common,
+                Value = 55,
+                Weight = 8,
+                Durability = 55,
+                Material = WeaponMaterialEntity.Iron,
+                WeaponType = WeaponTypeEntity.Axe,
+                MeleeAttackValue = 10,
+                RangedAttackValue = 0,
+                MagicAttackValue = 0,
+                IsRanged = false,
+                TwoHanded = true,
+                Range = 1,
+                MagicPower = 0
+            }
+        };
+    }
+
+    public static IEnumerable<WandEntity> CreateDefaultWands()
+    {
+        return new List<WandEntity>
+        {
+            new()
+            {
+                Name = "Apprentice Wand",
+                LevelRequirement = 1,
+                Rarity = RarityEntity.Common,
+                Value = 40,
+                Weight = 1,
+                Durability = 40,
+                Material = WeaponMaterialEntity.Wood,
+                WeaponType = WeaponTypeEntity.Wand,
+                MeleeAttackValue = 1,
+                RangedAttackValue = 0,
+                MagicAttackValue = 6,
+                IsRanged = true,
+                TwoHanded = false,
+                Range = 4,
+                MagicPower = 8
+            }
+        };
+    }
+
+    public static IEnumerable<StaffEntity> CreateDefaultStaff()
+    {
+        return new List<StaffEntity>
+        {
+            new()
+            {
+                Name = "Elderwood Staff",
+                LevelRequirement = 3,
+                Rarity = RarityEntity.Uncommon,
+                Value = 90,
+                Weight = 4,
+                Durability = 70,
+                Material = WeaponMaterialEntity.Wood,
+                WeaponType = WeaponTypeEntity.Staff,
+                MeleeAttackValue = 4,
+                RangedAttackValue = 0,
+                MagicAttackValue = 10,
+                IsRanged = true,
+                TwoHanded = true,
+                Range = 5,
+                MagicPower = 12
             }
         };
     }
