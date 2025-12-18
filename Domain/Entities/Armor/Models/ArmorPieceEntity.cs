@@ -6,6 +6,7 @@ namespace Domain.Entities.Armor.Models;
 public class ArmorPieceEntity : EquipmentBaseEntity
 {
     public ArmorMaterialEntity Material { get; set; }
-    public int ArmorValue { get; set; }
+    public int PhysicalDefense { get; set; }
+    public int MagicResistance { get; set; }
 }
 

@@ -8,6 +8,7 @@ public enum WeaponMaterial
     Steel,
     Silver,
     Gold,
-    Diamond
+    Diamond,
+    Adamantium
 }
 

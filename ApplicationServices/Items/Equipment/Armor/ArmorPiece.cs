@@ -3,5 +3,6 @@
 public abstract class ArmorPiece : EquipmentBase
 {
     public ArmorMaterial Material { get; set; }
-    public int ArmorValue { get; set; }
+    public int PhysicalDefense { get; set; }
+    public int MagicResistance { get; set; }
 }
