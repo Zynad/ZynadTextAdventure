@@ -66,6 +66,8 @@ public class QuestFlowTests
         {
             Id = "help_the_blacksmith",
             CompletionLocationId = "emberbrook_square",
+            ExperienceReward = 220,
+            CoinReward = 40,
             RewardItems = [new() { ItemId = "tempered_sword", Quantity = 1 }]
         };
         _quests.Add(quest);
@@ -82,6 +84,52 @@ public class QuestFlowTests
         result.Success.ShouldBeTrue();
         character.QuestStates.ShouldContain(q => q.QuestId == quest.Id && q.Status == QuestProgressStatus.Completed);
         character.Inventory.ShouldContain(i => i.ItemId == "tempered_sword" && i.Quantity == 1);
+        character.Experience.ShouldBe(quest.ExperienceReward);
+        character.Coins.ShouldBe(20 + quest.CoinReward);
+    }
+
+    [Fact]
+    public async Task TravelToLocation_AppliesEncounterRewards()
+    {
+        var token = await RegisterUserAsync();
+        var character = await CreateCharacterAsync(token, "Emberbrook Gate");
+
+        var monster = new Monster
+        {
+            Id = "ember_wolf",
+            Name = "Ember Wolf",
+            Biome = "Village",
+            LevelRange = new MonsterStatRange { Min = 1, Max = 2 },
+            HitPointRange = new MonsterStatRange { Min = 6, Max = 8 },
+            AttackRange = new MonsterStatRange { Min = 1, Max = 2 },
+            DefenseRange = new MonsterStatRange { Min = 0, Max = 1 },
+            CoinDropRange = new MonsterStatRange { Min = 2, Max = 2 },
+            PreferredThreatLevels = ["Low"]
+        };
+
+        _world.Monsters.Add(monster);
+        _world.DropTables.Add(new DropTable { Biome = "Village", Drops = ["wolf_pelt"] });
+
+        var random = new FixedRandomService();
+        var encounterGenerator = new EncounterGenerator(random, _world, NullLogger<EncounterGenerator>.Instance);
+        var handler = new TravelToLocationHandler(
+            _currentUserHandler,
+            _characters,
+            _world,
+            encounterGenerator,
+            NullLogger<TravelToLocationHandler>.Instance);
+
+        var result = await handler.HandleAsync(token, new TravelRequest
+        {
+            CharacterId = character.Id,
+            DestinationId = "emberbrook_square"
+        });
+
+        result.Success.ShouldBeTrue();
+        character.Experience.ShouldBeGreaterThan(0);
+        character.Coins.ShouldBeGreaterThan(20);
+        character.Inventory.ShouldContain(i => i.ItemId == "wolf_pelt");
+        character.EncounterLog.ShouldNotBeEmpty();
     }
 
     private async Task<Character> CreateCharacterAsync(string token, string locationName)
@@ -114,6 +162,15 @@ public class QuestFlowTests
         var token = _authService.CreateSessionToken(account.Id);
         await _sessions.AddAsync(token);
         return token.Token;
+    }
+
+    private sealed class FixedRandomService : IRandomService
+    {
+        public int NextInt(int minInclusive, int maxExclusive) => minInclusive;
+
+        public double NextDouble() => 0.1;
+
+        public byte[] GetBytes(int length) => Enumerable.Repeat((byte)1, length).ToArray();
     }
 
     private class InMemoryQuestRepository : IQuestRepository
@@ -266,6 +323,9 @@ public class QuestFlowTests
 
     private class InMemoryWorldRepository : IWorldRepository
     {
+        public List<Monster> Monsters { get; } = [];
+        public List<DropTable> DropTables { get; } = [];
+
         private readonly IReadOnlyCollection<WorldLocationNode> _locations = new List<WorldLocationNode>
         {
             new()
@@ -274,7 +334,7 @@ public class QuestFlowTests
                 Name = "Emberbrook Gate",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = []
+                AdjacentLocationIds = ["emberbrook_square"]
             },
             new()
             {
@@ -282,13 +342,13 @@ public class QuestFlowTests
                 Name = "Emberbrook Square",
                 Biome = "Village",
                 ThreatLevel = "Low",
-                AdjacentLocationIds = []
+                AdjacentLocationIds = ["emberbrook_gate"]
             }
         };
 
         public Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<IReadOnlyCollection<Monster>>([]);
+            return Task.FromResult((IReadOnlyCollection<Monster>)Monsters);
         }
 
         public Task<IReadOnlyCollection<CharacterPreset>> GetCharacterPresetsAsync(CancellationToken cancellationToken = default)
@@ -312,7 +372,7 @@ public class QuestFlowTests
 
         public Task<IReadOnlyCollection<DropTable>> GetDropTablesAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<IReadOnlyCollection<DropTable>>([]);
+            return Task.FromResult((IReadOnlyCollection<DropTable>)DropTables);
         }
 
         public Task<IReadOnlyCollection<WorldLocationNode>> GetLocationsAsync(CancellationToken cancellationToken = default)

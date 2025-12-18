@@ -15,5 +15,11 @@ public class Quest
 
     public List<string> PrerequisiteQuestIds { get; set; } = [];
 
+    public int ExperienceReward { get; set; }
+        = 0;
+
+    public int CoinReward { get; set; }
+        = 0;
+
     public List<InventoryItem> RewardItems { get; set; } = [];
 }

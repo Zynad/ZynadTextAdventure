@@ -93,6 +93,11 @@ public class TravelToLocationHandler(
     {
         foreach (var drop in resolution.Loot)
         {
+            if (drop.ItemId.Equals("coins", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
             var existing = character.Inventory.FirstOrDefault(i =>
                 i.ItemId.Equals(drop.ItemId, StringComparison.OrdinalIgnoreCase));
 
@@ -104,6 +109,16 @@ public class TravelToLocationHandler(
             {
                 existing.Quantity += drop.Quantity;
             }
+        }
+
+        if (resolution.Experience > 0)
+        {
+            character.Experience += resolution.Experience;
+        }
+
+        if (resolution.Coins > 0)
+        {
+            character.Coins += resolution.Coins;
         }
 
         character.EncounterLog.Add(resolution.Encounter);

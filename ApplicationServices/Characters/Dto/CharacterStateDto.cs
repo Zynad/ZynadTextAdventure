@@ -7,6 +7,7 @@ public record CharacterStateDto(
     Guid Id,
     string Name,
     int Level,
+    int Experience,
     string ClassName,
     CharacterStats Stats,
     decimal Coins,

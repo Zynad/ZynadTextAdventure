@@ -74,6 +74,16 @@ public class CompleteQuestHandler(
         questState.Status = QuestProgressStatus.Completed;
         questState.UpdatedAt = DateTimeOffset.UtcNow;
 
+        if (quest.ExperienceReward > 0)
+        {
+            character.Experience += quest.ExperienceReward;
+        }
+
+        if (quest.CoinReward > 0)
+        {
+            character.Coins += quest.CoinReward;
+        }
+
         if (quest.RewardItems.Any())
         {
             GrantRewards(character, quest.RewardItems);

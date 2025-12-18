@@ -109,6 +109,8 @@ public class DataSchemaTests
 
             quest.RewardItems.Count.ShouldBeGreaterThan(0);
             quest.RewardItems.ShouldAllBe(r => !string.IsNullOrWhiteSpace(r.ItemId) && r.Quantity > 0);
+            quest.ExperienceReward.ShouldBeGreaterThanOrEqualTo(0);
+            quest.CoinReward.ShouldBeGreaterThanOrEqualTo(0);
         }
     }
 

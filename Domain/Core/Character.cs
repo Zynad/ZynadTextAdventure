@@ -10,6 +10,8 @@ public class Character
     public string PresetId { get; set; } = string.Empty;
     public string ClassName { get; set; } = string.Empty;
     public int Level { get; set; } = 1;
+    public int Experience { get; set; }
+        = 0;
     public decimal Coins { get; set; } = 20;
     public CharacterStats Stats { get; set; } = CharacterStats.Default();
     public WorldLocation Location { get; set; } = WorldLocation.Default();

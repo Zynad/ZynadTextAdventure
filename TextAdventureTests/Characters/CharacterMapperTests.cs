@@ -66,6 +66,7 @@ public class CharacterMapperTests
             Id = Guid.NewGuid(),
             Name = "Traveler",
             ClassName = "Rogue",
+            Experience = 75,
             Stats = new CharacterStats { Combat = 1, Stealth = 2, Pickpocket = 3 },
             Coins = 10,
             Location = new WorldLocation { Name = "Town" },
@@ -79,6 +80,7 @@ public class CharacterMapperTests
 
         dto.Id.ShouldBe(character.Id);
         dto.ClassName.ShouldBe("Rogue");
+        dto.Experience.ShouldBe(75);
         dto.QuestLog.ShouldHaveSingleItem().QuestId.ShouldBe("quest1");
         dto.Encounters.Count.ShouldBe(10);
         dto.Encounters.First().Drops.First().ItemId.ShouldBe("loot_0");

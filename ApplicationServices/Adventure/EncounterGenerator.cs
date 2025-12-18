@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationServices.Adventure;
 
-public record EncounterResolution(Encounter Encounter, IReadOnlyCollection<InventoryItem> Loot);
+public record EncounterResolution(Encounter Encounter, IReadOnlyCollection<InventoryItem> Loot, int Experience, int Coins);
 public record MonsterSpawn(Monster Template, int Level, int HitPoints, int Attack, int Defense, int Coins);
 
 public class EncounterGenerator(
@@ -65,6 +65,8 @@ public class EncounterGenerator(
         var spawn = RollMonsterSpawn(monsterCandidates, destination.ThreatLevel);
         var victory = ResolveCombat(character.Level, spawn);
         var loot = victory ? RollDrops(dropPool, 3, spawn) : [];
+        var experience = CalculateExperienceReward(spawn, victory);
+        var coins = loot.FirstOrDefault(l => l.ItemId.Equals("coins", StringComparison.OrdinalIgnoreCase))?.Quantity ?? 0;
 
         var battle = new Encounter
         {
@@ -83,7 +85,7 @@ public class EncounterGenerator(
             destination.Name,
             battle.Outcome);
 
-        return new EncounterResolution(battle, loot);
+        return new EncounterResolution(battle, loot, experience, coins);
     }
 
     private double CalculateEncounterChance(string threatLevel)
@@ -129,7 +131,7 @@ public class EncounterGenerator(
             AddOrIncrementDrop(drops, dropId, quantity);
         }
 
-        if (spawn is not null && spawn.Coins > 0)
+        if (spawn is not null && spawn.Coins > 0 && randomService.NextDouble() <= 0.65)
         {
             AddOrIncrementDrop(drops, "coins", spawn.Coins);
         }
@@ -186,7 +188,21 @@ public class EncounterGenerator(
             destination.Name,
             discoveryDrops.Count);
 
-        return new EncounterResolution(discovery, discoveryDrops);
+        return new EncounterResolution(discovery, discoveryDrops, 0, 0);
+    }
+
+    private static int CalculateExperienceReward(MonsterSpawn spawn, bool victory)
+    {
+        if (!victory)
+        {
+            return 0;
+        }
+
+        var baseExperience = Math.Max(10, spawn.Level * 8);
+        var defenseFactor = Math.Max(0, spawn.Defense - 2) * 2;
+        var attackFactor = Math.Max(0, spawn.Attack - 3) * 2;
+
+        return baseExperience + defenseFactor + attackFactor;
     }
 
     private IEnumerable<Monster> FilterMonsters(IEnumerable<Monster> monsters, string biome, string threatLevel)
