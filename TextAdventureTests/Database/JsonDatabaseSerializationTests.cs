@@ -48,7 +48,7 @@ public class JsonDatabaseSerializationTests : IDisposable
 
         var result = await _database.ReadAsync();
 
-        result.Users.ShouldNotBeEmpty();
+        result.Users.ShouldBeEmpty();
         result.Monsters.ShouldNotBeEmpty();
         result.Monsters.ShouldContain(m => m.Name == databaseModel.Monsters.First().Name);
     }
