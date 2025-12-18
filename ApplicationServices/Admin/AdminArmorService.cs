@@ -132,7 +132,7 @@ public class AdminArmorService : IAdminArmorService
 
     private static ArmorPieceEntity ToEntity(ArmorPieceDto dto)
     {
-        return dto.Slot switch
+        var entity = dto.Slot switch
         {
             ArmorSlot.Helmet => new HelmetEntity(),
             ArmorSlot.Chest => new ChestEntity(),
@@ -140,19 +140,20 @@ public class AdminArmorService : IAdminArmorService
             ArmorSlot.Legs => new LegsEntity(),
             ArmorSlot.Boots => new BootsEntity(),
             _ => new ArmorPieceEntity()
-        }
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            LevelRequirement = dto.LevelRequirement,
-            Rarity = dto.Rarity,
-            Value = dto.Value,
-            Weight = dto.Weight,
-            Durability = dto.Durability,
-            Material = dto.Material,
-            PhysicalDefense = dto.PhysicalDefense,
-            MagicResistance = dto.MagicResistance
         };
+
+        entity.Id = dto.Id;
+        entity.Name = dto.Name;
+        entity.LevelRequirement = dto.LevelRequirement;
+        entity.Rarity = dto.Rarity;
+        entity.Value = dto.Value;
+        entity.Weight = dto.Weight;
+        entity.Durability = dto.Durability;
+        entity.Material = dto.Material;
+        entity.PhysicalDefense = dto.PhysicalDefense;
+        entity.MagicResistance = dto.MagicResistance;
+
+        return entity;
     }
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)

@@ -135,32 +135,33 @@ public class AdminWeaponService : IAdminWeaponService
 
     private static WeaponBaseEntity ToEntity(WeaponDto dto)
     {
-        return dto.WeaponType switch
+        var entity = dto.WeaponType switch
         {
             WeaponTypeEntity.Wand => new WandEntity(),
             WeaponTypeEntity.Staff => new StaffEntity(),
             WeaponTypeEntity.Sword => new SwordEntity(),
             WeaponTypeEntity.Axe => new AxeEntity(),
             _ => new WeaponBaseEntity()
-        }
-        {
-            Id = dto.Id,
-            Name = dto.Name,
-            LevelRequirement = dto.LevelRequirement,
-            Rarity = dto.Rarity,
-            Value = dto.Value,
-            Weight = dto.Weight,
-            Durability = dto.Durability,
-            Material = dto.Material,
-            WeaponType = dto.WeaponType,
-            MeleeAttackValue = dto.MeleeAttackValue,
-            RangedAttackValue = dto.RangedAttackValue,
-            MagicAttackValue = dto.MagicAttackValue,
-            IsRanged = dto.IsRanged,
-            TwoHanded = dto.TwoHanded,
-            Range = dto.Range,
-            MagicPower = dto.MagicPower
         };
+
+        entity.Id = dto.Id;
+        entity.Name = dto.Name;
+        entity.LevelRequirement = dto.LevelRequirement;
+        entity.Rarity = dto.Rarity;
+        entity.Value = dto.Value;
+        entity.Weight = dto.Weight;
+        entity.Durability = dto.Durability;
+        entity.Material = dto.Material;
+        entity.WeaponType = dto.WeaponType;
+        entity.MeleeAttackValue = dto.MeleeAttackValue;
+        entity.RangedAttackValue = dto.RangedAttackValue;
+        entity.MagicAttackValue = dto.MagicAttackValue;
+        entity.IsRanged = dto.IsRanged;
+        entity.TwoHanded = dto.TwoHanded;
+        entity.Range = dto.Range;
+        entity.MagicPower = dto.MagicPower;
+
+        return entity;
     }
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)
