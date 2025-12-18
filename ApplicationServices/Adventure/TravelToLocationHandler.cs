@@ -113,7 +113,7 @@ public class TravelToLocationHandler(
 
         if (resolution.Experience > 0)
         {
-            character.Experience += resolution.Experience;
+            LevelingSystem.ApplyExperience(character, resolution.Experience);
         }
 
         if (resolution.Coins > 0)
