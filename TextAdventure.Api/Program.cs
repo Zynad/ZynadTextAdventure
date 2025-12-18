@@ -1,7 +1,9 @@
 using System.Reflection;
 using ApplicationServices.Configuration;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi;
 using Scalar.AspNetCore;
+using TextAdventure.Api.Authentication;
 using TextAdventure.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Session";
+    options.DefaultChallengeScheme = "Session";
+}).AddScheme<AuthenticationSchemeOptions, SessionTokenAuthenticationHandler>("Session", null);
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthPolicies.AuthenticatedUsers, policy => policy.RequireAuthenticatedUser());
+});
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -61,6 +72,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseCors("FrontendOrigins");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,4 +1,5 @@
 using Domain.Entities.Armor.Models;
+using Domain.Entities.Items.Models;
 using Domain.ValueObjects;
 using Domain.Entities.Weapons.Models;
 using Domain.Enums;
@@ -12,6 +13,8 @@ public class DatabaseModel
     public List<PlayerProgress> Progress { get; set; } = new();
 
     public List<MonsterProfile> Monsters { get; set; } = new();
+
+    public List<GenericItemEntity> Items { get; set; } = new();
 
     public List<WandEntity> Wands { get; set; } = new();
 
