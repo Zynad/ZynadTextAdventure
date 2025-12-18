@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Linq;
 using ApplicationServices.Admin.Models;
 using ApplicationServices.Contracts.Repositories;
+using Domain.Core;
 using Domain.Database;
 using Domain.Enums;
 using Microsoft.AspNetCore.Hosting;
@@ -117,30 +118,48 @@ public class AdminEndpointsTests
 
     private class InMemoryUserRepository : IUserRepository
     {
-        private readonly Dictionary<Guid, ApplicationServices.Contracts.Models.Account> _users = new();
+        private readonly Dictionary<Guid, Account> _users = new();
 
-        public Task AddAsync(ApplicationServices.Contracts.Models.Account account, CancellationToken cancellationToken = default)
+        public Task AddAsync(Account account, CancellationToken cancellationToken = default)
         {
             _users[account.Id] = account;
             return Task.CompletedTask;
         }
 
-        public Task<ApplicationServices.Contracts.Models.Account?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+        public Task<Account?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
         {
             var account = _users.Values.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
             return Task.FromResult(account);
         }
 
-        public Task<ApplicationServices.Contracts.Models.Account?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public Task<Account?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             _users.TryGetValue(id, out var account);
             return Task.FromResult(account);
         }
 
-        public Task<ApplicationServices.Contracts.Models.Account?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default)
+        public Task<Account?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default)
         {
             var account = _users.Values.FirstOrDefault(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
             return Task.FromResult(account);
+        }
+
+        public Task<Account?> GetBySessionTokenAsync(string token, CancellationToken cancellationToken = default)
+        {
+            var account = _users.Values.FirstOrDefault(u => u.Sessions.Any(s => s.Token == token && s.ExpiresAt > DateTimeOffset.UtcNow));
+            return Task.FromResult(account);
+        }
+
+        public Task<IReadOnlyCollection<Account>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            IReadOnlyCollection<Account> accounts = _users.Values.ToList();
+            return Task.FromResult(accounts);
+        }
+
+        public Task UpdateAsync(Account account, CancellationToken cancellationToken = default)
+        {
+            _users[account.Id] = account;
+            return Task.CompletedTask;
         }
     }
 
