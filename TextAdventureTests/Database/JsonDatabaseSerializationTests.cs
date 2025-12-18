@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using Shouldly;
+using TextAdventure.Infrastructure.Database;
 
 namespace TextAdventureTests.Database;
 

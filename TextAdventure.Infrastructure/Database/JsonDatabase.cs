@@ -1,11 +1,11 @@
 using System.Text.Json;
-using Domain.Entities.Storage;
+using System.Text.Json.Serialization;
+using Domain.Database;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Text.Json.Serialization;
 
-namespace Domain.Database;
+namespace TextAdventure.Infrastructure.Database;
 
 public class JsonDatabaseOptions
 {

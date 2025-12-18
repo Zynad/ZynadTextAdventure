@@ -14,7 +14,8 @@ The `TextAdventure.Api` project is a lightweight ASP.NET Core Web API that persi
 ### Solution layout
 - **TextAdventure.Api**: Controllers and hosting setup only. Business logic is delegated to the application layer.
 - **ApplicationServices**: Contracts and services (e.g., `GameDataService`) that orchestrate authentication, monsters, and progress.
-- **Domain**: JSON persistence (`JsonDatabase`) and data models such as `UserAccount`, `SaveSlot`, `WorldLocation`, and `MonsterProfile`.
+- **Domain**: Persistence contracts (for example, `IGameDatabase`) and data models such as `UserAccount`, `SaveSlot`, `WorldLocation`, and `MonsterProfile`.
+- **TextAdventure.Infrastructure**: JSON persistence implementations (including `JsonDatabase`), repositories, and infrastructure services.
 
 The API exposes endpoints for registration/login (`/api/auth/register`, `/api/auth/login`), fetching monsters (`/api/monsters`), and saving or loading player progress (`/api/progress/save`, `/api/progress?token=...`). Each authentication response returns a simple session token that can be used when saving or restoring progress.
 

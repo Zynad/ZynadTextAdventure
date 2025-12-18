@@ -53,7 +53,7 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
-builder.Services.AddTextAdventureGame(builder.Configuration);
+builder.Services.AddTextAdventureGame();
 builder.Services.AddTextAdventureInfrastructure(builder.Configuration);
 
 var app = builder.Build();

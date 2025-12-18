@@ -1,7 +1,9 @@
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
+using Domain.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TextAdventure.Infrastructure.Database;
 using TextAdventure.Infrastructure.Repositories;
 using TextAdventure.Infrastructure.Services;
 
@@ -13,9 +15,11 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services.Configure<DataStoreOptions>(configuration.GetSection("DataStore"));
         services.Configure<AuthOptions>(configuration.GetSection("Auth"));
+        services.Configure<JsonDatabaseOptions>(configuration.GetSection("JsonDatabase"));
 
         services.AddSingleton<FileConcurrencyProvider>();
 
+        services.AddSingleton<IGameDatabase, JsonDatabase>();
         services.AddSingleton<IUserRepository, JsonUserRepository>();
         services.AddSingleton<ISessionRepository, JsonSessionRepository>();
         services.AddSingleton<ICharacterRepository, JsonCharacterRepository>();
