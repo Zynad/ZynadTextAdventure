@@ -91,6 +91,12 @@ public class JsonDatabase : IGameDatabase
             databaseModel.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
         }
 
+        databaseModel.Items ??= [];
+        if (databaseModel.Items.Count == 0)
+        {
+            databaseModel.Items.AddRange(DatabaseModel.CreateDefaultItems());
+        }
+
         databaseModel.Helmets ??= [];
         if (databaseModel.Helmets.Count == 0)
         {

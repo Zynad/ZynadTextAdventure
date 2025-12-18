@@ -60,6 +60,7 @@ public class JsonDatabaseSerializationTests : IDisposable
         var defaults = DatabaseModel.CreateDefault();
         var result = await _database.ReadAsync();
 
+        result.Items.Count.ShouldBe(defaults.Items.Count);
         result.Helmets.Count.ShouldBe(defaults.Helmets.Count);
         result.Gloves.Count.ShouldBe(defaults.Gloves.Count);
         result.Chests.Count.ShouldBe(defaults.Chests.Count);

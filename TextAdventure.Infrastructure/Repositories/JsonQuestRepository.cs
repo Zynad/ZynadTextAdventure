@@ -1,5 +1,6 @@
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
+using Domain.Database;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -18,26 +19,26 @@ public class JsonQuestRepository(
 
     public async Task AddAsync(Quest quest, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => [], cancellationToken);
+        var quests = await ReadQuestsAsync(cancellationToken);
         quests.Add(quest);
         await _store.WriteAsync(quests, cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Quest>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => [], cancellationToken);
+        var quests = await ReadQuestsAsync(cancellationToken);
         return quests;
     }
 
     public async Task<Quest?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => [], cancellationToken);
+        var quests = await ReadQuestsAsync(cancellationToken);
         return quests.FirstOrDefault(q => string.Equals(q.Id, id, StringComparison.OrdinalIgnoreCase));
     }
 
     public async Task UpdateAsync(Quest quest, CancellationToken cancellationToken = default)
     {
-        var quests = await _store.ReadAsync(() => [], cancellationToken);
+        var quests = await ReadQuestsAsync(cancellationToken);
         var index = quests.FindIndex(q => string.Equals(q.Id, quest.Id, StringComparison.OrdinalIgnoreCase));
         if (index < 0)
         {
@@ -49,5 +50,10 @@ public class JsonQuestRepository(
         }
 
         await _store.WriteAsync(quests, cancellationToken);
+    }
+
+    private Task<List<Quest>> ReadQuestsAsync(CancellationToken cancellationToken)
+    {
+        return _store.ReadAsync(DbCreateDefault.World.Quests, cancellationToken);
     }
 }

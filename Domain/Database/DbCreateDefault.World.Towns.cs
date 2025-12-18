@@ -19,7 +19,12 @@ public static partial class DbCreateDefault
                         new() { ItemId = "whetstone", BuyPrice = 8.0m, SellPrice = 3.0m },
                         new() { ItemId = "leather_cap", BuyPrice = 12.0m, SellPrice = 5.0m },
                         new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
-                        new() { ItemId = "minor_healing_potion", BuyPrice = 14.0m, SellPrice = 6.0m }
+                        new() { ItemId = "minor_healing_potion", BuyPrice = 14.0m, SellPrice = 6.0m },
+                        new() { ItemId = "bundle_of_roots", BuyPrice = 4.0m, SellPrice = 2.0m },
+                        new() { ItemId = "travel_rations", BuyPrice = 5.0m, SellPrice = 2.0m },
+                        new() { ItemId = "torch_bundle", BuyPrice = 5.0m, SellPrice = 2.0m },
+                        new() { ItemId = "herbal_tonic", BuyPrice = 10.0m, SellPrice = 4.0m },
+                        new() { ItemId = "herbal_satchel", BuyPrice = 12.0m, SellPrice = 5.0m }
                     ],
                     Npcs =
                     [
@@ -40,7 +45,12 @@ public static partial class DbCreateDefault
                         new() { ItemId = "travel_rations", BuyPrice = 3.5m, SellPrice = 1.5m },
                         new() { ItemId = "quiver_of_arrows", BuyPrice = 14.0m, SellPrice = 6.0m },
                         new() { ItemId = "healing_herbs", BuyPrice = 6.0m, SellPrice = 3.0m },
-                        new() { ItemId = "antidote_phial", BuyPrice = 10.0m, SellPrice = 4.0m }
+                        new() { ItemId = "antidote_phial", BuyPrice = 10.0m, SellPrice = 4.0m },
+                        new() { ItemId = "sturdy_leather", BuyPrice = 9.0m, SellPrice = 4.0m },
+                        new() { ItemId = "healers_poultice", BuyPrice = 12.0m, SellPrice = 5.0m },
+                        new() { ItemId = "surveyor_map", BuyPrice = 14.0m, SellPrice = 6.0m },
+                        new() { ItemId = "wayfinder_lens", BuyPrice = 28.0m, SellPrice = 12.0m },
+                        new() { ItemId = "adventurer_toolkit", BuyPrice = 24.0m, SellPrice = 10.0m }
                     ],
                     Npcs =
                     [
@@ -63,7 +73,12 @@ public static partial class DbCreateDefault
                         new() { ItemId = "driftwood_charm", BuyPrice = 9.0m, SellPrice = 4.0m },
                         new() { ItemId = "rope_coil", BuyPrice = 7.0m, SellPrice = 3.0m },
                         new() { ItemId = "sailor_cloak", BuyPrice = 15.0m, SellPrice = 7.0m },
-                        new() { ItemId = "lesser_mana_potion", BuyPrice = 16.0m, SellPrice = 7.0m }
+                        new() { ItemId = "lesser_mana_potion", BuyPrice = 16.0m, SellPrice = 7.0m },
+                        new() { ItemId = "sailor_gloves", BuyPrice = 8.0m, SellPrice = 3.0m },
+                        new() { ItemId = "rugged_cloak", BuyPrice = 11.0m, SellPrice = 5.0m },
+                        new() { ItemId = "traveler_compass", BuyPrice = 16.0m, SellPrice = 7.0m },
+                        new() { ItemId = "surveyor_map", BuyPrice = 16.0m, SellPrice = 7.0m },
+                        new() { ItemId = "torch_bundle", BuyPrice = 5.0m, SellPrice = 2.0m }
                     ],
                     Npcs =
                     [
@@ -85,7 +100,12 @@ public static partial class DbCreateDefault
                         new() { ItemId = "sturdy_leather", BuyPrice = 9.0m, SellPrice = 4.0m },
                         new() { ItemId = "iron_ingot", BuyPrice = 18.0m, SellPrice = 8.0m },
                         new() { ItemId = "glowing_crystal", BuyPrice = 22.0m, SellPrice = 10.0m },
-                        new() { ItemId = "iron_shield", BuyPrice = 28.0m, SellPrice = 12.0m }
+                        new() { ItemId = "iron_shield", BuyPrice = 28.0m, SellPrice = 12.0m },
+                        new() { ItemId = "stonemason_chisel", BuyPrice = 10.0m, SellPrice = 4.0m },
+                        new() { ItemId = "copper_wire_coil", BuyPrice = 7.0m, SellPrice = 3.0m },
+                        new() { ItemId = "herbal_tonic", BuyPrice = 10.0m, SellPrice = 4.0m },
+                        new() { ItemId = "reinforced_pack", BuyPrice = 18.0m, SellPrice = 8.0m },
+                        new() { ItemId = "adventurer_toolkit", BuyPrice = 24.0m, SellPrice = 10.0m }
                     ],
                     Npcs =
                     [
