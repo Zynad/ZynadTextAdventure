@@ -99,6 +99,8 @@ public class CreateCharacterHandler
             character.Id,
             character.Name,
             character.Level,
+            character.Stats,
+            character.Coins,
             character.ClassName,
             character.PresetId,
             character.Location,

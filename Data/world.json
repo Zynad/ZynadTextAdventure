@@ -4,105 +4,918 @@
       {
         "Name": "Emberbrook",
         "VendorInventory": [
-          { "ItemId": "loaf_of_bread", "BuyPrice": 2.0, "SellPrice": 1.0 },
-          { "ItemId": "whetstone", "BuyPrice": 8.0, "SellPrice": 3.0 },
-          { "ItemId": "leather_cap", "BuyPrice": 12.0, "SellPrice": 5.0 },
-          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
-          { "ItemId": "minor_healing_potion", "BuyPrice": 14.0, "SellPrice": 6.0 },
-          { "ItemId": "rusted_dagger", "BuyPrice": 10.0, "SellPrice": 4.0 }
+          {
+            "ItemId": "loaf_of_bread",
+            "BuyPrice": 2.0,
+            "SellPrice": 1.0
+          },
+          {
+            "ItemId": "whetstone",
+            "BuyPrice": 8.0,
+            "SellPrice": 3.0
+          },
+          {
+            "ItemId": "leather_cap",
+            "BuyPrice": 12.0,
+            "SellPrice": 5.0
+          },
+          {
+            "ItemId": "healing_herbs",
+            "BuyPrice": 6.0,
+            "SellPrice": 3.0
+          },
+          {
+            "ItemId": "minor_healing_potion",
+            "BuyPrice": 14.0,
+            "SellPrice": 6.0
+          },
+          {
+            "ItemId": "rusted_dagger",
+            "BuyPrice": 10.0,
+            "SellPrice": 4.0
+          }
         ],
         "Npcs": [
-          { "Id": "emberbrook_mayor", "Name": "Mayor Thale", "Role": "Mayor", "Personality": "Earnest" },
-          { "Id": "emberbrook_farmer", "Name": "Rhea Grainley", "Role": "Farmer", "Personality": "Cheerful" },
-          { "Id": "emberbrook_barkeep", "Name": "Joren Kask", "Role": "Barkeep", "Personality": "Wry", "IsVendor": true }
+          {
+            "Id": "emberbrook_mayor",
+            "Name": "Mayor Thale",
+            "Role": "Mayor",
+            "Personality": "Earnest",
+            "Location": "Emberbrook",
+            "RoleType": "QuestGiver",
+            "QuestsOffered": [
+              "emberbrook_mayor_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Mayor Thale of Emberbrook.",
+                "Emberbrook welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Emberbrook.",
+                "Spare a moment? Emberbrook has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Emberbrook?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "emberbrook_farmer",
+            "Name": "Rhea Grainley",
+            "Role": "Farmer",
+            "Personality": "Cheerful",
+            "Location": "Emberbrook",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "emberbrook_farmer_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Rhea Grainley of Emberbrook.",
+                "Emberbrook welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Emberbrook.",
+                "Spare a moment? Emberbrook has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Emberbrook?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "emberbrook_barkeep",
+            "Name": "Joren Kask",
+            "Role": "Barkeep",
+            "Personality": "Wry",
+            "IsVendor": true,
+            "Location": "Emberbrook",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "emberbrook_barkeep_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Joren Kask of Emberbrook.",
+                "Emberbrook welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Emberbrook.",
+                "Spare a moment? Emberbrook has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Emberbrook?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Mosslight",
         "VendorInventory": [
-          { "ItemId": "forest_tokens", "BuyPrice": 5.0, "SellPrice": 2.0 },
-          { "ItemId": "travel_rations", "BuyPrice": 3.5, "SellPrice": 1.5 },
-          { "ItemId": "quiver_of_arrows", "BuyPrice": 14.0, "SellPrice": 6.0 },
-          { "ItemId": "healing_herbs", "BuyPrice": 6.0, "SellPrice": 3.0 },
-          { "ItemId": "antidote_phial", "BuyPrice": 10.0, "SellPrice": 4.0 },
-          { "ItemId": "hunter_hat", "BuyPrice": 15.0, "SellPrice": 7.0 }
+          {
+            "ItemId": "forest_tokens",
+            "BuyPrice": 5.0,
+            "SellPrice": 2.0
+          },
+          {
+            "ItemId": "travel_rations",
+            "BuyPrice": 3.5,
+            "SellPrice": 1.5
+          },
+          {
+            "ItemId": "quiver_of_arrows",
+            "BuyPrice": 14.0,
+            "SellPrice": 6.0
+          },
+          {
+            "ItemId": "healing_herbs",
+            "BuyPrice": 6.0,
+            "SellPrice": 3.0
+          },
+          {
+            "ItemId": "antidote_phial",
+            "BuyPrice": 10.0,
+            "SellPrice": 4.0
+          },
+          {
+            "ItemId": "hunter_hat",
+            "BuyPrice": 15.0,
+            "SellPrice": 7.0
+          }
         ],
         "Npcs": [
-          { "Id": "mosslight_guard", "Name": "Ser Havel", "Role": "Guard Captain", "Personality": "Stoic" },
-          { "Id": "mosslight_scavenger", "Name": "Fenna Willow", "Role": "Forager", "Personality": "Curious" },
-          { "Id": "mosslight_caller", "Name": "Brin Bell", "Role": "Town Crier", "Personality": "Booming" }
+          {
+            "Id": "mosslight_guard",
+            "Name": "Ser Havel",
+            "Role": "Guard Captain",
+            "Personality": "Stoic",
+            "Location": "Mosslight",
+            "RoleType": "Guard",
+            "QuestsOffered": [
+              "mosslight_guard_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Ser Havel of Mosslight.",
+                "Mosslight welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Mosslight.",
+                "Spare a moment? Mosslight has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Mosslight?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "mosslight_scavenger",
+            "Name": "Fenna Willow",
+            "Role": "Forager",
+            "Personality": "Curious",
+            "Location": "Mosslight",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "mosslight_scavenger_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Fenna Willow of Mosslight.",
+                "Mosslight welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Mosslight.",
+                "Spare a moment? Mosslight has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Mosslight?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "mosslight_caller",
+            "Name": "Brin Bell",
+            "Role": "Town Crier",
+            "Personality": "Booming",
+            "Location": "Mosslight",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "mosslight_caller_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Brin Bell of Mosslight.",
+                "Mosslight welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Mosslight.",
+                "Spare a moment? Mosslight has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Mosslight?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Stormwatch Harbor",
         "VendorInventory": [
-          { "ItemId": "salted_fish", "BuyPrice": 4.0, "SellPrice": 2.0 },
-          { "ItemId": "driftwood_charm", "BuyPrice": 9.0, "SellPrice": 4.0 },
-          { "ItemId": "rope_coil", "BuyPrice": 7.0, "SellPrice": 3.0 },
-          { "ItemId": "sailor_cloak", "BuyPrice": 15.0, "SellPrice": 7.0 },
-          { "ItemId": "sea_blade", "BuyPrice": 22.0, "SellPrice": 9.0 },
-          { "ItemId": "lesser_mana_potion", "BuyPrice": 16.0, "SellPrice": 7.0 }
+          {
+            "ItemId": "salted_fish",
+            "BuyPrice": 4.0,
+            "SellPrice": 2.0
+          },
+          {
+            "ItemId": "driftwood_charm",
+            "BuyPrice": 9.0,
+            "SellPrice": 4.0
+          },
+          {
+            "ItemId": "rope_coil",
+            "BuyPrice": 7.0,
+            "SellPrice": 3.0
+          },
+          {
+            "ItemId": "sailor_cloak",
+            "BuyPrice": 15.0,
+            "SellPrice": 7.0
+          },
+          {
+            "ItemId": "sea_blade",
+            "BuyPrice": 22.0,
+            "SellPrice": 9.0
+          },
+          {
+            "ItemId": "lesser_mana_potion",
+            "BuyPrice": 16.0,
+            "SellPrice": 7.0
+          }
         ],
         "Npcs": [
-          { "Id": "stormwatch_dockmaster", "Name": "Dockmaster Leira", "Role": "Dockmaster", "Personality": "Gruff", "IsVendor": true },
-          { "Id": "stormwatch_sailor", "Name": "Old Wens", "Role": "Sailor", "Personality": "Storyteller" },
-          { "Id": "stormwatch_scrim", "Name": "Scrim", "Role": "Smuggler", "Personality": "Cagey" }
+          {
+            "Id": "stormwatch_dockmaster",
+            "Name": "Dockmaster Leira",
+            "Role": "Dockmaster",
+            "Personality": "Gruff",
+            "IsVendor": true,
+            "Location": "Stormwatch Harbor",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "stormwatch_dockmaster_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Dockmaster Leira of Stormwatch Harbor.",
+                "Stormwatch Harbor welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Stormwatch Harbor.",
+                "Spare a moment? Stormwatch Harbor has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Stormwatch Harbor?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "stormwatch_sailor",
+            "Name": "Old Wens",
+            "Role": "Sailor",
+            "Personality": "Storyteller",
+            "Location": "Stormwatch Harbor",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "stormwatch_sailor_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Old Wens of Stormwatch Harbor.",
+                "Stormwatch Harbor welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Stormwatch Harbor.",
+                "Spare a moment? Stormwatch Harbor has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Stormwatch Harbor?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "stormwatch_scrim",
+            "Name": "Scrim",
+            "Role": "Smuggler",
+            "Personality": "Cagey",
+            "Location": "Stormwatch Harbor",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "stormwatch_scrim_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Scrim of Stormwatch Harbor.",
+                "Stormwatch Harbor welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Stormwatch Harbor.",
+                "Spare a moment? Stormwatch Harbor has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Stormwatch Harbor?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Highridge",
         "VendorInventory": [
-          { "ItemId": "ore_fragment", "BuyPrice": 10.0, "SellPrice": 4.0 },
-          { "ItemId": "sturdy_leather", "BuyPrice": 9.0, "SellPrice": 4.0 },
-          { "ItemId": "iron_ingot", "BuyPrice": 18.0, "SellPrice": 8.0 },
-          { "ItemId": "glowing_crystal", "BuyPrice": 22.0, "SellPrice": 10.0 },
-          { "ItemId": "iron_shield", "BuyPrice": 24.0, "SellPrice": 10.0 }
+          {
+            "ItemId": "ore_fragment",
+            "BuyPrice": 10.0,
+            "SellPrice": 4.0
+          },
+          {
+            "ItemId": "sturdy_leather",
+            "BuyPrice": 9.0,
+            "SellPrice": 4.0
+          },
+          {
+            "ItemId": "iron_ingot",
+            "BuyPrice": 18.0,
+            "SellPrice": 8.0
+          },
+          {
+            "ItemId": "glowing_crystal",
+            "BuyPrice": 22.0,
+            "SellPrice": 10.0
+          },
+          {
+            "ItemId": "iron_shield",
+            "BuyPrice": 24.0,
+            "SellPrice": 10.0
+          }
         ],
         "Npcs": [
-          { "Id": "highridge_miner", "Name": "Torun Slate", "Role": "Miner", "Personality": "Pragmatic" },
-          { "Id": "highridge_cook", "Name": "Elya Pike", "Role": "Cook", "Personality": "Warm" },
-          { "Id": "highridge_quartermaster", "Name": "Quartermaster Hale", "Role": "Quartermaster", "Personality": "Exacting", "IsVendor": true }
+          {
+            "Id": "highridge_miner",
+            "Name": "Torun Slate",
+            "Role": "Miner",
+            "Personality": "Pragmatic",
+            "Location": "Highridge",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "highridge_miner_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Torun Slate of Highridge.",
+                "Highridge welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Highridge.",
+                "Spare a moment? Highridge has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Highridge?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "highridge_cook",
+            "Name": "Elya Pike",
+            "Role": "Cook",
+            "Personality": "Warm",
+            "Location": "Highridge",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "highridge_cook_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Elya Pike of Highridge.",
+                "Highridge welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Highridge.",
+                "Spare a moment? Highridge has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Highridge?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "highridge_quartermaster",
+            "Name": "Quartermaster Hale",
+            "Role": "Quartermaster",
+            "Personality": "Exacting",
+            "IsVendor": true,
+            "Location": "Highridge",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "highridge_quartermaster_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Quartermaster Hale of Highridge.",
+                "Highridge welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Highridge.",
+                "Spare a moment? Highridge has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Highridge?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Bramblefen",
         "VendorInventory": [
-          { "ItemId": "marsh_pearl", "BuyPrice": 12.0, "SellPrice": 5.0 },
-          { "ItemId": "reedy_bundle", "BuyPrice": 4.0, "SellPrice": 1.5 },
-          { "ItemId": "marsh_hood", "BuyPrice": 14.0, "SellPrice": 6.0 },
-          { "ItemId": "bog_spice", "BuyPrice": 7.0, "SellPrice": 2.5 }
+          {
+            "ItemId": "marsh_pearl",
+            "BuyPrice": 12.0,
+            "SellPrice": 5.0
+          },
+          {
+            "ItemId": "reedy_bundle",
+            "BuyPrice": 4.0,
+            "SellPrice": 1.5
+          },
+          {
+            "ItemId": "marsh_hood",
+            "BuyPrice": 14.0,
+            "SellPrice": 6.0
+          },
+          {
+            "ItemId": "bog_spice",
+            "BuyPrice": 7.0,
+            "SellPrice": 2.5
+          }
         ],
         "Npcs": [
-          { "Id": "bramblefen_reed", "Name": "Lysa Reed", "Role": "Boatwright", "Personality": "Patient" },
-          { "Id": "bramblefen_sworn", "Name": "Krell Fen", "Role": "Swamp Ranger", "Personality": "Watchful" },
-          { "Id": "bramblefen_hag", "Name": "Old Miri", "Role": "Herbalist", "Personality": "Gruff", "IsVendor": true }
+          {
+            "Id": "bramblefen_reed",
+            "Name": "Lysa Reed",
+            "Role": "Boatwright",
+            "Personality": "Patient",
+            "Location": "Bramblefen",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "bramblefen_reed_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Lysa Reed of Bramblefen.",
+                "Bramblefen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Bramblefen.",
+                "Spare a moment? Bramblefen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Bramblefen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "bramblefen_sworn",
+            "Name": "Krell Fen",
+            "Role": "Swamp Ranger",
+            "Personality": "Watchful",
+            "Location": "Bramblefen",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "bramblefen_sworn_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Krell Fen of Bramblefen.",
+                "Bramblefen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Bramblefen.",
+                "Spare a moment? Bramblefen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Bramblefen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "bramblefen_hag",
+            "Name": "Old Miri",
+            "Role": "Herbalist",
+            "Personality": "Gruff",
+            "IsVendor": true,
+            "Location": "Bramblefen",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "bramblefen_hag_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Old Miri of Bramblefen.",
+                "Bramblefen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Bramblefen.",
+                "Spare a moment? Bramblefen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Bramblefen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Silvercross",
         "VendorInventory": [
-          { "ItemId": "silver_token", "BuyPrice": 20.0, "SellPrice": 9.0 },
-          { "ItemId": "tempered_sword", "BuyPrice": 30.0, "SellPrice": 12.0 },
-          { "ItemId": "chain_hauberk", "BuyPrice": 28.0, "SellPrice": 12.0 },
-          { "ItemId": "oak_bow", "BuyPrice": 18.0, "SellPrice": 7.0 }
+          {
+            "ItemId": "silver_token",
+            "BuyPrice": 20.0,
+            "SellPrice": 9.0
+          },
+          {
+            "ItemId": "tempered_sword",
+            "BuyPrice": 30.0,
+            "SellPrice": 12.0
+          },
+          {
+            "ItemId": "chain_hauberk",
+            "BuyPrice": 28.0,
+            "SellPrice": 12.0
+          },
+          {
+            "ItemId": "oak_bow",
+            "BuyPrice": 18.0,
+            "SellPrice": 7.0
+          }
         ],
         "Npcs": [
-          { "Id": "silvercross_castellan", "Name": "Castellan Wyne", "Role": "Castellan", "Personality": "Measured" },
-          { "Id": "silvercross_bard", "Name": "Perrin Lyre", "Role": "Bard", "Personality": "Spirited" },
-          { "Id": "silvercross_scribe", "Name": "Ilse Quill", "Role": "Scribe", "Personality": "Curious" }
+          {
+            "Id": "silvercross_castellan",
+            "Name": "Castellan Wyne",
+            "Role": "Castellan",
+            "Personality": "Measured",
+            "Location": "Silvercross",
+            "RoleType": "QuestGiver",
+            "QuestsOffered": [
+              "silvercross_castellan_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Castellan Wyne of Silvercross.",
+                "Silvercross welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Silvercross.",
+                "Spare a moment? Silvercross has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Silvercross?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "silvercross_bard",
+            "Name": "Perrin Lyre",
+            "Role": "Bard",
+            "Personality": "Spirited",
+            "Location": "Silvercross",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "silvercross_bard_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Perrin Lyre of Silvercross.",
+                "Silvercross welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Silvercross.",
+                "Spare a moment? Silvercross has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Silvercross?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "silvercross_scribe",
+            "Name": "Ilse Quill",
+            "Role": "Scribe",
+            "Personality": "Curious",
+            "Location": "Silvercross",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "silvercross_scribe_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Ilse Quill of Silvercross.",
+                "Silvercross welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Silvercross.",
+                "Spare a moment? Silvercross has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Silvercross?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       },
       {
         "Name": "Frostglen",
         "VendorInventory": [
-          { "ItemId": "frost_coat", "BuyPrice": 26.0, "SellPrice": 11.0 },
-          { "ItemId": "crystal_flask", "BuyPrice": 18.0, "SellPrice": 8.0 },
-          { "ItemId": "ashen_staff", "BuyPrice": 22.0, "SellPrice": 9.0 }
+          {
+            "ItemId": "frost_coat",
+            "BuyPrice": 26.0,
+            "SellPrice": 11.0
+          },
+          {
+            "ItemId": "crystal_flask",
+            "BuyPrice": 18.0,
+            "SellPrice": 8.0
+          },
+          {
+            "ItemId": "ashen_staff",
+            "BuyPrice": 22.0,
+            "SellPrice": 9.0
+          }
         ],
         "Npcs": [
-          { "Id": "frostglen_warden", "Name": "Warden Hrold", "Role": "Gate Warden", "Personality": "Stern" },
-          { "Id": "frostglen_healer", "Name": "Maera Snow", "Role": "Healer", "Personality": "Gentle", "IsVendor": true },
-          { "Id": "frostglen_trapper", "Name": "Olan Rime", "Role": "Trapper", "Personality": "Quiet" }
+          {
+            "Id": "frostglen_warden",
+            "Name": "Warden Hrold",
+            "Role": "Gate Warden",
+            "Personality": "Stern",
+            "Location": "Frostglen",
+            "RoleType": "Guard",
+            "QuestsOffered": [
+              "frostglen_warden_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Warden Hrold of Frostglen.",
+                "Frostglen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Frostglen.",
+                "Spare a moment? Frostglen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Frostglen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "frostglen_healer",
+            "Name": "Maera Snow",
+            "Role": "Healer",
+            "Personality": "Gentle",
+            "IsVendor": true,
+            "Location": "Frostglen",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "frostglen_healer_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Maera Snow of Frostglen.",
+                "Frostglen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Frostglen.",
+                "Spare a moment? Frostglen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Frostglen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "frostglen_trapper",
+            "Name": "Olan Rime",
+            "Role": "Trapper",
+            "Personality": "Quiet",
+            "Location": "Frostglen",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "frostglen_trapper_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Olan Rime of Frostglen.",
+                "Frostglen welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Frostglen.",
+                "Spare a moment? Frostglen has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out there.",
+                "May your path be clear."
+              ],
+              "RandomLines": [
+                "Have you heard the news from Frostglen?",
+                "The roads grow stranger each night."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
         ]
       }
     ],
@@ -111,166 +924,426 @@
         "Id": "road_bandit",
         "Name": "Roadside Bandit",
         "Biome": "Grassland",
-        "LevelRange": { "Min": 1, "Max": 3 },
-        "HitPointRange": { "Min": 8, "Max": 14 },
-        "AttackRange": { "Min": 2, "Max": 4 },
-        "DefenseRange": { "Min": 1, "Max": 2 },
-        "CoinDropRange": { "Min": 3, "Max": 9 },
-        "PreferredThreatLevels": ["Low"]
+        "LevelRange": {
+          "Min": 1,
+          "Max": 3
+        },
+        "HitPointRange": {
+          "Min": 8,
+          "Max": 14
+        },
+        "AttackRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "DefenseRange": {
+          "Min": 1,
+          "Max": 2
+        },
+        "CoinDropRange": {
+          "Min": 3,
+          "Max": 9
+        },
+        "PreferredThreatLevels": [
+          "Low"
+        ]
       },
       {
         "Id": "wild_boar",
         "Name": "Wild Boar",
         "Biome": "Grassland",
-        "LevelRange": { "Min": 2, "Max": 4 },
-        "HitPointRange": { "Min": 12, "Max": 18 },
-        "AttackRange": { "Min": 3, "Max": 5 },
-        "DefenseRange": { "Min": 1, "Max": 3 },
-        "CoinDropRange": { "Min": 2, "Max": 6 },
-        "PreferredThreatLevels": ["Low", "Moderate"]
+        "LevelRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "HitPointRange": {
+          "Min": 12,
+          "Max": 18
+        },
+        "AttackRange": {
+          "Min": 3,
+          "Max": 5
+        },
+        "DefenseRange": {
+          "Min": 1,
+          "Max": 3
+        },
+        "CoinDropRange": {
+          "Min": 2,
+          "Max": 6
+        },
+        "PreferredThreatLevels": [
+          "Low",
+          "Moderate"
+        ]
       },
       {
         "Id": "emberbrook_scout",
         "Name": "Wayward Scout",
         "Biome": "Village",
-        "LevelRange": { "Min": 3, "Max": 5 },
-        "HitPointRange": { "Min": 16, "Max": 24 },
-        "AttackRange": { "Min": 4, "Max": 6 },
-        "DefenseRange": { "Min": 2, "Max": 4 },
-        "CoinDropRange": { "Min": 5, "Max": 12 },
-        "PreferredThreatLevels": ["Low", "Moderate"]
+        "LevelRange": {
+          "Min": 3,
+          "Max": 5
+        },
+        "HitPointRange": {
+          "Min": 16,
+          "Max": 24
+        },
+        "AttackRange": {
+          "Min": 4,
+          "Max": 6
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "CoinDropRange": {
+          "Min": 5,
+          "Max": 12
+        },
+        "PreferredThreatLevels": [
+          "Low",
+          "Moderate"
+        ]
       },
       {
         "Id": "cavern_bat",
         "Name": "Cavern Bat",
         "Biome": "Cave",
-        "LevelRange": { "Min": 2, "Max": 4 },
-        "HitPointRange": { "Min": 14, "Max": 22 },
-        "AttackRange": { "Min": 4, "Max": 6 },
-        "DefenseRange": { "Min": 1, "Max": 2 },
-        "CoinDropRange": { "Min": 1, "Max": 4 },
-        "PreferredThreatLevels": ["Moderate"]
+        "LevelRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "HitPointRange": {
+          "Min": 14,
+          "Max": 22
+        },
+        "AttackRange": {
+          "Min": 4,
+          "Max": 6
+        },
+        "DefenseRange": {
+          "Min": 1,
+          "Max": 2
+        },
+        "CoinDropRange": {
+          "Min": 1,
+          "Max": 4
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
       },
       {
         "Id": "ruin_skeleton",
         "Name": "Restless Skeleton",
         "Biome": "Ruins",
-        "LevelRange": { "Min": 4, "Max": 7 },
-        "HitPointRange": { "Min": 18, "Max": 32 },
-        "AttackRange": { "Min": 5, "Max": 8 },
-        "DefenseRange": { "Min": 3, "Max": 6 },
-        "CoinDropRange": { "Min": 6, "Max": 14 },
-        "PreferredThreatLevels": ["High"]
+        "LevelRange": {
+          "Min": 4,
+          "Max": 7
+        },
+        "HitPointRange": {
+          "Min": 18,
+          "Max": 32
+        },
+        "AttackRange": {
+          "Min": 5,
+          "Max": 8
+        },
+        "DefenseRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "CoinDropRange": {
+          "Min": 6,
+          "Max": 14
+        },
+        "PreferredThreatLevels": [
+          "High"
+        ]
       },
       {
         "Id": "coastal_siren",
         "Name": "Coastal Siren",
         "Biome": "Coast",
-        "LevelRange": { "Min": 5, "Max": 8 },
-        "HitPointRange": { "Min": 24, "Max": 40 },
-        "AttackRange": { "Min": 6, "Max": 10 },
-        "DefenseRange": { "Min": 3, "Max": 6 },
-        "CoinDropRange": { "Min": 8, "Max": 20 },
-        "PreferredThreatLevels": ["Moderate", "High"]
+        "LevelRange": {
+          "Min": 5,
+          "Max": 8
+        },
+        "HitPointRange": {
+          "Min": 24,
+          "Max": 40
+        },
+        "AttackRange": {
+          "Min": 6,
+          "Max": 10
+        },
+        "DefenseRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "CoinDropRange": {
+          "Min": 8,
+          "Max": 20
+        },
+        "PreferredThreatLevels": [
+          "Moderate",
+          "High"
+        ]
       },
       {
         "Id": "marsh_wisp",
         "Name": "Marsh Wisp",
         "Biome": "Swamp",
-        "LevelRange": { "Min": 3, "Max": 6 },
-        "HitPointRange": { "Min": 16, "Max": 28 },
-        "AttackRange": { "Min": 4, "Max": 7 },
-        "DefenseRange": { "Min": 2, "Max": 5 },
-        "CoinDropRange": { "Min": 5, "Max": 12 },
-        "PreferredThreatLevels": ["Moderate"]
+        "LevelRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "HitPointRange": {
+          "Min": 16,
+          "Max": 28
+        },
+        "AttackRange": {
+          "Min": 4,
+          "Max": 7
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 5
+        },
+        "CoinDropRange": {
+          "Min": 5,
+          "Max": 12
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
       },
       {
         "Id": "mountain_wolf",
         "Name": "Highridge Wolf",
         "Biome": "Mountain",
-        "LevelRange": { "Min": 4, "Max": 8 },
-        "HitPointRange": { "Min": 22, "Max": 36 },
-        "AttackRange": { "Min": 6, "Max": 9 },
-        "DefenseRange": { "Min": 3, "Max": 6 },
-        "CoinDropRange": { "Min": 7, "Max": 16 },
-        "PreferredThreatLevels": ["High"]
+        "LevelRange": {
+          "Min": 4,
+          "Max": 8
+        },
+        "HitPointRange": {
+          "Min": 22,
+          "Max": 36
+        },
+        "AttackRange": {
+          "Min": 6,
+          "Max": 9
+        },
+        "DefenseRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "CoinDropRange": {
+          "Min": 7,
+          "Max": 16
+        },
+        "PreferredThreatLevels": [
+          "High"
+        ]
       },
       {
         "Id": "harbor_cutthroat",
         "Name": "Harbor Cutthroat",
         "Biome": "Coast",
-        "LevelRange": { "Min": 4, "Max": 7 },
-        "HitPointRange": { "Min": 20, "Max": 30 },
-        "AttackRange": { "Min": 6, "Max": 9 },
-        "DefenseRange": { "Min": 2, "Max": 5 },
-        "CoinDropRange": { "Min": 7, "Max": 16 },
-        "PreferredThreatLevels": ["Moderate"]
+        "LevelRange": {
+          "Min": 4,
+          "Max": 7
+        },
+        "HitPointRange": {
+          "Min": 20,
+          "Max": 30
+        },
+        "AttackRange": {
+          "Min": 6,
+          "Max": 9
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 5
+        },
+        "CoinDropRange": {
+          "Min": 7,
+          "Max": 16
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
       },
       {
         "Id": "bog_troll",
         "Name": "Bog Troll",
         "Biome": "Swamp",
-        "LevelRange": { "Min": 5, "Max": 9 },
-        "HitPointRange": { "Min": 30, "Max": 46 },
-        "AttackRange": { "Min": 7, "Max": 11 },
-        "DefenseRange": { "Min": 4, "Max": 7 },
-        "CoinDropRange": { "Min": 10, "Max": 22 },
-        "PreferredThreatLevels": ["High"]
+        "LevelRange": {
+          "Min": 5,
+          "Max": 9
+        },
+        "HitPointRange": {
+          "Min": 30,
+          "Max": 46
+        },
+        "AttackRange": {
+          "Min": 7,
+          "Max": 11
+        },
+        "DefenseRange": {
+          "Min": 4,
+          "Max": 7
+        },
+        "CoinDropRange": {
+          "Min": 10,
+          "Max": 22
+        },
+        "PreferredThreatLevels": [
+          "High"
+        ]
       },
       {
         "Id": "silverfox_raider",
         "Name": "Silverfox Raider",
         "Biome": "Grassland",
-        "LevelRange": { "Min": 3, "Max": 5 },
-        "HitPointRange": { "Min": 18, "Max": 26 },
-        "AttackRange": { "Min": 5, "Max": 7 },
-        "DefenseRange": { "Min": 2, "Max": 4 },
-        "CoinDropRange": { "Min": 6, "Max": 14 },
-        "PreferredThreatLevels": ["Moderate"]
+        "LevelRange": {
+          "Min": 3,
+          "Max": 5
+        },
+        "HitPointRange": {
+          "Min": 18,
+          "Max": 26
+        },
+        "AttackRange": {
+          "Min": 5,
+          "Max": 7
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "CoinDropRange": {
+          "Min": 6,
+          "Max": 14
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
       },
       {
         "Id": "ashen_construct",
         "Name": "Ashen Construct",
         "Biome": "Mountain",
-        "LevelRange": { "Min": 6, "Max": 10 },
-        "HitPointRange": { "Min": 32, "Max": 50 },
-        "AttackRange": { "Min": 8, "Max": 12 },
-        "DefenseRange": { "Min": 5, "Max": 9 },
-        "CoinDropRange": { "Min": 12, "Max": 26 },
-        "PreferredThreatLevels": ["High", "Extreme"]
+        "LevelRange": {
+          "Min": 6,
+          "Max": 10
+        },
+        "HitPointRange": {
+          "Min": 32,
+          "Max": 50
+        },
+        "AttackRange": {
+          "Min": 8,
+          "Max": 12
+        },
+        "DefenseRange": {
+          "Min": 5,
+          "Max": 9
+        },
+        "CoinDropRange": {
+          "Min": 12,
+          "Max": 26
+        },
+        "PreferredThreatLevels": [
+          "High",
+          "Extreme"
+        ]
       },
       {
         "Id": "frost_wight",
         "Name": "Frost Wight",
         "Biome": "Snow",
-        "LevelRange": { "Min": 6, "Max": 10 },
-        "HitPointRange": { "Min": 28, "Max": 46 },
-        "AttackRange": { "Min": 7, "Max": 11 },
-        "DefenseRange": { "Min": 4, "Max": 8 },
-        "CoinDropRange": { "Min": 10, "Max": 22 },
-        "PreferredThreatLevels": ["High"]
+        "LevelRange": {
+          "Min": 6,
+          "Max": 10
+        },
+        "HitPointRange": {
+          "Min": 28,
+          "Max": 46
+        },
+        "AttackRange": {
+          "Min": 7,
+          "Max": 11
+        },
+        "DefenseRange": {
+          "Min": 4,
+          "Max": 8
+        },
+        "CoinDropRange": {
+          "Min": 10,
+          "Max": 22
+        },
+        "PreferredThreatLevels": [
+          "High"
+        ]
       },
       {
         "Id": "crystal_spider",
         "Name": "Crystal Spider",
         "Biome": "Cave",
-        "LevelRange": { "Min": 4, "Max": 7 },
-        "HitPointRange": { "Min": 22, "Max": 34 },
-        "AttackRange": { "Min": 6, "Max": 9 },
-        "DefenseRange": { "Min": 3, "Max": 6 },
-        "CoinDropRange": { "Min": 8, "Max": 18 },
-        "PreferredThreatLevels": ["Moderate", "High"]
+        "LevelRange": {
+          "Min": 4,
+          "Max": 7
+        },
+        "HitPointRange": {
+          "Min": 22,
+          "Max": 34
+        },
+        "AttackRange": {
+          "Min": 6,
+          "Max": 9
+        },
+        "DefenseRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "CoinDropRange": {
+          "Min": 8,
+          "Max": 18
+        },
+        "PreferredThreatLevels": [
+          "Moderate",
+          "High"
+        ]
       },
       {
         "Id": "harbor_smuggler",
         "Name": "Harbor Smuggler",
         "Biome": "Coast",
-        "LevelRange": { "Min": 3, "Max": 6 },
-        "HitPointRange": { "Min": 18, "Max": 28 },
-        "AttackRange": { "Min": 5, "Max": 8 },
-        "DefenseRange": { "Min": 2, "Max": 4 },
-        "CoinDropRange": { "Min": 9, "Max": 18 },
-        "PreferredThreatLevels": ["Moderate"]
+        "LevelRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "HitPointRange": {
+          "Min": 18,
+          "Max": 28
+        },
+        "AttackRange": {
+          "Min": 5,
+          "Max": 8
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 4
+        },
+        "CoinDropRange": {
+          "Min": 9,
+          "Max": 18
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
       }
     ],
     "CharacterPresets": [
@@ -284,9 +1357,18 @@
           "ThreatLevel": "Low"
         },
         "StartingInventory": [
-          { "ItemId": "rusty_sword", "Quantity": 1 },
-          { "ItemId": "worn_shield", "Quantity": 1 },
-          { "ItemId": "loaf_of_bread", "Quantity": 3 }
+          {
+            "ItemId": "rusty_sword",
+            "Quantity": 1
+          },
+          {
+            "ItemId": "worn_shield",
+            "Quantity": 1
+          },
+          {
+            "ItemId": "loaf_of_bread",
+            "Quantity": 3
+          }
         ]
       },
       {
@@ -299,9 +1381,18 @@
           "ThreatLevel": "Low"
         },
         "StartingInventory": [
-          { "ItemId": "shortbow", "Quantity": 1 },
-          { "ItemId": "quiver_of_arrows", "Quantity": 20 },
-          { "ItemId": "traveler_cloak", "Quantity": 1 }
+          {
+            "ItemId": "shortbow",
+            "Quantity": 1
+          },
+          {
+            "ItemId": "quiver_of_arrows",
+            "Quantity": 20
+          },
+          {
+            "ItemId": "traveler_cloak",
+            "Quantity": 1
+          }
         ]
       },
       {
@@ -314,9 +1405,18 @@
           "ThreatLevel": "Low"
         },
         "StartingInventory": [
-          { "ItemId": "oak_staff", "Quantity": 1 },
-          { "ItemId": "apprentice_robes", "Quantity": 1 },
-          { "ItemId": "healing_herbs", "Quantity": 2 }
+          {
+            "ItemId": "oak_staff",
+            "Quantity": 1
+          },
+          {
+            "ItemId": "apprentice_robes",
+            "Quantity": 1
+          },
+          {
+            "ItemId": "healing_herbs",
+            "Quantity": 2
+          }
         ]
       }
     ],
@@ -327,7 +1427,11 @@
         "Description": "A well-worn path where many adventurers begin their journey.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["forked_path", "roadside_inn", "river_bridge"]
+        "AdjacentLocationIds": [
+          "forked_path",
+          "roadside_inn",
+          "river_bridge"
+        ]
       },
       {
         "Id": "roadside_inn",
@@ -335,7 +1439,10 @@
         "Description": "A roadside tavern where caravans share news over warm stew.",
         "Biome": "Grassland",
         "ThreatLevel": "Safe",
-        "AdjacentLocationIds": ["travelers_road", "forked_path"]
+        "AdjacentLocationIds": [
+          "travelers_road",
+          "forked_path"
+        ]
       },
       {
         "Id": "forked_path",
@@ -343,7 +1450,13 @@
         "Description": "A crossroads lined with signposts pointing toward nearby settlements.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["travelers_road", "emberbrook_gate", "mossy_trail", "roadside_inn", "river_bridge"]
+        "AdjacentLocationIds": [
+          "travelers_road",
+          "emberbrook_gate",
+          "mossy_trail",
+          "roadside_inn",
+          "river_bridge"
+        ]
       },
       {
         "Id": "river_bridge",
@@ -351,7 +1464,11 @@
         "Description": "A wooden bridge spanning a bright stream and the path to distant hamlets.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["travelers_road", "forked_path", "willow_farm"]
+        "AdjacentLocationIds": [
+          "travelers_road",
+          "forked_path",
+          "willow_farm"
+        ]
       },
       {
         "Id": "willow_farm",
@@ -359,7 +1476,10 @@
         "Description": "Quiet farm fields that feed the nearby township of Silvercross.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["river_bridge", "silvercross_square"]
+        "AdjacentLocationIds": [
+          "river_bridge",
+          "silvercross_square"
+        ]
       },
       {
         "Id": "emberbrook_gate",
@@ -367,7 +1487,10 @@
         "Description": "The sturdy wooden gate guarding the village of Emberbrook.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["forked_path", "emberbrook_square"],
+        "AdjacentLocationIds": [
+          "forked_path",
+          "emberbrook_square"
+        ],
         "TownName": "Emberbrook"
       },
       {
@@ -376,7 +1499,10 @@
         "Description": "A bustling square where villagers trade stories and goods.",
         "Biome": "Village",
         "ThreatLevel": "Safe",
-        "AdjacentLocationIds": ["emberbrook_gate", "emberbrook_inn"],
+        "AdjacentLocationIds": [
+          "emberbrook_gate",
+          "emberbrook_inn"
+        ],
         "TownName": "Emberbrook"
       },
       {
@@ -385,7 +1511,9 @@
         "Description": "A cozy inn with a glowing hearth and plenty of gossip.",
         "Biome": "Village",
         "ThreatLevel": "Safe",
-        "AdjacentLocationIds": ["emberbrook_square"],
+        "AdjacentLocationIds": [
+          "emberbrook_square"
+        ],
         "TownName": "Emberbrook"
       },
       {
@@ -394,7 +1522,10 @@
         "Description": "A damp trail leading deeper into the trees with soft moss underfoot.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["forked_path", "whispering_woods"]
+        "AdjacentLocationIds": [
+          "forked_path",
+          "whispering_woods"
+        ]
       },
       {
         "Id": "whispering_woods",
@@ -402,7 +1533,11 @@
         "Description": "The wind carries faint whispers through the dense canopy.",
         "Biome": "Forest",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["mossy_trail", "mosslight_green", "hollow_cave"]
+        "AdjacentLocationIds": [
+          "mossy_trail",
+          "mosslight_green",
+          "hollow_cave"
+        ]
       },
       {
         "Id": "mosslight_green",
@@ -410,7 +1545,11 @@
         "Description": "A sun-dappled clearing where the villagers of Mosslight gather.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["whispering_woods", "mosslight_market", "sagestone_tavern"],
+        "AdjacentLocationIds": [
+          "whispering_woods",
+          "mosslight_market",
+          "sagestone_tavern"
+        ],
         "TownName": "Mosslight"
       },
       {
@@ -419,7 +1558,10 @@
         "Description": "Stalls with fragrant herbs and carved trinkets line the path.",
         "Biome": "Village",
         "ThreatLevel": "Safe",
-        "AdjacentLocationIds": ["mosslight_green", "sagestone_tavern"],
+        "AdjacentLocationIds": [
+          "mosslight_green",
+          "sagestone_tavern"
+        ],
         "TownName": "Mosslight"
       },
       {
@@ -428,7 +1570,11 @@
         "Description": "Travelers swap rumors over mugs etched with old runes.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["mosslight_green", "mosslight_market", "blackmarsh_crossing"]
+        "AdjacentLocationIds": [
+          "mosslight_green",
+          "mosslight_market",
+          "blackmarsh_crossing"
+        ]
       },
       {
         "Id": "hollow_cave",
@@ -436,7 +1582,11 @@
         "Description": "A yawning cave mouth breathing cool, damp air.",
         "Biome": "Cave",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["whispering_woods", "sunless_depths", "crystal_chamber"]
+        "AdjacentLocationIds": [
+          "whispering_woods",
+          "sunless_depths",
+          "crystal_chamber"
+        ]
       },
       {
         "Id": "sunless_depths",
@@ -444,7 +1594,10 @@
         "Description": "The cave descends into a maze of echoing tunnels.",
         "Biome": "Cave",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["hollow_cave", "broken_keep"]
+        "AdjacentLocationIds": [
+          "hollow_cave",
+          "broken_keep"
+        ]
       },
       {
         "Id": "crystal_chamber",
@@ -452,7 +1605,10 @@
         "Description": "Shimmering crystals jut from the stone walls, casting pale light.",
         "Biome": "Cave",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["hollow_cave", "frostglen_gate"]
+        "AdjacentLocationIds": [
+          "hollow_cave",
+          "frostglen_gate"
+        ]
       },
       {
         "Id": "broken_keep",
@@ -460,7 +1616,11 @@
         "Description": "Ruined battlements crumble over a forgotten cellar.",
         "Biome": "Ruins",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["sunless_depths", "blackmarsh_crossing", "old_watchtower"]
+        "AdjacentLocationIds": [
+          "sunless_depths",
+          "blackmarsh_crossing",
+          "old_watchtower"
+        ]
       },
       {
         "Id": "blackmarsh_crossing",
@@ -468,7 +1628,12 @@
         "Description": "Soggy boardwalks stretch over the dark marsh water.",
         "Biome": "Swamp",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["sagestone_tavern", "broken_keep", "coastal_road", "marsh_landing"]
+        "AdjacentLocationIds": [
+          "sagestone_tavern",
+          "broken_keep",
+          "coastal_road",
+          "marsh_landing"
+        ]
       },
       {
         "Id": "marsh_landing",
@@ -476,7 +1641,10 @@
         "Description": "A rickety dock among the reeds leading deeper into Bramblefen.",
         "Biome": "Swamp",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["blackmarsh_crossing", "bramblefen_square"]
+        "AdjacentLocationIds": [
+          "blackmarsh_crossing",
+          "bramblefen_square"
+        ]
       },
       {
         "Id": "bramblefen_square",
@@ -484,7 +1652,10 @@
         "Description": "A lantern-lit boardwalk with traders hawking swamp curios.",
         "Biome": "Swamp",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["marsh_landing", "bramblefen_docks"],
+        "AdjacentLocationIds": [
+          "marsh_landing",
+          "bramblefen_docks"
+        ],
         "TownName": "Bramblefen"
       },
       {
@@ -493,7 +1664,10 @@
         "Description": "Flatboats unload reed bundles and mud-crab cages.",
         "Biome": "Swamp",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["bramblefen_square", "coastal_road"],
+        "AdjacentLocationIds": [
+          "bramblefen_square",
+          "coastal_road"
+        ],
         "TownName": "Bramblefen"
       },
       {
@@ -502,7 +1676,13 @@
         "Description": "A sea-sprayed road dotted with fisher carts and gulls.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["blackmarsh_crossing", "stormwatch_gate", "old_watchtower", "bramblefen_docks", "harbor_way"]
+        "AdjacentLocationIds": [
+          "blackmarsh_crossing",
+          "stormwatch_gate",
+          "old_watchtower",
+          "bramblefen_docks",
+          "harbor_way"
+        ]
       },
       {
         "Id": "stormwatch_gate",
@@ -510,7 +1690,12 @@
         "Description": "Weathered stone arches lead into the harbor city.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["coastal_road", "stormwatch_market", "stormwatch_docks", "harbor_way"],
+        "AdjacentLocationIds": [
+          "coastal_road",
+          "stormwatch_market",
+          "stormwatch_docks",
+          "harbor_way"
+        ],
         "TownName": "Stormwatch Harbor"
       },
       {
@@ -519,7 +1704,9 @@
         "Description": "Vendors call out prices for fresh catches and exotic spices.",
         "Biome": "Coast",
         "ThreatLevel": "Safe",
-        "AdjacentLocationIds": ["stormwatch_gate"],
+        "AdjacentLocationIds": [
+          "stormwatch_gate"
+        ],
         "TownName": "Stormwatch Harbor"
       },
       {
@@ -528,7 +1715,10 @@
         "Description": "Ships bob in the harbor beside nets heavy with fish.",
         "Biome": "Coast",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["stormwatch_gate", "harbor_way"],
+        "AdjacentLocationIds": [
+          "stormwatch_gate",
+          "harbor_way"
+        ],
         "TownName": "Stormwatch Harbor"
       },
       {
@@ -537,7 +1727,12 @@
         "Description": "A busy lane connecting dockside warehouses to inland trade routes.",
         "Biome": "Coast",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["coastal_road", "stormwatch_gate", "stormwatch_docks", "silvercross_square"]
+        "AdjacentLocationIds": [
+          "coastal_road",
+          "stormwatch_gate",
+          "stormwatch_docks",
+          "silvercross_square"
+        ]
       },
       {
         "Id": "old_watchtower",
@@ -545,7 +1740,11 @@
         "Description": "A leaning tower that still offers a sweeping coastal view.",
         "Biome": "Ruins",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["coastal_road", "broken_keep", "highridge_pass"]
+        "AdjacentLocationIds": [
+          "coastal_road",
+          "broken_keep",
+          "highridge_pass"
+        ]
       },
       {
         "Id": "highridge_pass",
@@ -553,7 +1752,11 @@
         "Description": "A narrow pass winding upward through jagged cliffs.",
         "Biome": "Mountain",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["old_watchtower", "highridge_plaza", "frostglen_gate"]
+        "AdjacentLocationIds": [
+          "old_watchtower",
+          "highridge_plaza",
+          "frostglen_gate"
+        ]
       },
       {
         "Id": "highridge_plaza",
@@ -561,7 +1764,10 @@
         "Description": "The mountain town's central square overlooking the valley.",
         "Biome": "Mountain",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["highridge_pass", "highridge_forge"],
+        "AdjacentLocationIds": [
+          "highridge_pass",
+          "highridge_forge"
+        ],
         "TownName": "Highridge"
       },
       {
@@ -570,7 +1776,9 @@
         "Description": "Forgefires light the snow around the mountain smithy.",
         "Biome": "Mountain",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["highridge_plaza"],
+        "AdjacentLocationIds": [
+          "highridge_plaza"
+        ],
         "TownName": "Highridge"
       },
       {
@@ -579,7 +1787,11 @@
         "Description": "Heavy gates guard the snowy pass into Frostglen's hearth.",
         "Biome": "Snow",
         "ThreatLevel": "High",
-        "AdjacentLocationIds": ["highridge_pass", "crystal_chamber", "frostglen_hearth"]
+        "AdjacentLocationIds": [
+          "highridge_pass",
+          "crystal_chamber",
+          "frostglen_hearth"
+        ]
       },
       {
         "Id": "frostglen_hearth",
@@ -587,7 +1799,10 @@
         "Description": "A warm plaza sheltered from the wind by tall timber walls.",
         "Biome": "Snow",
         "ThreatLevel": "Moderate",
-        "AdjacentLocationIds": ["frostglen_gate", "silvercross_square"],
+        "AdjacentLocationIds": [
+          "frostglen_gate",
+          "silvercross_square"
+        ],
         "TownName": "Frostglen"
       },
       {
@@ -596,21 +1811,121 @@
         "Description": "A thriving market town that links trade from coast and mountain.",
         "Biome": "Village",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": ["willow_farm", "harbor_way", "frostglen_hearth"],
+        "AdjacentLocationIds": [
+          "willow_farm",
+          "harbor_way",
+          "frostglen_hearth"
+        ],
         "TownName": "Silvercross"
       }
     ],
     "DropTables": [
-      { "Biome": "Village", "Drops": ["loaf_of_bread", "bundle_of_roots", "healing_herbs", "travel_rations", "coin_pouch", "copper_ring", "minor_healing_potion", "wool_vest"] },
-      { "Biome": "Grassland", "Drops": ["loaf_of_bread", "coin_pouch", "torn_cloth", "field_beans", "rusted_dagger", "hunter_hat"] },
-      { "Biome": "Forest", "Drops": ["healing_herbs", "tree_sap", "forest_tokens", "stack_of_fungus", "oak_bow", "antidote_phial"] },
-      { "Biome": "Mountain", "Drops": ["ore_fragment", "sturdy_leather", "coin_pouch", "glowing_crystal", "iron_ingot", "iron_shield"] },
-      { "Biome": "Cave", "Drops": ["glowing_crystal", "bat_wing", "ore_fragment", "crystal_flask", "ashen_staff"] },
-      { "Biome": "Ruins", "Drops": ["ancient_coin", "tattered_map", "mysterious_trinket", "chain_hauberk"] },
-      { "Biome": "Coast", "Drops": ["salted_fish", "coin_pouch", "driftwood_charm", "rope_coil", "sea_blade", "smuggler_cutlass", "lesser_mana_potion"] },
-      { "Biome": "Swamp", "Drops": ["reedy_bundle", "marsh_pearl", "mossy_fragment", "marsh_hood", "bog_spice"] },
-      { "Biome": "Snow", "Drops": ["frost_coat", "crystal_flask", "coin_pouch", "ashen_staff", "lesser_mana_potion"] },
-      { "Biome": "Unknown", "Drops": ["coin_pouch", "mysterious_trinket", "tattered_map", "antidote_phial"] }
+      {
+        "Biome": "Village",
+        "Drops": [
+          "loaf_of_bread",
+          "bundle_of_roots",
+          "healing_herbs",
+          "travel_rations",
+          "coin_pouch",
+          "copper_ring",
+          "minor_healing_potion",
+          "wool_vest"
+        ]
+      },
+      {
+        "Biome": "Grassland",
+        "Drops": [
+          "loaf_of_bread",
+          "coin_pouch",
+          "torn_cloth",
+          "field_beans",
+          "rusted_dagger",
+          "hunter_hat"
+        ]
+      },
+      {
+        "Biome": "Forest",
+        "Drops": [
+          "healing_herbs",
+          "tree_sap",
+          "forest_tokens",
+          "stack_of_fungus",
+          "oak_bow",
+          "antidote_phial"
+        ]
+      },
+      {
+        "Biome": "Mountain",
+        "Drops": [
+          "ore_fragment",
+          "sturdy_leather",
+          "coin_pouch",
+          "glowing_crystal",
+          "iron_ingot",
+          "iron_shield"
+        ]
+      },
+      {
+        "Biome": "Cave",
+        "Drops": [
+          "glowing_crystal",
+          "bat_wing",
+          "ore_fragment",
+          "crystal_flask",
+          "ashen_staff"
+        ]
+      },
+      {
+        "Biome": "Ruins",
+        "Drops": [
+          "ancient_coin",
+          "tattered_map",
+          "mysterious_trinket",
+          "chain_hauberk"
+        ]
+      },
+      {
+        "Biome": "Coast",
+        "Drops": [
+          "salted_fish",
+          "coin_pouch",
+          "driftwood_charm",
+          "rope_coil",
+          "sea_blade",
+          "smuggler_cutlass",
+          "lesser_mana_potion"
+        ]
+      },
+      {
+        "Biome": "Swamp",
+        "Drops": [
+          "reedy_bundle",
+          "marsh_pearl",
+          "mossy_fragment",
+          "marsh_hood",
+          "bog_spice"
+        ]
+      },
+      {
+        "Biome": "Snow",
+        "Drops": [
+          "frost_coat",
+          "crystal_flask",
+          "coin_pouch",
+          "ashen_staff",
+          "lesser_mana_potion"
+        ]
+      },
+      {
+        "Biome": "Unknown",
+        "Drops": [
+          "coin_pouch",
+          "mysterious_trinket",
+          "tattered_map",
+          "antidote_phial"
+        ]
+      }
     ]
   }
 ]
