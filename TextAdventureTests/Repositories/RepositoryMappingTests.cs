@@ -45,6 +45,7 @@ public class RepositoryMappingTests : IDisposable
             AccountId = Guid.NewGuid(),
             ClassName = "Rogue",
             Level = 3,
+            Experience = 120,
             Coins = 42,
             Location = location
         };
@@ -59,6 +60,7 @@ public class RepositoryMappingTests : IDisposable
         stored.Location.ThreatLevel.ShouldBe(location.ThreatLevel);
         stored.Coins.ShouldBe(character.Coins);
         stored.Level.ShouldBe(character.Level);
+        stored.Experience.ShouldBe(character.Experience);
     }
 
     [Fact]

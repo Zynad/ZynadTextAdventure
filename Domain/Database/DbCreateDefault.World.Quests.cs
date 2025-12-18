@@ -19,6 +19,8 @@ public static partial class DbCreateDefault
                     TownName = "Emberbrook",
                     AcceptLocationId = "emberbrook_mayor",
                     CompletionLocationId = "emberbrook_mayor",
+                    ExperienceReward = 125,
+                    CoinReward = 30,
                     RewardItems =
                     [
                         new InventoryItem { ItemId = "travel_rations", Quantity = 4 },
@@ -33,6 +35,8 @@ public static partial class DbCreateDefault
                     TownName = "Mosslight",
                     AcceptLocationId = "mosslight_guard",
                     CompletionLocationId = "mosslight_guard",
+                    ExperienceReward = 150,
+                    CoinReward = 0,
                     RewardItems =
                     [
                         new InventoryItem { ItemId = "antidote_phial", Quantity = 2 },
@@ -47,6 +51,8 @@ public static partial class DbCreateDefault
                     TownName = "Stormwatch Harbor",
                     AcceptLocationId = "stormwatch_dockmaster",
                     CompletionLocationId = "stormwatch_dockmaster",
+                    ExperienceReward = 175,
+                    CoinReward = 30,
                     RewardItems =
                     [
                         new InventoryItem { ItemId = "driftwood_charm", Quantity = 1 },
@@ -61,6 +67,8 @@ public static partial class DbCreateDefault
                     TownName = "Highridge",
                     AcceptLocationId = "highridge_quartermaster",
                     CompletionLocationId = "highridge_miner",
+                    ExperienceReward = 200,
+                    CoinReward = 0,
                     RewardItems =
                     [
                         new InventoryItem { ItemId = "iron_ingot", Quantity = 2 },
@@ -76,6 +84,8 @@ public static partial class DbCreateDefault
                     TownName = "Mosslight",
                     AcceptLocationId = "mosslight_scavenger",
                     CompletionLocationId = "highridge_quartermaster",
+                    ExperienceReward = 225,
+                    CoinReward = 30,
                     RewardItems =
                     [
                         new InventoryItem { ItemId = "surveyor_map", Quantity = 1 },

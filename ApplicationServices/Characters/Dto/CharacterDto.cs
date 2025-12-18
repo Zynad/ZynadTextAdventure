@@ -8,6 +8,7 @@ public record CharacterDto(
     Guid Id,
     string Name,
     int Level,
+    int Experience,
     CharacterStats Stats,
     decimal Coins,
     string ClassName,

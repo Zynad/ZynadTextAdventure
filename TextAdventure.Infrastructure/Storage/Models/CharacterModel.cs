@@ -17,6 +17,9 @@ public class CharacterModel
 
     public int Level { get; set; } = 1;
 
+    public int Experience { get; set; }
+        = 0;
+
     public decimal Coins { get; set; } = 20;
 
     public CharacterStats Stats { get; set; } = CharacterStats.Default();

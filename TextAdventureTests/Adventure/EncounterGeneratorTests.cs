@@ -55,12 +55,14 @@ public class EncounterGeneratorTests
 
         result.ShouldNotBeNull();
         result!.Encounter.MonsterId.ShouldBe(monster.Id);
+        result.Experience.ShouldBeGreaterThan(0);
 
         var loot = result.Loot.ToList();
         loot.ShouldContain(l => l.ItemId == "iron_shield");
         var coins = loot.Single(l => l.ItemId == "coins");
         coins.Quantity.ShouldBeGreaterThan(0);
         coins.Quantity.ShouldBeLessThanOrEqualTo(5); // clamped by threat level range
+        result.Coins.ShouldBe(coins.Quantity);
     }
 
     private sealed class FixedRandomService : IRandomService
