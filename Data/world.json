@@ -917,6 +917,270 @@
             }
           }
         ]
+      },
+      {
+        "Name": "Sunspire",
+        "VendorInventory": [
+          {
+            "ItemId": "cactus_water",
+            "BuyPrice": 5.5,
+            "SellPrice": 2.0
+          },
+          {
+            "ItemId": "sunveil_cloak",
+            "BuyPrice": 18.0,
+            "SellPrice": 8.0
+          },
+          {
+            "ItemId": "dune_blade",
+            "BuyPrice": 26.0,
+            "SellPrice": 11.0
+          },
+          {
+            "ItemId": "glass_bead",
+            "BuyPrice": 7.0,
+            "SellPrice": 3.0
+          },
+          {
+            "ItemId": "sun_spice",
+            "BuyPrice": 9.0,
+            "SellPrice": 4.0
+          }
+        ],
+        "Npcs": [
+          {
+            "Id": "sunspire_steward",
+            "Name": "Steward Maali",
+            "Role": "Steward",
+            "Personality": "Measured",
+            "Location": "Sunspire",
+            "RoleType": "QuestGiver",
+            "QuestsOffered": [
+              "sunspire_steward_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Steward Maali of Sunspire.",
+                "Sunspire welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Sunspire.",
+                "Spare a moment? Sunspire has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out in the dunes.",
+                "May the sun be gentle on your path."
+              ],
+              "RandomLines": [
+                "The glassmakers brought rare sand from the wastes.",
+                "Our wells run deep but we never waste a drop."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "sunspire_trader",
+            "Name": "Rafi Sunbound",
+            "Role": "Trader",
+            "Personality": "Charming",
+            "IsVendor": true,
+            "Location": "Sunspire",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "sunspire_trader_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Rafi Sunbound of Sunspire.",
+                "Sunspire welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Sunspire.",
+                "Spare a moment? Sunspire has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out in the dunes.",
+                "May the sun be gentle on your path."
+              ],
+              "RandomLines": [
+                "The caravans bring tales of storms far to the west.",
+                "Water is coin out here—guard yours well."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "sunspire_excavator",
+            "Name": "Tala Dunehand",
+            "Role": "Excavator",
+            "Personality": "Curious",
+            "Location": "Sunspire",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "sunspire_excavator_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Tala Dunehand of Sunspire.",
+                "Sunspire welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Sunspire.",
+                "Spare a moment? Sunspire has a task for capable hands."
+              ],
+              "Farewells": [
+                "Stay safe out in the dunes.",
+                "May the sun be gentle on your path."
+              ],
+              "RandomLines": [
+                "Old ruins lie buried just beyond the ridge.",
+                "We found shards that hum when the wind rises."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Glimmerdeep",
+        "VendorInventory": [
+          {
+            "ItemId": "glow_mushroom",
+            "BuyPrice": 6.5,
+            "SellPrice": 2.5
+          },
+          {
+            "ItemId": "spelunkers_rope",
+            "BuyPrice": 11.0,
+            "SellPrice": 5.0
+          },
+          {
+            "ItemId": "crystal_lantern",
+            "BuyPrice": 17.0,
+            "SellPrice": 7.0
+          },
+          {
+            "ItemId": "stonebread_loaf",
+            "BuyPrice": 4.0,
+            "SellPrice": 1.5
+          },
+          {
+            "ItemId": "ember_dust_vial",
+            "BuyPrice": 13.0,
+            "SellPrice": 5.0
+          }
+        ],
+        "Npcs": [
+          {
+            "Id": "glimmerdeep_overseer",
+            "Name": "Overseer Branka",
+            "Role": "Overseer",
+            "Personality": "Practical",
+            "Location": "Glimmerdeep",
+            "RoleType": "QuestGiver",
+            "QuestsOffered": [
+              "glimmerdeep_overseer_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Overseer Branka of Glimmerdeep.",
+                "Glimmerdeep welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Glimmerdeep.",
+                "Spare a moment? Glimmerdeep has a task for capable hands."
+              ],
+              "Farewells": [
+                "Watch for loose stone underfoot.",
+                "Mind the lanterns; darkness comes quick."
+              ],
+              "RandomLines": [
+                "The lower shafts hum since we broke into that crystal vein.",
+                "Shards can fetch a price, but don't pocket too many."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "glimmerdeep_quartermaster",
+            "Name": "Quartermaster Orla",
+            "Role": "Quartermaster",
+            "Personality": "Meticulous",
+            "IsVendor": true,
+            "Location": "Glimmerdeep",
+            "RoleType": "Vendor",
+            "QuestsOffered": [
+              "glimmerdeep_quartermaster_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Quartermaster Orla of Glimmerdeep.",
+                "Glimmerdeep welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Glimmerdeep.",
+                "Spare a moment? Glimmerdeep has a task for capable hands."
+              ],
+              "Farewells": [
+                "Watch for loose stone underfoot.",
+                "Mind the lanterns; darkness comes quick."
+              ],
+              "RandomLines": [
+                "Ropes fray fast in the damp—check yours often.",
+                "We trade crystal dust for sturdy gear."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          },
+          {
+            "Id": "glimmerdeep_chronicler",
+            "Name": "Chronicler Pell",
+            "Role": "Chronicler",
+            "Personality": "Studious",
+            "Location": "Glimmerdeep",
+            "RoleType": "Flavor",
+            "QuestsOffered": [
+              "glimmerdeep_chronicler_rumor"
+            ],
+            "Dialogue": {
+              "Greetings": [
+                "Greetings, {playerName}. I'm Chronicler Pell of Glimmerdeep.",
+                "Glimmerdeep welcomes you, {playerName}."
+              ],
+              "QuestOffers": [
+                "If you're brave, {playerName}, I could use help with a matter in Glimmerdeep.",
+                "Spare a moment? Glimmerdeep has a task for capable hands."
+              ],
+              "Farewells": [
+                "Watch for loose stone underfoot.",
+                "Mind the lanterns; darkness comes quick."
+              ],
+              "RandomLines": [
+                "The echoes carry old songs down here.",
+                "Ink dries slow in the deep tunnels."
+              ],
+              "TradeOpeners": [
+                "Take a look at my wares.",
+                "Fair prices for a fellow traveler."
+              ]
+            }
+          }
+        ]
       }
     ],
     "Monsters": [
@@ -1318,6 +1582,63 @@
         ]
       },
       {
+        "Id": "sand_wraith",
+        "Name": "Sand Wraith",
+        "Biome": "Desert",
+        "LevelRange": {
+          "Min": 5,
+          "Max": 9
+        },
+        "HitPointRange": {
+          "Min": 28,
+          "Max": 46
+        },
+        "AttackRange": {
+          "Min": 7,
+          "Max": 11
+        },
+        "DefenseRange": {
+          "Min": 4,
+          "Max": 8
+        },
+        "CoinDropRange": {
+          "Min": 12,
+          "Max": 24
+        },
+        "PreferredThreatLevels": [
+          "High",
+          "Perilous"
+        ]
+      },
+      {
+        "Id": "glimmerdeep_skulker",
+        "Name": "Glimmerdeep Skulker",
+        "Biome": "Underground",
+        "LevelRange": {
+          "Min": 3,
+          "Max": 6
+        },
+        "HitPointRange": {
+          "Min": 18,
+          "Max": 30
+        },
+        "AttackRange": {
+          "Min": 5,
+          "Max": 8
+        },
+        "DefenseRange": {
+          "Min": 2,
+          "Max": 5
+        },
+        "CoinDropRange": {
+          "Min": 6,
+          "Max": 14
+        },
+        "PreferredThreatLevels": [
+          "Moderate"
+        ]
+      },
+      {
         "Id": "harbor_smuggler",
         "Name": "Harbor Smuggler",
         "Biome": "Coast",
@@ -1455,7 +1776,8 @@
           "emberbrook_gate",
           "mossy_trail",
           "roadside_inn",
-          "river_bridge"
+          "river_bridge",
+          "sunbreak_fork"
         ]
       },
       {
@@ -1464,11 +1786,12 @@
         "Description": "A wooden bridge spanning a bright stream and the path to distant hamlets.",
         "Biome": "Grassland",
         "ThreatLevel": "Low",
-        "AdjacentLocationIds": [
-          "travelers_road",
-          "forked_path",
-          "willow_farm"
-        ]
+      "AdjacentLocationIds": [
+        "travelers_road",
+        "forked_path",
+        "willow_farm",
+        "sunbreak_fork"
+      ]
       },
       {
         "Id": "willow_farm",
@@ -1607,7 +1930,8 @@
         "ThreatLevel": "High",
         "AdjacentLocationIds": [
           "hollow_cave",
-          "frostglen_gate"
+          "frostglen_gate",
+          "glimmerdeep_depths"
         ]
       },
       {
@@ -1817,6 +2141,112 @@
           "frostglen_hearth"
         ],
         "TownName": "Silvercross"
+      },
+      {
+        "Id": "sunbreak_fork",
+        "Name": "Sunbreak Fork",
+        "Description": "A sun-bleached milestone marks the turn toward the desert caravans.",
+        "Biome": "Grassland",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": [
+          "forked_path",
+          "river_bridge",
+          "dunes_edge"
+        ]
+      },
+      {
+        "Id": "dunes_edge",
+        "Name": "Dune's Edge",
+        "Description": "Scrubland gives way to rolling dunes and heat shimmer.",
+        "Biome": "Desert",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": [
+          "sunbreak_fork",
+          "sunspire_gate"
+        ]
+      },
+      {
+        "Id": "sunspire_gate",
+        "Name": "Sunspire Gate",
+        "Description": "Stone pillars etched with sun symbols watch over the desert road.",
+        "Biome": "Desert",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": [
+          "dunes_edge",
+          "sunspire_market",
+          "sunspire_oasis"
+        ],
+        "TownName": "Sunspire"
+      },
+      {
+        "Id": "sunspire_market",
+        "Name": "Sunspire Market",
+        "Description": "Bright awnings shade spice merchants and glassblowers alike.",
+        "Biome": "Desert",
+        "ThreatLevel": "Safe",
+        "AdjacentLocationIds": [
+          "sunspire_gate",
+          "sunspire_oasis"
+        ],
+        "TownName": "Sunspire"
+      },
+      {
+        "Id": "sunspire_oasis",
+        "Name": "Sunspire Oasis",
+        "Description": "Palm trees circle a clear pool fed by underground springs.",
+        "Biome": "Desert",
+        "ThreatLevel": "Perilous",
+        "AdjacentLocationIds": [
+          "sunspire_gate",
+          "sunspire_market",
+          "glass_cavern_entry"
+        ]
+      },
+      {
+        "Id": "glass_cavern_entry",
+        "Name": "Glass Cavern Entry",
+        "Description": "A yawning fissure leads into cool tunnels glittering with sand glass.",
+        "Biome": "Cave",
+        "ThreatLevel": "High",
+        "AdjacentLocationIds": [
+          "sunspire_oasis",
+          "glimmerdeep_camp"
+        ]
+      },
+      {
+        "Id": "glimmerdeep_camp",
+        "Name": "Glimmerdeep Camp",
+        "Description": "Lanterns hang from timber scaffolds around the elevator platform.",
+        "Biome": "Underground",
+        "ThreatLevel": "Moderate",
+        "AdjacentLocationIds": [
+          "glass_cavern_entry",
+          "glimmerdeep_market"
+        ],
+        "TownName": "Glimmerdeep"
+      },
+      {
+        "Id": "glimmerdeep_market",
+        "Name": "Glimmerdeep Market",
+        "Description": "Miners barter crystal dust for provisions and ropes.",
+        "Biome": "Underground",
+        "ThreatLevel": "Safe",
+        "AdjacentLocationIds": [
+          "glimmerdeep_camp",
+          "glimmerdeep_depths"
+        ],
+        "TownName": "Glimmerdeep"
+      },
+      {
+        "Id": "glimmerdeep_depths",
+        "Name": "Glimmerdeep Depths",
+        "Description": "Veins of shimmering ore pulse faintly within the bedrock walls.",
+        "Biome": "Underground",
+        "ThreatLevel": "High",
+        "AdjacentLocationIds": [
+          "glimmerdeep_market",
+          "crystal_chamber"
+        ]
       }
     ],
     "DropTables": [
@@ -1905,6 +2335,28 @@
           "mossy_fragment",
           "marsh_hood",
           "bog_spice"
+        ]
+      },
+      {
+        "Biome": "Desert",
+        "Drops": [
+          "cactus_water",
+          "glass_bead",
+          "sun_spice",
+          "sunveil_cloak",
+          "dune_blade",
+          "coin_pouch"
+        ]
+      },
+      {
+        "Biome": "Underground",
+        "Drops": [
+          "glow_mushroom",
+          "crystal_lantern",
+          "spelunkers_rope",
+          "ember_dust_vial",
+          "stonebread_loaf",
+          "ore_fragment"
         ]
       },
       {

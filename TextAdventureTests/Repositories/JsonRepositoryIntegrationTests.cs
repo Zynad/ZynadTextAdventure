@@ -102,14 +102,26 @@ public class JsonRepositoryIntegrationTests : IDisposable
     [Fact]
     public async Task WorldRepository_LoadsCopiedWorldData()
     {
+        var towns = await _worldRepository.GetTownsAsync();
         var locations = await _worldRepository.GetLocationsAsync();
         locations.ShouldContain(l => l.Name == "Traveler's Road");
+
+        towns.ShouldContain(t => t.Name == "Sunspire");
+        towns.ShouldContain(t => t.Name == "Glimmerdeep");
+
+        locations.ShouldContain(l => l.Id == "sunspire_oasis" && l.ThreatLevel == "Perilous");
+
+        var dropTables = await _worldRepository.GetDropTablesAsync();
+        dropTables.Count.ShouldBe(12);
+        dropTables.ShouldContain(t => t.Biome == "Desert" && t.Drops.Contains("dune_blade"));
+        dropTables.ShouldContain(t => t.Biome == "Underground" && t.Drops.Contains("glow_mushroom"));
 
         var presets = await _worldRepository.GetCharacterPresetsAsync();
         presets.ShouldContain(p => p.Id == "warrior");
 
         var monsters = await _worldRepository.GetMonstersAsync();
         monsters.ShouldContain(m => m.Id == "road_bandit");
+        monsters.ShouldContain(m => m.Id == "sand_wraith");
     }
 
     [Fact]
