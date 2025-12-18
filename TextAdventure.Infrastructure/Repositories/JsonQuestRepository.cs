@@ -52,6 +52,16 @@ public class JsonQuestRepository(
         await _store.WriteAsync(quests, cancellationToken);
     }
 
+    public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+    {
+        var quests = await ReadQuestsAsync(cancellationToken);
+        var removed = quests.RemoveAll(q => string.Equals(q.Id, id, StringComparison.OrdinalIgnoreCase)) > 0;
+        if (removed)
+        {
+            await _store.WriteAsync(quests, cancellationToken);
+        }
+    }
+
     private Task<List<Quest>> ReadQuestsAsync(CancellationToken cancellationToken)
     {
         return _store.ReadAsync(DbCreateDefault.World.Quests, cancellationToken);

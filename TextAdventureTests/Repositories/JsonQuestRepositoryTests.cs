@@ -55,6 +55,17 @@ public class JsonQuestRepositoryTests : IDisposable
         reloaded!.Description.ShouldBe("Updated description");
     }
 
+    [Fact]
+    public async Task DeleteAsync_RemovesQuest()
+    {
+        var quest = (await _repository.GetAllAsync()).First();
+
+        await _repository.DeleteAsync(quest.Id);
+
+        var afterDelete = await _repository.GetByIdAsync(quest.Id);
+        afterDelete.ShouldBeNull();
+    }
+
     public void Dispose()
     {
         try

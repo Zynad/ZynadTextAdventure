@@ -16,6 +16,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IAdminWeaponService, AdminWeaponService>();
         services.AddSingleton<IAdminItemService, AdminItemService>();
         services.AddSingleton<IAdminMonsterService, AdminMonsterService>();
+        services.AddSingleton<IAdminUserService, AdminUserService>();
+        services.AddSingleton<IAdminProgressService, AdminProgressService>();
+        services.AddSingleton<IAdminQuestService, AdminQuestService>();
+        services.AddSingleton<IAdminWorldService, AdminWorldService>();
 
         services.AddSingleton<IHelmetRepository, HelmetRepository>();
         services.AddSingleton<IChestRepository, ChestRepository>();
