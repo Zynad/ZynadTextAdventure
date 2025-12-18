@@ -11,7 +11,10 @@
       { "TownName": "Frostglen", "ItemId": "frost_coat", "BuyMultiplier": 1.1, "SellMultiplier": 1.2, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
       { "TownName": "Emberbrook", "ItemId": "minor_healing_potion", "BuyMultiplier": 0.95, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
       { "TownName": "Mosslight", "ItemId": "antidote_phial", "BuyMultiplier": 1.0, "SellMultiplier": 1.1, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
-      { "TownName": "Stormwatch Harbor", "ItemId": "lesser_mana_potion", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" }
+      { "TownName": "Stormwatch Harbor", "ItemId": "lesser_mana_potion", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Sunspire", "ItemId": "dune_blade", "BuyMultiplier": 0.95, "SellMultiplier": 1.05, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Sunspire", "ItemId": "cactus_water", "BuyMultiplier": 0.9, "SellMultiplier": 1.0, "ExpiresAt": "2099-01-01T06:00:00+00:00" },
+      { "TownName": "Glimmerdeep", "ItemId": "crystal_lantern", "BuyMultiplier": 1.1, "SellMultiplier": 1.15, "ExpiresAt": "2099-01-01T06:00:00+00:00" }
     ]
   }
 ]
