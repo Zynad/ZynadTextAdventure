@@ -38,7 +38,7 @@ public class Knight : Vocation
     }
     private async Task ChooseWeapon(Player player)
     {
-        WeaponBase startingWeapon = null;
+        WeaponBase? startingWeapon = null;
         while (startingWeapon == null)
         {
             string weaponChoice = ParseHelper.AskForString("Choose your starting weapon:\n1. Sword\n2. Axe\n");

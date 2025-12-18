@@ -1,16 +1,12 @@
 using ApplicationServices.Services;
-using Domain.Database;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationServices.Configuration;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTextAdventureGame(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddTextAdventureGame(this IServiceCollection services)
     {
-        services.Configure<JsonDatabaseOptions>(configuration.GetSection("JsonDatabase"));
-        services.AddSingleton<IGameDatabase, JsonDatabase>();
         services.AddSingleton<IGameDataService, GameDataService>();
         services.AddTransient<Authentication.RegisterUserHandler>();
         services.AddTransient<Authentication.LoginUserHandler>();
