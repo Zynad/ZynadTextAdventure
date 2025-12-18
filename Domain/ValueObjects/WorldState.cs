@@ -1,6 +1,6 @@
 using Domain.Core;
 
-namespace Domain.Entities.Storage;
+namespace Domain.ValueObjects;
 
 public class WorldState
 {

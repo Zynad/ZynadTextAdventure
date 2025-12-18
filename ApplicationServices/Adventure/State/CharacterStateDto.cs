@@ -1,5 +1,5 @@
 using Domain.Core;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.ValueObjects;
 
 namespace ApplicationServices.Adventure.State;

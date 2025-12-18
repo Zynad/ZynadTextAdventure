@@ -1,6 +1,6 @@
-namespace Domain.Entities.Storage;
+namespace TextAdventure.Infrastructure.Storage.Models;
 
-public class WorldLocationNode
+public class WorldLocationNodeModel
 {
     public string Id { get; set; } = string.Empty;
 

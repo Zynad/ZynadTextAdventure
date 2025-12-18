@@ -4,7 +4,6 @@ using ApplicationServices.Characters.Requests;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
-using Domain.Entities.Storage;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 

@@ -1,20 +1,33 @@
+using Domain.Core;
 using Domain.ValueObjects;
 
-namespace Domain.Core;
+namespace TextAdventure.Infrastructure.Storage.Models;
 
-public class Character
+public class CharacterModel
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
+
     public Guid AccountId { get; set; }
+
     public string Name { get; set; } = string.Empty;
+
     public string PresetId { get; set; } = string.Empty;
+
     public string ClassName { get; set; } = string.Empty;
+
     public int Level { get; set; } = 1;
+
     public decimal Coins { get; set; } = 20;
+
     public CharacterStats Stats { get; set; } = CharacterStats.Default();
-    public WorldLocation Location { get; set; } = WorldLocation.Default();
+
+    public WorldLocationModel Location { get; set; } = new();
+
     public List<InventoryItem> Inventory { get; set; } = new();
+
     public List<CharacterQuestState> QuestStates { get; set; } = new();
+
     public List<Encounter> EncounterLog { get; set; } = new();
+
     public List<CharacterActionLogEntry> ActionLog { get; set; } = new();
 }

@@ -1,4 +1,4 @@
-namespace Domain.Entities.Storage;
+namespace Domain.ValueObjects;
 
 public class UserAccount
 {

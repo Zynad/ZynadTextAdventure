@@ -1,8 +1,8 @@
 using Domain.ValueObjects;
 
-namespace Domain.Entities.Storage;
+namespace TextAdventure.Infrastructure.Storage.Models;
 
-public class CharacterPreset
+public class CharacterPresetModel
 {
     public string Id { get; set; } = string.Empty;
 
@@ -10,7 +10,7 @@ public class CharacterPreset
 
     public string Description { get; set; } = string.Empty;
 
-    public WorldLocation StartingLocation { get; set; } = WorldLocation.Default();
+    public WorldLocationModel StartingLocation { get; set; } = new();
 
     public List<InventoryItem> StartingInventory { get; set; } = new();
 }

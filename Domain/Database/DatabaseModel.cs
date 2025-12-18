@@ -1,5 +1,5 @@
 using Domain.Entities.Armor.Models;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.Entities.Weapons.Models;
 
 namespace Domain.Database;
