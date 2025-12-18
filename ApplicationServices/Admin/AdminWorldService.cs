@@ -138,7 +138,8 @@ public class AdminWorldService(
             return AdminOperationResult<TownNpcDto>.Conflict("NPC already exists");
         }
 
-        var entity = ToEntity(townNpc) with { Id = npcId };
+        var entity = ToEntity(townNpc);
+        entity.Id = npcId;
         town.Npcs.Add(entity);
         await SaveWorldAsync(state, cancellationToken);
 
@@ -171,7 +172,8 @@ public class AdminWorldService(
             return AdminOperationResult<TownNpcDto>.NotFound("NPC not found");
         }
 
-        var updated = ToEntity(townNpc) with { Id = npcId };
+        var updated = ToEntity(townNpc);
+        updated.Id = npcId;
         var index = town.Npcs.IndexOf(npc);
         town.Npcs[index] = updated;
         await SaveWorldAsync(state, cancellationToken);
@@ -247,7 +249,8 @@ public class AdminWorldService(
             return AdminOperationResult<AdminWorldLocationDto>.Conflict("Location already exists");
         }
 
-        var entity = ToEntity(location) with { Id = locationId };
+        var entity = ToEntity(location);
+        entity.Id = locationId;
         state.Locations.Add(entity);
         await SaveWorldAsync(state, cancellationToken);
 
@@ -273,7 +276,8 @@ public class AdminWorldService(
             return AdminOperationResult<AdminWorldLocationDto>.NotFound("Location not found");
         }
 
-        var updated = ToEntity(location) with { Id = locationId };
+        var updated = ToEntity(location);
+        updated.Id = locationId;
         var index = state.Locations.IndexOf(existing);
         state.Locations[index] = updated;
         await SaveWorldAsync(state, cancellationToken);

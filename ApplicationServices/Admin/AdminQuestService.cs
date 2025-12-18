@@ -49,7 +49,8 @@ public class AdminQuestService(
             return AdminOperationResult<AdminQuestDto>.Conflict("Quest already exists");
         }
 
-        var entity = ToEntity(questDto) with { Id = questId };
+        var entity = ToEntity(questDto);
+        entity.Id = questId;
         await questRepository.AddAsync(entity, cancellationToken);
 
         return AdminOperationResult<AdminQuestDto>.FromSuccess(ToDto(entity));
@@ -73,7 +74,8 @@ public class AdminQuestService(
             return AdminOperationResult<AdminQuestDto>.NotFound("Quest not found");
         }
 
-        var updated = ToEntity(questDto) with { Id = questId };
+        var updated = ToEntity(questDto);
+        updated.Id = questId;
         await questRepository.UpdateAsync(updated, cancellationToken);
 
         return AdminOperationResult<AdminQuestDto>.FromSuccess(ToDto(updated));
