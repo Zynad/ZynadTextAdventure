@@ -1,4 +1,5 @@
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 
@@ -31,6 +32,6 @@ public class GetCharacterDetailsHandler
             return CharacterResult.NotFound("Character not found");
         }
 
-        return CharacterResult.FromSuccess(CreateCharacterHandler.ToDto(character));
+        return CharacterResult.FromSuccess(CharacterMapper.ToCharacterDto(character));
     }
 }

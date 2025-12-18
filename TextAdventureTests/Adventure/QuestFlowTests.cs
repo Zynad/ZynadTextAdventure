@@ -1,8 +1,8 @@
 using ApplicationServices.Adventure;
 using ApplicationServices.Adventure.Requests;
-using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
 using ApplicationServices.Characters;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
 using Domain.Core;
@@ -91,7 +91,7 @@ public class QuestFlowTests
     private async Task<Character> CreateCharacterAsync(string token, string locationName)
     {
         var handler = new CreateCharacterHandler(_characters, _world, _currentUserHandler, NullLogger<CreateCharacterHandler>.Instance);
-        var result = await handler.HandleAsync(token, new ApplicationServices.Characters.Requests.CreateCharacterRequest
+        var result = await handler.HandleAsync(token, new CreateCharacterRequestDto
         {
             Name = Guid.NewGuid().ToString(),
             PresetId = "warrior"

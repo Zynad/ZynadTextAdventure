@@ -1,11 +1,10 @@
 using System.Linq;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
-using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
-using Domain.ValueObjects;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
@@ -96,7 +95,7 @@ public class TravelToLocationHandler
             current.Name,
             target.Name);
 
-        return AdventureResult.FromSuccess(CharacterStateMapper.FromCharacter(character));
+        return AdventureResult.FromSuccess(CharacterMapper.ToStateDto(character));
     }
 
     private static WorldLocationNode? FindCurrentLocation(IEnumerable<WorldLocationNode> locations, WorldLocation currentLocation)

@@ -1,6 +1,6 @@
 using ApplicationServices.Adventure.Results;
-using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters;
 using ApplicationServices.Contracts.Repositories;
 namespace ApplicationServices.Adventure;
 
@@ -31,6 +31,6 @@ public class GetEncountersHandler
             return AdventureResult.NotFound("Character not found");
         }
 
-        return AdventureResult.FromSuccess(CharacterStateMapper.FromCharacter(character));
+        return AdventureResult.FromSuccess(CharacterMapper.ToStateDto(character));
     }
 }

@@ -1,5 +1,5 @@
 using ApplicationServices.Characters;
-using ApplicationServices.Characters.Requests;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,14 +50,15 @@ public class CharactersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Create(CreateCharacterRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(CreateCharacterRequestDto request, CancellationToken cancellationToken)
     {
         var token = Request.GetAccessToken();
         var result = await _createCharacterHandler.HandleAsync(token, request, cancellationToken);
 
         if (result.Success && result.Character is not null)
         {
-            return CreatedAtAction(nameof(GetById), new { id = result.Character.Id }, result.Character);
+            var response = new CreateCharacterResponseDto(result.Character);
+            return CreatedAtAction(nameof(GetById), new { id = result.Character.Id }, response);
         }
 
         return TranslateError(result.ErrorType, result.Error);

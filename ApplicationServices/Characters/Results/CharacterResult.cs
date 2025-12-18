@@ -1,4 +1,4 @@
-using ApplicationServices.Characters.Models;
+using ApplicationServices.Characters.Dto;
 
 namespace ApplicationServices.Characters.Results;
 

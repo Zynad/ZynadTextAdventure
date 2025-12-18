@@ -1,8 +1,8 @@
 using System.Linq;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
-using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
 using Microsoft.Extensions.Logging;
@@ -113,6 +113,6 @@ public class AcceptQuestHandler
             character.Id,
             quest.Id);
 
-        return AdventureResult.FromSuccess(CharacterStateMapper.FromCharacter(character));
+        return AdventureResult.FromSuccess(CharacterMapper.ToStateDto(character));
     }
 }

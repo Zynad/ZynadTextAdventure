@@ -1,6 +1,6 @@
+using System.Linq;
 using ApplicationServices.Authentication;
-using ApplicationServices.Characters.Models;
-using ApplicationServices.Characters.Requests;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
@@ -30,7 +30,7 @@ public class CreateCharacterHandler
 
     public async Task<CharacterResult> HandleAsync(
         string token,
-        CreateCharacterRequest request,
+        CreateCharacterRequestDto request,
         CancellationToken cancellationToken = default)
     {
         var userResult = await _getCurrentUserHandler.HandleAsync(token, cancellationToken);
@@ -83,26 +83,11 @@ public class CreateCharacterHandler
             character.AccountId,
             preset.Id);
 
-        return CharacterResult.FromSuccess(ToDto(character));
+        return CharacterResult.FromSuccess(CharacterMapper.ToCharacterDto(character));
     }
 
     private static List<InventoryItem> CopyInventory(IEnumerable<InventoryItem> items)
     {
         return items.Select(i => new InventoryItem { ItemId = i.ItemId, Quantity = i.Quantity }).ToList();
-    }
-
-    internal static CharacterDto ToDto(Character character)
-    {
-        return new CharacterDto(
-            character.AccountId,
-            character.Id,
-            character.Name,
-            character.Level,
-            character.Stats,
-            character.Coins,
-            character.ClassName,
-            character.PresetId,
-            character.Location,
-            character.Inventory.AsReadOnly());
     }
 }

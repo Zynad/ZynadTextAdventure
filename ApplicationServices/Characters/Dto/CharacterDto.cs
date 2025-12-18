@@ -1,8 +1,6 @@
-using Domain.Core;
-using Domain.ValueObjects;
 using Domain.ValueObjects;
 
-namespace ApplicationServices.Characters.Models;
+namespace ApplicationServices.Characters.Dto;
 
 public record CharacterDto(
     Guid AccountId,

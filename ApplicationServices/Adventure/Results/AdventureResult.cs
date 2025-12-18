@@ -1,4 +1,4 @@
-using ApplicationServices.Adventure.State;
+using ApplicationServices.Characters.Dto;
 
 namespace ApplicationServices.Adventure.Results;
 

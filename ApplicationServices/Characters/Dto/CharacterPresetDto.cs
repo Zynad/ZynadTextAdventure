@@ -1,7 +1,6 @@
 using Domain.ValueObjects;
-using Domain.ValueObjects;
 
-namespace ApplicationServices.Characters.Models;
+namespace ApplicationServices.Characters.Dto;
 
 public record CharacterPresetDto(
     string Id,

@@ -1,8 +1,7 @@
 using Domain.Core;
 using Domain.ValueObjects;
-using Domain.ValueObjects;
 
-namespace ApplicationServices.Adventure.State;
+namespace ApplicationServices.Characters.Dto;
 
 public record CharacterStateDto(
     Guid Id,
