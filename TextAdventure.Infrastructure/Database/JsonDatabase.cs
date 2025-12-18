@@ -66,10 +66,7 @@ public class JsonDatabase : IGameDatabase
             var databaseModel = await JsonSerializer.DeserializeAsync<DatabaseModel>(stream, _serializerOptions, cancellationToken)
                                 ?? DatabaseModel.CreateDefault();
 
-            if (databaseModel.Monsters.Count == 0)
-            {
-                databaseModel.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
-            }
+            EnsureDefaults(databaseModel);
 
             return databaseModel;
         }
@@ -83,6 +80,69 @@ public class JsonDatabase : IGameDatabase
         finally
         {
             _gate.Release();
+        }
+    }
+
+    private static void EnsureDefaults(DatabaseModel databaseModel)
+    {
+        databaseModel.Monsters ??= new();
+        if (databaseModel.Monsters.Count == 0)
+        {
+            databaseModel.Monsters.AddRange(DatabaseModel.CreateDefaultMonsters());
+        }
+
+        databaseModel.Helmets ??= new();
+        if (databaseModel.Helmets.Count == 0)
+        {
+            databaseModel.Helmets.AddRange(DatabaseModel.CreateDefaultHelmets());
+        }
+
+        databaseModel.Gloves ??= new();
+        if (databaseModel.Gloves.Count == 0)
+        {
+            databaseModel.Gloves.AddRange(DatabaseModel.CreateDefaultGloves());
+        }
+
+        databaseModel.Chests ??= new();
+        if (databaseModel.Chests.Count == 0)
+        {
+            databaseModel.Chests.AddRange(DatabaseModel.CreateDefaultChests());
+        }
+
+        databaseModel.Legs ??= new();
+        if (databaseModel.Legs.Count == 0)
+        {
+            databaseModel.Legs.AddRange(DatabaseModel.CreateDefaultLegs());
+        }
+
+        databaseModel.Boots ??= new();
+        if (databaseModel.Boots.Count == 0)
+        {
+            databaseModel.Boots.AddRange(DatabaseModel.CreateDefaultBoots());
+        }
+
+        databaseModel.Swords ??= new();
+        if (databaseModel.Swords.Count == 0)
+        {
+            databaseModel.Swords.AddRange(DatabaseModel.CreateDefaultSwords());
+        }
+
+        databaseModel.Axes ??= new();
+        if (databaseModel.Axes.Count == 0)
+        {
+            databaseModel.Axes.AddRange(DatabaseModel.CreateDefaultAxes());
+        }
+
+        databaseModel.Wands ??= new();
+        if (databaseModel.Wands.Count == 0)
+        {
+            databaseModel.Wands.AddRange(DatabaseModel.CreateDefaultWands());
+        }
+
+        databaseModel.Staff ??= new();
+        if (databaseModel.Staff.Count == 0)
+        {
+            databaseModel.Staff.AddRange(DatabaseModel.CreateDefaultStaff());
         }
     }
 

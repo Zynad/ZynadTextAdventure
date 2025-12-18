@@ -54,6 +54,38 @@ public class JsonDatabaseSerializationTests : IDisposable
         result.Monsters.ShouldContain(m => m.Name == databaseModel.Monsters.First().Name);
     }
 
+    [Fact]
+    public async Task ReadAsync_SeedsDefaultEquipment_WhenFileMissing()
+    {
+        var defaults = DatabaseModel.CreateDefault();
+        var result = await _database.ReadAsync();
+
+        result.Helmets.Count.ShouldBe(defaults.Helmets.Count);
+        result.Gloves.Count.ShouldBe(defaults.Gloves.Count);
+        result.Chests.Count.ShouldBe(defaults.Chests.Count);
+        result.Legs.Count.ShouldBe(defaults.Legs.Count);
+        result.Boots.Count.ShouldBe(defaults.Boots.Count);
+        result.Swords.Count.ShouldBe(defaults.Swords.Count);
+        result.Axes.Count.ShouldBe(defaults.Axes.Count);
+        result.Wands.Count.ShouldBe(defaults.Wands.Count);
+        result.Staff.Count.ShouldBe(defaults.Staff.Count);
+    }
+
+    [Fact]
+    public async Task ReadAsync_RecreatesDefaults_WhenJsonMalformed()
+    {
+        await File.WriteAllTextAsync(Path.Combine(_tempDirectory, "database.json"), "{ invalid json }");
+
+        var result = await _database.ReadAsync();
+
+        result.Monsters.ShouldNotBeEmpty();
+        result.Helmets.ShouldContain(h => h.Name == "Leather Hood");
+        result.Swords.ShouldContain(s => s.Name == "Steel Longsword");
+        result.Wands.ShouldContain(w => w.Name == "Apprentice Wand");
+        result.Staff.ShouldContain(s => s.Name == "Elderwood Staff");
+        result.Axes.ShouldContain(a => a.Name == "Woodcutter's Axe");
+    }
+
     public void Dispose()
     {
         try
