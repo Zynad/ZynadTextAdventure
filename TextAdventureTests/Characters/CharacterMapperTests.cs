@@ -69,7 +69,7 @@ public class CharacterMapperTests
             Id = Guid.NewGuid(),
             Name = "Traveler",
             ClassName = "Rogue",
-            Stats = new CharacterStats { Strength = 1, Agility = 2, Intellect = 3 },
+            Stats = new CharacterStats { Combat = 1, Stealth = 2, Pickpocket = 3 },
             Coins = 10,
             Location = new WorldLocation { Name = "Town" },
             Inventory = new List<InventoryItem> { new() { ItemId = "coin", Quantity = 5 } },
