@@ -149,7 +149,12 @@ public class AdminEndpointsTests
                     "Friendly",
                     "Square",
                     new[] { questDto.Id },
-                    new NpcDialogueDto(["Hi"], ["Quest?"], ["Bye"], ["Hmm"], ["Trade"]))
+                    new NpcDialogueDto(
+                        new[] { "Hi" },
+                        new[] { "Quest?" },
+                        new[] { "Bye" },
+                        new[] { "Hmm" },
+                        new[] { "Trade" }))
             });
 
         var townCreate = await client.PostAsJsonAsync("/api/admin/towns", townRequest);
@@ -171,7 +176,12 @@ public class AdminEndpointsTests
             "Friendly",
             "Market",
             new[] { questDto.Id },
-            new NpcDialogueDto(["Hello"], ["Quest?"], ["Farewell"], ["Chat"], ["Browse"]))
+            new NpcDialogueDto(
+                new[] { "Hello" },
+                new[] { "Quest?" },
+                new[] { "Farewell" },
+                new[] { "Chat" },
+                new[] { "Browse" }))
         );
         var npcUpdate = await client.PutAsJsonAsync($"/api/admin/towns/{townRequest.Name}/npcs/{npcId}", npcUpdateDto);
         npcUpdate.StatusCode.ShouldBe(HttpStatusCode.OK);
