@@ -37,6 +37,7 @@ public class DatabaseModel
     {
         var database = new DatabaseModel();
         database.Monsters.AddRange(CreateDefaultMonsters());
+        database.Items.AddRange(CreateDefaultItems());
         database.Helmets.AddRange(CreateDefaultHelmets());
         database.Gloves.AddRange(CreateDefaultGloves());
         database.Chests.AddRange(CreateDefaultChests());
@@ -50,6 +51,8 @@ public class DatabaseModel
     }
 
     public static IEnumerable<MonsterProfile> CreateDefaultMonsters() => DbCreateDefault.Database.MonsterProfiles();
+
+    public static IEnumerable<GenericItemEntity> CreateDefaultItems() => DbCreateDefault.Database.Items();
 
     public static IEnumerable<HelmetEntity> CreateDefaultHelmets() => DbCreateDefault.Database.Helmets();
 
