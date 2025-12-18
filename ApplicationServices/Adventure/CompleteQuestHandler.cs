@@ -76,7 +76,7 @@ public class CompleteQuestHandler(
 
         if (quest.ExperienceReward > 0)
         {
-            character.Experience += quest.ExperienceReward;
+            LevelingSystem.ApplyExperience(character, quest.ExperienceReward);
         }
 
         if (quest.CoinReward > 0)
