@@ -37,7 +37,7 @@ public class Mage : Vocation
     }
     private async Task ChooseWeapon(Player player)
     {
-        WeaponBase startingWeapon = null;
+        WeaponBase? startingWeapon = null;
         while (startingWeapon == null)
         {
             string weaponChoice = ParseHelper.AskForString("Game Master : Choose your starting weapon:\n1. Staff\n2. Wand\n");

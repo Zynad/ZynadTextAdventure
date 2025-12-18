@@ -10,8 +10,8 @@ public abstract class Creature
     {
         CheckLevel();
     }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
     public string Name => $"{FirstName} {LastName}";
     public int Age { get; set; }
     private int hp;
