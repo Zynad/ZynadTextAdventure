@@ -1,6 +1,6 @@
-using ApplicationServices.Characters.Models;
+using System.Linq;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Contracts.Repositories;
-using Domain.ValueObjects;
 
 namespace ApplicationServices.Characters;
 
@@ -18,14 +18,7 @@ public class GetCharacterPresetsHandler
     {
         var presets = await _worldRepository.GetCharacterPresetsAsync(cancellationToken);
         return presets
-            .Select(p => new CharacterPresetDto(
-                p.Id,
-                p.Name,
-                p.Description,
-                p.StartingLocation,
-                p.StartingInventory
-                    .Select(i => new InventoryItem { ItemId = i.ItemId, Quantity = i.Quantity })
-                    .ToList()))
+            .Select(CharacterMapper.ToPresetDto)
             .ToList();
     }
 }

@@ -1,8 +1,8 @@
 using System.Linq;
 using ApplicationServices.Adventure.Requests;
 using ApplicationServices.Adventure.Results;
-using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
 using Domain.ValueObjects;
@@ -102,7 +102,7 @@ public class CompleteQuestHandler
             character.Id,
             quest.Id);
 
-        return AdventureResult.FromSuccess(CharacterStateMapper.FromCharacter(character));
+        return AdventureResult.FromSuccess(CharacterMapper.ToStateDto(character));
     }
 
     private static void GrantRewards(Character character, IEnumerable<InventoryItem> rewards)

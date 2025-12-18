@@ -1,5 +1,6 @@
+using System.Linq;
 using ApplicationServices.Authentication;
-using ApplicationServices.Characters.Models;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 
@@ -27,7 +28,7 @@ public class GetCharactersHandler
         }
 
         var characters = await _characterRepository.GetByAccountAsync(userResult.User.Id, cancellationToken);
-        var dtos = characters.Select(CreateCharacterHandler.ToDto).ToList();
+        var dtos = characters.Select(CharacterMapper.ToCharacterDto).ToList();
         return (dtos, null, null);
     }
 }

@@ -1,6 +1,6 @@
 using Domain.Core;
 
-namespace ApplicationServices.Adventure.State;
+namespace ApplicationServices.Characters.Dto;
 
 public record QuestStateDto(
     string QuestId,

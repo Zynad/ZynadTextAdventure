@@ -1,5 +1,7 @@
-using ApplicationServices.Adventure.State;
+using System.Linq;
 using ApplicationServices.Authentication;
+using ApplicationServices.Characters;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
 using ApplicationServices.Npc.Models;
@@ -82,7 +84,7 @@ public class NpcInteractionService
         var personalized = selected.Replace("{playerName}", character.Name);
 
         var payload = new NpcDialogueResponse(npc.Id, npc.Name, town.Name, personalized, npc.RoleType.ToString());
-        return NpcInteractionResult<NpcDialogueResponse>.FromSuccess(payload, CharacterStateMapper.FromCharacter(character));
+        return NpcInteractionResult<NpcDialogueResponse>.FromSuccess(payload, CharacterMapper.ToStateDto(character));
     }
 
     public async Task<NpcInteractionResult<NpcQuestOfferResponse>> OfferQuestAsync(
@@ -111,7 +113,7 @@ public class NpcInteractionService
                      ?? $"{npc.Name} has a task for you, {character.Name}.";
 
         var payload = new NpcQuestOfferResponse(npc.Id, npc.Name, questId, prompt.Replace("{playerName}", character.Name));
-        return NpcInteractionResult<NpcQuestOfferResponse>.FromSuccess(payload, CharacterStateMapper.FromCharacter(character));
+        return NpcInteractionResult<NpcQuestOfferResponse>.FromSuccess(payload, CharacterMapper.ToStateDto(character));
     }
 
     public async Task<NpcInteractionResult<NpcTradeResponse>> TradeAsync(
@@ -185,7 +187,7 @@ public class NpcInteractionService
             character.Coins,
             action.ToString());
 
-        return NpcInteractionResult<NpcTradeResponse>.FromSuccess(payload, CharacterStateMapper.FromCharacter(character));
+        return NpcInteractionResult<NpcTradeResponse>.FromSuccess(payload, CharacterMapper.ToStateDto(character));
     }
 
     public async Task<NpcInteractionResult<NpcActionResponse>> ResolveActionAsync(
@@ -239,7 +241,7 @@ public class NpcInteractionService
             success,
             character.Coins);
 
-        return NpcInteractionResult<NpcActionResponse>.FromSuccess(payload, CharacterStateMapper.FromCharacter(character));
+        return NpcInteractionResult<NpcActionResponse>.FromSuccess(payload, CharacterMapper.ToStateDto(character));
     }
 
     private async Task<(bool Success, string? Error, Character Character, TownNpc Npc, Town Town)> ResolveCharacterAndNpcAsync(

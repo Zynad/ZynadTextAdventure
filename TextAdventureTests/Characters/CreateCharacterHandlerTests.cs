@@ -1,11 +1,10 @@
 using ApplicationServices.Authentication;
 using ApplicationServices.Characters;
-using ApplicationServices.Characters.Requests;
+using ApplicationServices.Characters.Dto;
 using ApplicationServices.Characters.Results;
 using ApplicationServices.Contracts.Repositories;
 using ApplicationServices.Contracts.Services;
 using Domain.Core;
-using Domain.ValueObjects;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging.Abstractions;
 using Shouldly;
@@ -32,7 +31,7 @@ public class CreateCharacterHandlerTests
     public async Task HandleAsync_ReturnsUnauthorized_WhenSessionIsInvalid()
     {
         var handler = CreateHandler();
-        var request = new CreateCharacterRequest { Name = "Hero", PresetId = "warrior" };
+        var request = new CreateCharacterRequestDto { Name = "Hero", PresetId = "warrior" };
 
         var result = await handler.HandleAsync("missing", request);
 
@@ -46,7 +45,7 @@ public class CreateCharacterHandlerTests
         var handler = CreateHandler();
         var token = await RegisterUserAsync("player1", "player1@example.com");
 
-        var result = await handler.HandleAsync(token, new CreateCharacterRequest
+        var result = await handler.HandleAsync(token, new CreateCharacterRequestDto
         {
             Name = "Riza",
             PresetId = "warrior"
@@ -66,13 +65,13 @@ public class CreateCharacterHandlerTests
         var handler = CreateHandler();
         var token = await RegisterUserAsync("player2", "player2@example.com");
 
-        await handler.HandleAsync(token, new CreateCharacterRequest
+        await handler.HandleAsync(token, new CreateCharacterRequestDto
         {
             Name = "Riza",
             PresetId = "warrior"
         });
 
-        var duplicate = await handler.HandleAsync(token, new CreateCharacterRequest
+        var duplicate = await handler.HandleAsync(token, new CreateCharacterRequestDto
         {
             Name = "riza",
             PresetId = "warrior"

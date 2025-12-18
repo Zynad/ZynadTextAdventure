@@ -1,6 +1,6 @@
 using Domain.ValueObjects;
 
-namespace ApplicationServices.Adventure.State;
+namespace ApplicationServices.Characters.Dto;
 
 public record EncounterStateDto(
     string Id,

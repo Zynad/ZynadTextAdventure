@@ -1,6 +1,6 @@
-namespace ApplicationServices.Characters.Requests;
+namespace ApplicationServices.Characters.Dto;
 
-public class CreateCharacterRequest
+public class CreateCharacterRequestDto
 {
     public string Name { get; set; } = string.Empty;
 
