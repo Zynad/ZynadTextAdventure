@@ -69,8 +69,8 @@ public class NpcInteractionServiceTests
 
         var npc = new TownNpc { Id = "trainer", Name = "Drillmaster", Dialogue = new NpcDialogueTemplate() };
         var random = Substitute.For<IRandomService>();
-        random.NextInt(1, 21).Returns(18);
-        random.NextInt(0, Arg.Any<int>()).Returns(0);
+        random.NextInt(Arg.Is(1), Arg.Is(21)).Returns(18);
+        random.NextInt(Arg.Is(0), Arg.Any<int>()).Returns(0);
 
         var service = CreateService(character, npc, 0, randomService: random);
         var result = await service.ResolveActionAsync("token", character.Id, npc.Id, NpcActionType.Combat, 18);
