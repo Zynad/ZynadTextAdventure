@@ -348,7 +348,7 @@ public class QuestFlowTests
 
         public Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult((IReadOnlyCollection<Monster>>)Monsters);
+            return Task.FromResult((IReadOnlyCollection<Monster>)Monsters);
         }
 
         public Task<IReadOnlyCollection<CharacterPreset>> GetCharacterPresetsAsync(CancellationToken cancellationToken = default)
@@ -372,7 +372,7 @@ public class QuestFlowTests
 
         public Task<IReadOnlyCollection<DropTable>> GetDropTablesAsync(CancellationToken cancellationToken = default)
         {
-            return Task.FromResult((IReadOnlyCollection<DropTable>>)DropTables);
+            return Task.FromResult((IReadOnlyCollection<DropTable>)DropTables);
         }
 
         public Task<IReadOnlyCollection<WorldLocationNode>> GetLocationsAsync(CancellationToken cancellationToken = default)
