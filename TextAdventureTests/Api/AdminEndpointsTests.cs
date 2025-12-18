@@ -181,7 +181,7 @@ public class AdminEndpointsTests
                 new[] { "Quest?" },
                 new[] { "Farewell" },
                 new[] { "Chat" },
-                new[] { "Browse" }))
+                new[] { "Browse" })
         );
         var npcUpdate = await client.PutAsJsonAsync($"/api/admin/towns/{townRequest.Name}/npcs/{npcId}", npcUpdateDto);
         npcUpdate.StatusCode.ShouldBe(HttpStatusCode.OK);
