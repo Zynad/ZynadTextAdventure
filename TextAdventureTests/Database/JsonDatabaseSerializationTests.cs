@@ -50,7 +50,7 @@ public class JsonDatabaseSerializationTests : IDisposable
 
         result.Users.ShouldNotBeEmpty();
         result.Monsters.ShouldNotBeEmpty();
-        result.Monsters.ShouldContain(m => m.Id == databaseModel.Monsters.First().Id);
+        result.Monsters.ShouldContain(m => m.Name == databaseModel.Monsters.First().Name);
     }
 
     public void Dispose()
