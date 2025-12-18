@@ -10,7 +10,11 @@ namespace ApplicationServices.Admin;
 public class AdminArmorService : IAdminArmorService
 {
     private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IReadOnlyDictionary<ArmorSlot, IBaseRepo<ArmorPieceEntity>> _repositories;
+    private readonly IHelmetRepository _helmetRepository;
+    private readonly IChestRepository _chestRepository;
+    private readonly IGlovesRepository _glovesRepository;
+    private readonly ILegsRepository _legsRepository;
+    private readonly IBootsRepository _bootsRepository;
 
     public AdminArmorService(
         GetCurrentUserHandler getCurrentUserHandler,
@@ -21,14 +25,11 @@ public class AdminArmorService : IAdminArmorService
         IBootsRepository bootsRepository)
     {
         _getCurrentUserHandler = getCurrentUserHandler;
-        _repositories = new Dictionary<ArmorSlot, IBaseRepo<ArmorPieceEntity>>
-        {
-            [ArmorSlot.Helmet] = helmetRepository,
-            [ArmorSlot.Chest] = chestRepository,
-            [ArmorSlot.Gloves] = glovesRepository,
-            [ArmorSlot.Legs] = legsRepository,
-            [ArmorSlot.Boots] = bootsRepository
-        };
+        _helmetRepository = helmetRepository;
+        _chestRepository = chestRepository;
+        _glovesRepository = glovesRepository;
+        _legsRepository = legsRepository;
+        _bootsRepository = bootsRepository;
     }
 
     public async Task<AdminOperationResult<IReadOnlyCollection<ArmorPieceDto>>> GetAllAsync(string token, CancellationToken cancellationToken = default)
@@ -40,11 +41,11 @@ public class AdminArmorService : IAdminArmorService
         }
 
         var items = new List<ArmorPieceDto>();
-        foreach (var repository in _repositories)
-        {
-            var entities = await repository.Value.GetAllAsync();
-            items.AddRange(entities.Select(entity => ToDto(entity, repository.Key)));
-        }
+        items.AddRange((await _helmetRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Helmet)));
+        items.AddRange((await _chestRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Chest)));
+        items.AddRange((await _glovesRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Gloves)));
+        items.AddRange((await _legsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Legs)));
+        items.AddRange((await _bootsRepository.GetAllAsync()).Select(entity => ToDto(entity, ArmorSlot.Boots)));
 
         return AdminOperationResult<IReadOnlyCollection<ArmorPieceDto>>.FromSuccess(items);
     }
@@ -62,15 +63,15 @@ public class AdminArmorService : IAdminArmorService
             return AdminOperationResult<ArmorPieceDto>.ValidationFailed("Name is required");
         }
 
-        var repository = _repositories[armorPieceDto.Slot];
-        var entity = ToEntity(armorPieceDto);
-        if (entity.Id == Guid.Empty)
+        return armorPieceDto.Slot switch
         {
-            entity.Id = Guid.NewGuid();
-        }
-
-        var persisted = await repository.AddAsync(entity);
-        return AdminOperationResult<ArmorPieceDto>.FromSuccess(ToDto(persisted, armorPieceDto.Slot));
+            ArmorSlot.Helmet => await CreateAsync(_helmetRepository, armorPieceDto, ArmorSlot.Helmet),
+            ArmorSlot.Chest => await CreateAsync(_chestRepository, armorPieceDto, ArmorSlot.Chest),
+            ArmorSlot.Gloves => await CreateAsync(_glovesRepository, armorPieceDto, ArmorSlot.Gloves),
+            ArmorSlot.Legs => await CreateAsync(_legsRepository, armorPieceDto, ArmorSlot.Legs),
+            ArmorSlot.Boots => await CreateAsync(_bootsRepository, armorPieceDto, ArmorSlot.Boots),
+            _ => AdminOperationResult<ArmorPieceDto>.ValidationFailed("Unsupported armor slot")
+        };
     }
 
     public async Task<AdminOperationResult<ArmorPieceDto>> UpdateAsync(string token, ArmorPieceDto armorPieceDto, CancellationToken cancellationToken = default)
@@ -81,18 +82,15 @@ public class AdminArmorService : IAdminArmorService
             return AdminOperationResult<ArmorPieceDto>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var repository = _repositories[armorPieceDto.Slot];
-        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == armorPieceDto.Id);
-        if (existing is null)
+        return armorPieceDto.Slot switch
         {
-            return AdminOperationResult<ArmorPieceDto>.NotFound("Armor piece not found");
-        }
-
-        var updated = ToEntity(armorPieceDto);
-        updated.Id = armorPieceDto.Id;
-        var result = await repository.UpdateAsync(updated);
-
-        return AdminOperationResult<ArmorPieceDto>.FromSuccess(ToDto(result, armorPieceDto.Slot));
+            ArmorSlot.Helmet => await UpdateAsync(_helmetRepository, armorPieceDto, ArmorSlot.Helmet),
+            ArmorSlot.Chest => await UpdateAsync(_chestRepository, armorPieceDto, ArmorSlot.Chest),
+            ArmorSlot.Gloves => await UpdateAsync(_glovesRepository, armorPieceDto, ArmorSlot.Gloves),
+            ArmorSlot.Legs => await UpdateAsync(_legsRepository, armorPieceDto, ArmorSlot.Legs),
+            ArmorSlot.Boots => await UpdateAsync(_bootsRepository, armorPieceDto, ArmorSlot.Boots),
+            _ => AdminOperationResult<ArmorPieceDto>.ValidationFailed("Unsupported armor slot")
+        };
     }
 
     public async Task<AdminOperationResult<bool>> DeleteAsync(string token, Guid id, ArmorSlot slot, CancellationToken cancellationToken = default)
@@ -103,15 +101,15 @@ public class AdminArmorService : IAdminArmorService
             return AdminOperationResult<bool>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var repository = _repositories[slot];
-        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == id);
-        if (existing is null)
+        return slot switch
         {
-            return AdminOperationResult<bool>.NotFound("Armor piece not found");
-        }
-
-        await repository.DeleteAsync(existing);
-        return AdminOperationResult<bool>.FromSuccess(true);
+            ArmorSlot.Helmet => await DeleteAsync(_helmetRepository, id),
+            ArmorSlot.Chest => await DeleteAsync(_chestRepository, id),
+            ArmorSlot.Gloves => await DeleteAsync(_glovesRepository, id),
+            ArmorSlot.Legs => await DeleteAsync(_legsRepository, id),
+            ArmorSlot.Boots => await DeleteAsync(_bootsRepository, id),
+            _ => AdminOperationResult<bool>.ValidationFailed("Unsupported armor slot")
+        };
     }
 
     private static ArmorPieceDto ToDto(ArmorPieceEntity entity, ArmorSlot slot)
@@ -130,30 +128,63 @@ public class AdminArmorService : IAdminArmorService
             slot);
     }
 
-    private static ArmorPieceEntity ToEntity(ArmorPieceDto dto)
+    private static TEntity ToEntity<TEntity>(ArmorPieceDto dto) where TEntity : ArmorPieceEntity, new()
     {
-        var entity = dto.Slot switch
+        return new TEntity
         {
-            ArmorSlot.Helmet => new HelmetEntity(),
-            ArmorSlot.Chest => new ChestEntity(),
-            ArmorSlot.Gloves => new GlovesEntity(),
-            ArmorSlot.Legs => new LegsEntity(),
-            ArmorSlot.Boots => new BootsEntity(),
-            _ => new ArmorPieceEntity()
+            Id = dto.Id,
+            Name = dto.Name,
+            LevelRequirement = dto.LevelRequirement,
+            Rarity = dto.Rarity,
+            Value = dto.Value,
+            Weight = dto.Weight,
+            Durability = dto.Durability,
+            Material = dto.Material,
+            PhysicalDefense = dto.PhysicalDefense,
+            MagicResistance = dto.MagicResistance
         };
+    }
 
-        entity.Id = dto.Id;
-        entity.Name = dto.Name;
-        entity.LevelRequirement = dto.LevelRequirement;
-        entity.Rarity = dto.Rarity;
-        entity.Value = dto.Value;
-        entity.Weight = dto.Weight;
-        entity.Durability = dto.Durability;
-        entity.Material = dto.Material;
-        entity.PhysicalDefense = dto.PhysicalDefense;
-        entity.MagicResistance = dto.MagicResistance;
+    private static async Task<AdminOperationResult<ArmorPieceDto>> CreateAsync<TEntity>(IBaseRepo<TEntity> repository, ArmorPieceDto dto, ArmorSlot slot)
+        where TEntity : ArmorPieceEntity, new()
+    {
+        var entity = ToEntity<TEntity>(dto);
+        if (entity.Id == Guid.Empty)
+        {
+            entity.Id = Guid.NewGuid();
+        }
 
-        return entity;
+        var persisted = await repository.AddAsync(entity);
+        return AdminOperationResult<ArmorPieceDto>.FromSuccess(ToDto(persisted, slot));
+    }
+
+    private static async Task<AdminOperationResult<ArmorPieceDto>> UpdateAsync<TEntity>(IBaseRepo<TEntity> repository, ArmorPieceDto dto, ArmorSlot slot)
+        where TEntity : ArmorPieceEntity, new()
+    {
+        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == dto.Id);
+        if (existing is null)
+        {
+            return AdminOperationResult<ArmorPieceDto>.NotFound("Armor piece not found");
+        }
+
+        var updated = ToEntity<TEntity>(dto);
+        updated.Id = dto.Id;
+
+        var result = await repository.UpdateAsync(updated);
+        return AdminOperationResult<ArmorPieceDto>.FromSuccess(ToDto(result, slot));
+    }
+
+    private static async Task<AdminOperationResult<bool>> DeleteAsync<TEntity>(IBaseRepo<TEntity> repository, Guid id)
+        where TEntity : ArmorPieceEntity
+    {
+        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == id);
+        if (existing is null)
+        {
+            return AdminOperationResult<bool>.NotFound("Armor piece not found");
+        }
+
+        await repository.DeleteAsync(existing);
+        return AdminOperationResult<bool>.FromSuccess(true);
     }
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)

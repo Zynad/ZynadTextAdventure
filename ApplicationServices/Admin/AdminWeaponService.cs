@@ -11,7 +11,10 @@ namespace ApplicationServices.Admin;
 public class AdminWeaponService : IAdminWeaponService
 {
     private readonly GetCurrentUserHandler _getCurrentUserHandler;
-    private readonly IReadOnlyDictionary<WeaponTypeEntity, IBaseRepo<WeaponBaseEntity>> _repositories;
+    private readonly IWandRepository _wandRepository;
+    private readonly IStaffRepository _staffRepository;
+    private readonly ISwordRepository _swordRepository;
+    private readonly IAxeRepository _axeRepository;
 
     public AdminWeaponService(
         GetCurrentUserHandler getCurrentUserHandler,
@@ -21,13 +24,10 @@ public class AdminWeaponService : IAdminWeaponService
         IAxeRepository axeRepository)
     {
         _getCurrentUserHandler = getCurrentUserHandler;
-        _repositories = new Dictionary<WeaponTypeEntity, IBaseRepo<WeaponBaseEntity>>
-        {
-            [WeaponTypeEntity.Wand] = wandRepository,
-            [WeaponTypeEntity.Staff] = staffRepository,
-            [WeaponTypeEntity.Sword] = swordRepository,
-            [WeaponTypeEntity.Axe] = axeRepository
-        };
+        _wandRepository = wandRepository;
+        _staffRepository = staffRepository;
+        _swordRepository = swordRepository;
+        _axeRepository = axeRepository;
     }
 
     public async Task<AdminOperationResult<IReadOnlyCollection<WeaponDto>>> GetAllAsync(string token, CancellationToken cancellationToken = default)
@@ -39,11 +39,10 @@ public class AdminWeaponService : IAdminWeaponService
         }
 
         var items = new List<WeaponDto>();
-        foreach (var repository in _repositories)
-        {
-            var entities = await repository.Value.GetAllAsync();
-            items.AddRange(entities.Select(entity => ToDto(entity)));
-        }
+        items.AddRange((await _wandRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await _staffRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await _swordRepository.GetAllAsync()).Select(ToDto));
+        items.AddRange((await _axeRepository.GetAllAsync()).Select(ToDto));
 
         return AdminOperationResult<IReadOnlyCollection<WeaponDto>>.FromSuccess(items);
     }
@@ -61,15 +60,14 @@ public class AdminWeaponService : IAdminWeaponService
             return AdminOperationResult<WeaponDto>.ValidationFailed("Name is required");
         }
 
-        var repository = _repositories[weaponDto.WeaponType];
-        var entity = ToEntity(weaponDto);
-        if (entity.Id == Guid.Empty)
+        return weaponDto.WeaponType switch
         {
-            entity.Id = Guid.NewGuid();
-        }
-
-        var persisted = await repository.AddAsync(entity);
-        return AdminOperationResult<WeaponDto>.FromSuccess(ToDto(persisted));
+            WeaponTypeEntity.Wand => await CreateAsync(_wandRepository, weaponDto),
+            WeaponTypeEntity.Staff => await CreateAsync(_staffRepository, weaponDto),
+            WeaponTypeEntity.Sword => await CreateAsync(_swordRepository, weaponDto),
+            WeaponTypeEntity.Axe => await CreateAsync(_axeRepository, weaponDto),
+            _ => AdminOperationResult<WeaponDto>.ValidationFailed("Unsupported weapon type")
+        };
     }
 
     public async Task<AdminOperationResult<WeaponDto>> UpdateAsync(string token, WeaponDto weaponDto, CancellationToken cancellationToken = default)
@@ -80,17 +78,14 @@ public class AdminWeaponService : IAdminWeaponService
             return AdminOperationResult<WeaponDto>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var repository = _repositories[weaponDto.WeaponType];
-        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == weaponDto.Id);
-        if (existing is null)
+        return weaponDto.WeaponType switch
         {
-            return AdminOperationResult<WeaponDto>.NotFound("Weapon not found");
-        }
-
-        var updated = ToEntity(weaponDto);
-        updated.Id = weaponDto.Id;
-        var result = await repository.UpdateAsync(updated);
-        return AdminOperationResult<WeaponDto>.FromSuccess(ToDto(result));
+            WeaponTypeEntity.Wand => await UpdateAsync(_wandRepository, weaponDto),
+            WeaponTypeEntity.Staff => await UpdateAsync(_staffRepository, weaponDto),
+            WeaponTypeEntity.Sword => await UpdateAsync(_swordRepository, weaponDto),
+            WeaponTypeEntity.Axe => await UpdateAsync(_axeRepository, weaponDto),
+            _ => AdminOperationResult<WeaponDto>.ValidationFailed("Unsupported weapon type")
+        };
     }
 
     public async Task<AdminOperationResult<bool>> DeleteAsync(string token, Guid id, WeaponTypeEntity type, CancellationToken cancellationToken = default)
@@ -101,15 +96,14 @@ public class AdminWeaponService : IAdminWeaponService
             return AdminOperationResult<bool>.Unauthorized(authorization.Error ?? "Unauthorized");
         }
 
-        var repository = _repositories[type];
-        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == id);
-        if (existing is null)
+        return type switch
         {
-            return AdminOperationResult<bool>.NotFound("Weapon not found");
-        }
-
-        await repository.DeleteAsync(existing);
-        return AdminOperationResult<bool>.FromSuccess(true);
+            WeaponTypeEntity.Wand => await DeleteAsync(_wandRepository, id),
+            WeaponTypeEntity.Staff => await DeleteAsync(_staffRepository, id),
+            WeaponTypeEntity.Sword => await DeleteAsync(_swordRepository, id),
+            WeaponTypeEntity.Axe => await DeleteAsync(_axeRepository, id),
+            _ => AdminOperationResult<bool>.ValidationFailed("Unsupported weapon type")
+        };
     }
 
     private static WeaponDto ToDto(WeaponBaseEntity entity)
@@ -133,35 +127,69 @@ public class AdminWeaponService : IAdminWeaponService
             entity.MagicPower);
     }
 
-    private static WeaponBaseEntity ToEntity(WeaponDto dto)
+    private static TEntity ToEntity<TEntity>(WeaponDto dto) where TEntity : WeaponBaseEntity, new()
     {
-        var entity = dto.WeaponType switch
+        return new TEntity
         {
-            WeaponTypeEntity.Wand => new WandEntity(),
-            WeaponTypeEntity.Staff => new StaffEntity(),
-            WeaponTypeEntity.Sword => new SwordEntity(),
-            WeaponTypeEntity.Axe => new AxeEntity(),
-            _ => new WeaponBaseEntity()
+            Id = dto.Id,
+            Name = dto.Name,
+            LevelRequirement = dto.LevelRequirement,
+            Rarity = dto.Rarity,
+            Value = dto.Value,
+            Weight = dto.Weight,
+            Durability = dto.Durability,
+            Material = dto.Material,
+            WeaponType = dto.WeaponType,
+            MeleeAttackValue = dto.MeleeAttackValue,
+            RangedAttackValue = dto.RangedAttackValue,
+            MagicAttackValue = dto.MagicAttackValue,
+            IsRanged = dto.IsRanged,
+            TwoHanded = dto.TwoHanded,
+            Range = dto.Range,
+            MagicPower = dto.MagicPower
         };
+    }
 
-        entity.Id = dto.Id;
-        entity.Name = dto.Name;
-        entity.LevelRequirement = dto.LevelRequirement;
-        entity.Rarity = dto.Rarity;
-        entity.Value = dto.Value;
-        entity.Weight = dto.Weight;
-        entity.Durability = dto.Durability;
-        entity.Material = dto.Material;
-        entity.WeaponType = dto.WeaponType;
-        entity.MeleeAttackValue = dto.MeleeAttackValue;
-        entity.RangedAttackValue = dto.RangedAttackValue;
-        entity.MagicAttackValue = dto.MagicAttackValue;
-        entity.IsRanged = dto.IsRanged;
-        entity.TwoHanded = dto.TwoHanded;
-        entity.Range = dto.Range;
-        entity.MagicPower = dto.MagicPower;
+    private static async Task<AdminOperationResult<WeaponDto>> CreateAsync<TEntity>(IBaseRepo<TEntity> repository, WeaponDto dto)
+        where TEntity : WeaponBaseEntity, new()
+    {
+        var entity = ToEntity<TEntity>(dto);
+        if (entity.Id == Guid.Empty)
+        {
+            entity.Id = Guid.NewGuid();
+        }
 
-        return entity;
+        var persisted = await repository.AddAsync(entity);
+        return AdminOperationResult<WeaponDto>.FromSuccess(ToDto(persisted));
+    }
+
+    private static async Task<AdminOperationResult<WeaponDto>> UpdateAsync<TEntity>(IBaseRepo<TEntity> repository, WeaponDto dto)
+        where TEntity : WeaponBaseEntity, new()
+    {
+        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == dto.Id);
+        if (existing is null)
+        {
+            return AdminOperationResult<WeaponDto>.NotFound("Weapon not found");
+        }
+
+        var updated = ToEntity<TEntity>(dto);
+        updated.Id = dto.Id;
+
+        var result = await repository.UpdateAsync(updated);
+        return AdminOperationResult<WeaponDto>.FromSuccess(ToDto(result));
+    }
+
+    private static async Task<AdminOperationResult<bool>> DeleteAsync<TEntity>(IBaseRepo<TEntity> repository, Guid id)
+        where TEntity : WeaponBaseEntity
+    {
+        var existing = (await repository.GetAllAsync()).FirstOrDefault(e => e.Id == id);
+        if (existing is null)
+        {
+            return AdminOperationResult<bool>.NotFound("Weapon not found");
+        }
+
+        await repository.DeleteAsync(existing);
+        return AdminOperationResult<bool>.FromSuccess(true);
     }
 
     private async Task<(bool Success, string? Error)> AuthorizeAsync(string token, CancellationToken cancellationToken)
