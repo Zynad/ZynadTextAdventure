@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Domain.Core;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.ValueObjects;
 using Shouldly;
 

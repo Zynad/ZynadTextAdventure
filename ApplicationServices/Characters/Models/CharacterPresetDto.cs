@@ -1,4 +1,4 @@
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.ValueObjects;
 
 namespace ApplicationServices.Characters.Models;

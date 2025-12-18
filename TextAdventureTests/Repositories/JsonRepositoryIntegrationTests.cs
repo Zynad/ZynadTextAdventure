@@ -1,5 +1,5 @@
 using Domain.Core;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

@@ -1,21 +1,23 @@
+using System.Linq;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
-using Domain.Entities.Storage;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TextAdventure.Infrastructure.Configuration;
+using TextAdventure.Infrastructure.Storage.Mappers;
+using TextAdventure.Infrastructure.Storage.Models;
 
 namespace TextAdventure.Infrastructure.Repositories;
 
 public class JsonWorldRepository : IWorldRepository
 {
-    private readonly JsonFileStore<WorldState> _store;
+    private readonly JsonFileStore<WorldStateModel> _store;
 
     public JsonWorldRepository(IOptions<DataStoreOptions> options, IHostEnvironment environment, ILogger<JsonWorldRepository> logger, FileConcurrencyProvider concurrencyProvider)
     {
-        _store = new JsonFileStore<WorldState>(options, environment, logger, concurrencyProvider, options.Value.WorldFileName);
+        _store = new JsonFileStore<WorldStateModel>(options, environment, logger, concurrencyProvider, options.Value.WorldFileName);
     }
 
     public async Task<IReadOnlyCollection<Monster>> GetMonstersAsync(CancellationToken cancellationToken = default)
@@ -66,13 +68,15 @@ public class JsonWorldRepository : IWorldRepository
             DropTables = dropTables.ToList()
         };
 
-        await _store.WriteAsync(new[] { world }, cancellationToken);
+        await _store.WriteAsync(new[] { world.ToModel() }, cancellationToken);
     }
 
     private async Task<WorldState> ReadWorldAsync(CancellationToken cancellationToken)
     {
-        var data = await _store.ReadAsync(() => new List<WorldState> { CreateDefaultWorldState() }, cancellationToken);
-        var world = data.FirstOrDefault() ?? CreateDefaultWorldState();
+        var data = await _store.ReadAsync(
+            () => new List<WorldStateModel> { CreateDefaultWorldState().ToModel() },
+            cancellationToken);
+        var world = data.FirstOrDefault()?.ToDomain() ?? CreateDefaultWorldState();
 
         world.CharacterPresets ??= new List<CharacterPreset>();
         if (world.CharacterPresets.Count == 0)

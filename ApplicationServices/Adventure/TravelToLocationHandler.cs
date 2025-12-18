@@ -5,7 +5,7 @@ using ApplicationServices.Adventure.State;
 using ApplicationServices.Authentication;
 using ApplicationServices.Contracts.Repositories;
 using Domain.Core;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 using Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 

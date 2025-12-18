@@ -1,6 +1,6 @@
 using ApplicationServices.Contracts.Requests;
 using ApplicationServices.Contracts.Responses;
-using Domain.Entities.Storage;
+using Domain.ValueObjects;
 
 namespace ApplicationServices.Services;
 
