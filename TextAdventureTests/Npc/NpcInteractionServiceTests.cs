@@ -111,9 +111,12 @@ public class NpcInteractionServiceTests
         var priceSvc = vendorPricing ?? Substitute.For<IVendorPricingService>();
 
         var rng = randomService ?? Substitute.For<IRandomService>();
-        rng.NextInt(Arg.Any<int>(), Arg.Any<int>()).Returns(randomChoice);
-        rng.NextDouble().Returns(0.5);
-        rng.GetBytes(Arg.Any<int>()).Returns(Array.Empty<byte>());
+        if (randomService == null)
+        {
+            rng.NextInt(Arg.Any<int>(), Arg.Any<int>()).Returns(randomChoice);
+            rng.NextDouble().Returns(0.5);
+            rng.GetBytes(Arg.Any<int>()).Returns(Array.Empty<byte>());
+        }
 
         return new NpcInteractionService(currentUserHandler, worldRepo, characterRepo, priceSvc, rng);
     }
