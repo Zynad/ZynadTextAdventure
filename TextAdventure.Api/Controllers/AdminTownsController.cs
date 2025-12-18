@@ -71,7 +71,7 @@ public class AdminTownsController(IAdminWorldService adminWorldService) : Contro
         return Translate(result);
     }
 
-    [HttpPut("{townName}/npcs/{npcId}")]
+    [AcceptVerbs("PUT", Route = "{townName}/npcs/{npcId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
