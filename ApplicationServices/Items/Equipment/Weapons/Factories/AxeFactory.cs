@@ -15,7 +15,7 @@ public class AxeFactory : IAxeFactory
                 Id = Guid.NewGuid(),
                 WeaponType = WeaponTypeEntity.Axe,
                 Rarity = ParseHelper.AskForEnum<RarityEntity>("What should the Rarity be?\n0. Common\n1. Uncommon\n2. Rare\n3. Epic\n4. Legendary\n"),
-                Material = ParseHelper.AskForEnum<WeaponMaterialEntity>("What should the weapon material be?\n0. Wood\n1. Iron\n2. Copper\n3. Stone\n4. Steel\n5. Silver\n6. Gold\n7. Diamond\n"),
+                Material = ParseHelper.AskForEnum<WeaponMaterialEntity>("What should the weapon material be?\n0. Wood\n1. Iron\n2. Copper\n3. Stone\n4. Steel\n5. Silver\n6. Gold\n7. Diamond\n8. Adamantium\n"),
                 Name = ParseHelper.AskForName("What should the name be? "),
                 Durability = ParseHelper.AskForInt("What should the durability cap be? "),
                 LevelRequirement = ParseHelper.AskForInt("What should the level requirement be?"),
