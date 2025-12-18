@@ -6,10 +6,6 @@ namespace ApplicationServices.Characters;
 
 public abstract class Creature
 {
-    public Creature()
-    {
-        CheckLevel();
-    }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Name => $"{FirstName} {LastName}";
@@ -42,42 +38,8 @@ public abstract class Creature
     public List<ItemsBase> Inventory { get; set; } = [];
     public int MaxCarryWeigth { get; set; }
     public int WorthXp { get; set; }
-    private int xp;
-    public int Xp
-    {
-        get => xp;
-        set
-        {
-            xp = value;
-            CheckLevel();
-        }
-    }
-    public int Level { get; private set; }
-    private void CheckLevel()
-    {
-        int oldLevel = Level;
-        Level = Xp switch
-        {
-            < 100 => 1,
-            >= 100 and < 300 => 2,
-            >= 300 and < 600 => 3,
-            > 600 => 4,
-            _ => Level
-        };
-        // If the level has increased, call LevelUp
-        for (int i = oldLevel; i < Level; i++)
-        {
-            LevelUp();
-        }
-    }
-    public void AddXp(int xp)
-    {
-        Xp += xp;
-    }
-
-    protected virtual void LevelUp()
-    {
-    }
+    public int Experience { get; set; }
+    public int Level { get; set; }
 
     protected virtual void OnDeath()
     {

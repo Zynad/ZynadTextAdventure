@@ -25,33 +25,4 @@ public class Player : Human
         CanCarryArmorType = allowedArmors ?? [];
         CanCarryWeaponType = allowedWeaponTypes ?? [];
     }
-
-    protected override void LevelUp()
-    {
-        base.LevelUp();
-        switch (Vocation)
-        {
-            case Knight:
-                HitPoints += 20;
-                MeleePhysicalAttackDamage += 10;
-                DefenseValue += 5;
-                ManaPoints += 5;
-                MaxCarryWeigth += 10;
-                Stamina += 10;
-                MagicAttackDamage += 2;
-                RangedPhysicalAttackDamage += 5;
-                break;
-            case Mage:
-                HitPoints += 5;
-                MeleePhysicalAttackDamage += 5;
-                DefenseValue += 2;
-                ManaPoints += 30;
-                MaxCarryWeigth += 5;
-                Stamina += 5;
-                MagicAttackDamage += 15;
-                RangedPhysicalAttackDamage += 2;
-                break;
-            // Add more cases as needed
-        }
-    }
 }
