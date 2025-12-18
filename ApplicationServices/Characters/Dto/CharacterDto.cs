@@ -1,3 +1,4 @@
+using Domain.Core;
 using Domain.ValueObjects;
 
 namespace ApplicationServices.Characters.Dto;
